@@ -176,7 +176,7 @@ body{background:var(--bg-base);color:var(--text);font-family:var(--font);min-hei
   </div>
 </div>
 <script>
-let API_KEY='',currentSection='config',criticalOnly=false,cache={};
+let API_KEY='',currentSection='config',criticalOnly=false,cache={},itemStore={};
 let favorites=JSON.parse(localStorage.getItem('radar_favs')||'{}');
 let readItems=JSON.parse(localStorage.getItem('radar_read')||'{}');
 let notes=JSON.parse(localStorage.getItem('radar_notes')||'{}');
@@ -242,27 +242,63 @@ function renderResults(items){
   c.innerHTML='<div class="cards-grid">'+f.map(i=>renderCard(i)).join('')+'</div>';updateFavCount();
 }
 function renderCard(item){
-  const id=item.id||Math.random().toString(36).substr(2,9),isRead=readItems[id],isFav=favorites[id],note=notes[id]||'';
+  const id=item.id||Math.random().toString(36).substr(2,9);
+  item.id=id;
+  itemStore[id]=item;
+  const isRead=readItems[id],isFav=favorites[id],note=notes[id]||'';
   const uc={critical:'badge-critical',informative:'badge-informative',opportunity:'badge-opportunity',threat:'badge-threat'}[item.urgency]||'badge-informative';
   const ul={critical:'CRÍTICO',informative:'INFORMATIVO',opportunity:'OPORTUNIDAD',threat:'AMENAZA'}[item.urgency]||'INFO';
   const src=item.source||item.channel||item.author||'',url=item.url||'#';
-  const ij=JSON.stringify(item).replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'&quot;');
-  return '<div class="news-card '+(isRead?'read':'')+'" id="card-'+id+'"><div class="card-top"><span class="card-badge '+uc+'">'+ul+'</span><span class="card-source">'+src+'</span>'+(item.duration?'<span class="card-source">⏱ '+item.duration+'</span>':'')+'<span class="card-date">'+(item.date||'')+'</span></div><div class="card-title">'+(item.title||'')+'</div><div class="card-summary">'+(item.summary||'')+'</div><div class="card-actions">'+(url!=='#'?'<a href="'+url+'" target="_blank" class="card-btn link-btn">🔗 Ver fuente</a>':'')+'<button class="card-btn '+(isFav?'favorited':'')+'" onclick="toggleFav(\''+id+'\',this,'+ij+')">'+(isFav?'★ Guardado':'☆ Guardar')+'</button><button class="card-btn" onclick="toggleRead(\''+id+'\',this)">'+(isRead?'◉ No leído':'◎ Leído')+'</button><button class="card-btn" onclick="toggleNote(\''+id+'\')">📝 Nota</button><button class="card-btn impact-btn" onclick="analyzeImpact(\''+id+'\',\''+(item.title||'').replace(/'/g,"\\'")+'\',\''+(item.summary||'').replace(/'/g,"\\'")+'\')">🔮 ¿Cómo me afecta?</button></div><div class="card-note" id="note-'+id+'"><textarea placeholder="Escribe tu nota aquí..." id="notetext-'+id+'">'+note+'</textarea><button class="note-save" onclick="saveNote(\''+id+'\')">Guardar nota</button></div></div>';
+  return '<div class="news-card '+(isRead?'read':'')+'" id="card-'+id+'">'+
+    '<div class="card-top"><span class="card-badge '+uc+'">'+ul+'</span><span class="card-source">'+src+'</span>'+(item.duration?'<span class="card-source">⏱ '+item.duration+'</span>':'')+'<span class="card-date">'+(item.date||'')+'</span></div>'+
+    '<div class="card-title">'+(item.title||'')+'</div>'+
+    '<div class="card-summary">'+(item.summary||'')+'</div>'+
+    '<div class="card-actions">'+
+      (url!=='#'?'<a href="'+url+'" target="_blank" class="card-btn link-btn">🔗 Ver fuente</a>':'')+
+      '<button class="card-btn '+(isFav?'favorited':'')+'" onclick="toggleFav(\''+id+'\',this)">'+(isFav?'★ Guardado':'☆ Guardar')+'</button>'+
+      '<button class="card-btn" onclick="toggleRead(\''+id+'\',this)">'+(isRead?'◉ No leído':'◎ Leído')+'</button>'+
+      '<button class="card-btn" onclick="toggleNote(\''+id+'\')">📝 Nota</button>'+
+      '<button class="card-btn impact-btn" onclick="analyzeImpact(\''+id+'\')">🔮 ¿Cómo me afecta?</button>'+
+      '<button class="card-btn" style="border-color:var(--cyan);color:var(--cyan)" onclick="extractKey(\''+id+'\')">📌 Lo clave</button>'+
+    '</div>'+
+    '<div class="card-note" id="note-'+id+'"><textarea placeholder="Escribe tu nota aquí..." id="notetext-'+id+'">'+note+'</textarea><button class="note-save" onclick="saveNote(\''+id+'\')">Guardar nota</button></div>'+
+    '<div class="card-note" id="key-'+id+'" style="display:none;border-color:var(--cyan)"><div id="keytext-'+id+'" style="font-size:12px;color:var(--text-secondary);line-height:1.6"></div></div>'+
+  '</div>';
 }
-function toggleFav(id,btn,item){if(favorites[id]){delete favorites[id];btn.classList.remove('favorited');btn.innerHTML='☆ Guardar'}else{favorites[id]=item||{id};btn.classList.add('favorited');btn.innerHTML='★ Guardado'}localStorage.setItem('radar_favs',JSON.stringify(favorites));updateFavCount()}
+function toggleFav(id,btn){
+  if(favorites[id]){delete favorites[id];btn.classList.remove('favorited');btn.innerHTML='☆ Guardar'}
+  else{const item=itemStore[id]||{id};favorites[id]=item;btn.classList.add('favorited');btn.innerHTML='★ Guardado'}
+  localStorage.setItem('radar_favs',JSON.stringify(favorites));updateFavCount();
+}
 function toggleRead(id,btn){const c=document.getElementById('card-'+id);if(readItems[id]){delete readItems[id];c?.classList.remove('read');btn.textContent='◎ Leído'}else{readItems[id]=true;c?.classList.add('read');btn.textContent='◉ No leído'}localStorage.setItem('radar_read',JSON.stringify(readItems))}
 function toggleNote(id){document.getElementById('note-'+id)?.classList.toggle('open')}
 function saveNote(id){notes[id]=document.getElementById('notetext-'+id)?.value||'';localStorage.setItem('radar_notes',JSON.stringify(notes));toggleNote(id)}
 function updateFavCount(){document.getElementById('favCount').textContent=Object.keys(favorites).length}
-async function analyzeImpact(id,title,summary){
+async function analyzeImpact(id){
+  const item=itemStore[id]||favorites[id]||{};
+  const title=item.title||'',summary=item.summary||'';
   const modal=document.getElementById('impactModal');document.getElementById('impactSubtitle').textContent=title;modal.classList.add('open');
   const c=document.getElementById('impactContent');c.innerHTML='<div class="loading-container"><div class="radar-spinner"></div><div class="loading-text">Analizando impacto...</div></div>';
   try{const r=await callClaude('Analiza cómo esta noticia afecta mi negocio:\n\nNOTICIA: '+title+'\nRESUMEN: '+summary+'\n\nMi negocio: Ecommerce COD Colombia, suplementos salud vía Meta Ads y WhatsApp, Dropi, ENVÍA/Interrapidísimo.\n\nEn español:\n1. IMPACTO DIRECTO\n2. ACCIONES INMEDIATAS\n3. OPORTUNIDADES\n4. RIESGOS\n\nEspecífico. Sin relleno.','Strategic advisor COD ecommerce Colombia. Spanish. Direct.',true);c.innerHTML='<div style="white-space:pre-wrap;line-height:1.7;">'+r+'</div>'}catch(e){c.innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">'+e.message+'</div></div>'}
+}
+async function extractKey(id){
+  const keyDiv=document.getElementById('key-'+id);
+  const keyText=document.getElementById('keytext-'+id);
+  if(keyDiv.style.display==='block'){keyDiv.style.display='none';return}
+  keyDiv.style.display='block';
+  const item=itemStore[id]||favorites[id]||{};
+  const title=item.title||'',summary=item.summary||'',url=item.url||'';
+  keyText.innerHTML='<div class="loading-container" style="padding:20px 0"><div class="radar-spinner" style="width:30px;height:30px"></div><div class="loading-text">Extrayendo lo clave...</div></div>';
+  try{
+    const r=await callClaude('Busca más información sobre esta noticia y extrae lo más importante:\n\nTÍTULO: '+title+'\nRESUMEN: '+summary+'\nURL: '+url+'\n\nEn español, dame:\n• Los 3-5 puntos clave que necesito saber\n• Dato más importante que no debo perder\n• Fuente original de la información\n\nSé conciso y directo. Solo lo esencial.','Intelligence analyst. Spanish. Extract key facts only. Concise.');
+    keyText.innerHTML='<div style="white-space:pre-wrap;line-height:1.6">'+r+'</div>';
+  }catch(e){keyText.innerHTML='Error: '+e.message}
 }
 function closeImpactModal(){document.getElementById('impactModal').classList.remove('open')}
 function renderFavorites(){
   const c=document.getElementById('contentArea'),fl=Object.values(favorites);
   if(!fl.length){c.innerHTML='<div class="empty-state"><div class="empty-icon">⭐</div><div class="empty-title">Sin favoritos</div><div class="empty-sub">Guarda noticias, videos o posts. Los favoritos no gastan tokens.</div></div>';return}
+  fl.forEach(item=>{if(item.id)itemStore[item.id]=item});
   c.innerHTML='<div class="cards-grid">'+fl.map(i=>renderCard(i)).join('')+'</div>';
 }
 async function generateDigest(){
