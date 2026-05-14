@@ -6,1113 +6,278 @@
 <title>RADAR — Inteligencia de Marketing</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg-base: #07070d;
-  --bg-surface: #0f0f18;
-  --bg-card: #161622;
-  --bg-card-hover: #1c1c2e;
-  --bg-input: #12121e;
-  --accent: #00e87b;
-  --accent-dim: #00e87b22;
-  --accent-mid: #00e87b55;
-  --blue: #3b82f6;
-  --blue-dim: #3b82f622;
-  --amber: #f59e0b;
-  --amber-dim: #f59e0b22;
-  --red: #ef4444;
-  --red-dim: #ef444422;
-  --purple: #a855f7;
-  --purple-dim: #a855f722;
-  --pink: #ec4899;
-  --pink-dim: #ec489922;
-  --cyan: #06b6d4;
-  --cyan-dim: #06b6d422;
-  --text: #e4e4e7;
-  --text-secondary: #a1a1aa;
-  --text-muted: #52525b;
-  --border: #27273a;
-  --border-light: #1e1e2e;
-  --font: 'Outfit', sans-serif;
-  --mono: 'JetBrains Mono', monospace;
-}
-* { margin:0; padding:0; box-sizing:border-box; }
-body { background:var(--bg-base); color:var(--text); font-family:var(--font); min-height:100vh; }
-::-webkit-scrollbar { width:6px; }
-::-webkit-scrollbar-track { background:var(--bg-base); }
-::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
-
-/* LOGIN */
-.login-screen {
-  display:flex; align-items:center; justify-content:center; min-height:100vh;
-  background: radial-gradient(ellipse at 50% 30%, #0a1a12 0%, var(--bg-base) 70%);
-}
-.login-box {
-  text-align:center; max-width:420px; width:90%; padding:2.5rem;
-  background:var(--bg-surface); border:1px solid var(--border); border-radius:16px;
-}
-.login-logo { font-size:2.5rem; font-weight:700; letter-spacing:6px; color:var(--accent); margin-bottom:4px; }
-.login-sub { font-size:13px; color:var(--text-muted); margin-bottom:2rem; font-family:var(--mono); }
-.login-input {
-  width:100%; padding:12px 16px; background:var(--bg-input); border:1px solid var(--border);
-  border-radius:8px; color:var(--text); font-family:var(--mono); font-size:13px; margin-bottom:12px;
-  outline:none; transition:border .2s;
-}
-.login-input:focus { border-color:var(--accent); }
-.login-btn {
-  width:100%; padding:12px; background:var(--accent); color:#07070d; border:none;
-  border-radius:8px; font-family:var(--font); font-weight:600; font-size:14px;
-  cursor:pointer; transition:opacity .2s;
-}
-.login-btn:hover { opacity:.9; }
-.login-hint { font-size:11px; color:var(--text-muted); margin-top:12px; line-height:1.5; }
-.login-hint a { color:var(--accent); text-decoration:none; }
-
-/* APP LAYOUT */
-.app { display:none; height:100vh; }
-.app.active { display:flex; }
-.sidebar {
-  width:220px; min-width:220px; background:var(--bg-surface); border-right:1px solid var(--border);
-  display:flex; flex-direction:column; padding:1rem 0; overflow-y:auto;
-}
-.sidebar-logo { font-size:1.3rem; font-weight:700; letter-spacing:4px; color:var(--accent); padding:0 1.25rem; margin-bottom:4px; }
-.sidebar-sub { font-size:10px; color:var(--text-muted); font-family:var(--mono); padding:0 1.25rem; margin-bottom:1.5rem; }
-.nav-group { margin-bottom:1rem; }
-.nav-label { font-size:10px; text-transform:uppercase; letter-spacing:2px; color:var(--text-muted); padding:0 1.25rem; margin-bottom:6px; }
-.nav-item {
-  display:flex; align-items:center; gap:10px; padding:8px 1.25rem; cursor:pointer;
-  font-size:13px; color:var(--text-secondary); transition:all .15s; border-left:2px solid transparent;
-}
-.nav-item:hover { background:var(--bg-card); color:var(--text); }
-.nav-item.active { color:var(--accent); border-left-color:var(--accent); background:var(--accent-dim); }
-.nav-icon { font-size:15px; width:20px; text-align:center; }
-.nav-badge {
-  margin-left:auto; font-size:10px; font-family:var(--mono); padding:1px 6px;
-  border-radius:10px; background:var(--accent-dim); color:var(--accent);
-}
-.sidebar-footer { margin-top:auto; padding:1rem 1.25rem; border-top:1px solid var(--border); }
-.sidebar-footer button {
-  width:100%; padding:8px; background:var(--bg-card); border:1px solid var(--border);
-  border-radius:6px; color:var(--text-secondary); font-size:12px; cursor:pointer;
-  font-family:var(--font); transition:all .15s;
-}
-.sidebar-footer button:hover { border-color:var(--red); color:var(--red); }
-
-/* MAIN */
-.main { flex:1; display:flex; flex-direction:column; overflow:hidden; }
-.topbar {
-  display:flex; align-items:center; gap:12px; padding:12px 24px;
-  border-bottom:1px solid var(--border); background:var(--bg-surface);
-}
-.topbar-title { font-size:16px; font-weight:600; }
-.topbar-date { margin-left:auto; display:flex; align-items:center; gap:8px; }
-.topbar-date input {
-  padding:6px 10px; background:var(--bg-input); border:1px solid var(--border);
-  border-radius:6px; color:var(--text); font-family:var(--mono); font-size:12px; outline:none;
-  color-scheme:dark;
-}
-.topbar-date input:focus { border-color:var(--accent); }
-.topbar-refresh {
-  padding:6px 14px; background:var(--accent-dim); border:1px solid var(--accent-mid);
-  border-radius:6px; color:var(--accent); font-size:12px; cursor:pointer;
-  font-family:var(--mono); font-weight:500; transition:all .15s;
-}
-.topbar-refresh:hover { background:var(--accent); color:var(--bg-base); }
-.topbar-filter {
-  padding:6px 14px; background:var(--bg-card); border:1px solid var(--border);
-  border-radius:6px; color:var(--text-secondary); font-size:12px; cursor:pointer;
-  font-family:var(--font); transition:all .15s;
-}
-.topbar-filter.active { border-color:var(--red); color:var(--red); background:var(--red-dim); }
-
-.content { flex:1; overflow-y:auto; padding:20px 24px; }
-
-/* CARDS */
-.cards-grid { display:flex; flex-direction:column; gap:12px; }
-.news-card {
-  background:var(--bg-card); border:1px solid var(--border-light); border-radius:10px;
-  padding:16px 20px; transition:all .2s; cursor:default; position:relative;
-}
-.news-card:hover { border-color:var(--border); background:var(--bg-card-hover); }
-.news-card.read { opacity:.55; }
-.card-top { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
-.card-badge {
-  font-size:10px; font-family:var(--mono); padding:2px 8px; border-radius:4px; font-weight:500;
-}
-.badge-critical { background:var(--red-dim); color:var(--red); }
-.badge-informative { background:var(--blue-dim); color:var(--blue); }
-.badge-opportunity { background:var(--accent-dim); color:var(--accent); }
-.badge-threat { background:var(--amber-dim); color:var(--amber); }
-.card-source { font-size:11px; color:var(--text-muted); font-family:var(--mono); }
-.card-date { font-size:11px; color:var(--text-muted); margin-left:auto; font-family:var(--mono); }
-.card-title { font-size:15px; font-weight:500; line-height:1.4; margin-bottom:6px; color:var(--text); }
-.card-summary { font-size:13px; color:var(--text-secondary); line-height:1.6; margin-bottom:12px; }
-.card-actions { display:flex; gap:6px; flex-wrap:wrap; }
-.card-btn {
-  padding:5px 12px; font-size:11px; border-radius:5px; cursor:pointer; border:1px solid var(--border);
-  background:var(--bg-surface); color:var(--text-secondary); font-family:var(--font); transition:all .15s;
-}
-.card-btn:hover { border-color:var(--accent); color:var(--accent); }
-.card-btn.favorited { border-color:var(--amber); color:var(--amber); background:var(--amber-dim); }
-.card-btn.link-btn { border-color:var(--blue); color:var(--blue); text-decoration:none; display:inline-flex; }
-.card-btn.link-btn:hover { background:var(--blue-dim); }
-.card-btn.impact-btn { border-color:var(--purple); color:var(--purple); }
-.card-btn.impact-btn:hover { background:var(--purple-dim); }
-.card-note {
-  margin-top:10px; padding:10px; background:var(--bg-input); border:1px solid var(--border);
-  border-radius:6px; display:none;
-}
-.card-note.open { display:block; }
-.card-note textarea {
-  width:100%; background:transparent; border:none; color:var(--text); font-size:12px;
-  font-family:var(--font); resize:vertical; min-height:50px; outline:none;
-}
-.card-note .note-save {
-  margin-top:6px; padding:4px 10px; background:var(--accent); color:var(--bg-base);
-  border:none; border-radius:4px; font-size:11px; cursor:pointer; font-family:var(--font); font-weight:500;
-}
-
-/* IMPACT MODAL */
-.modal-overlay {
-  display:none; position:fixed; top:0; left:0; right:0; bottom:0;
-  background:rgba(0,0,0,.7); z-index:100; align-items:center; justify-content:center;
-}
-.modal-overlay.open { display:flex; }
-.modal-box {
-  background:var(--bg-surface); border:1px solid var(--border); border-radius:12px;
-  max-width:600px; width:90%; max-height:80vh; overflow-y:auto; padding:24px;
-}
-.modal-title { font-size:16px; font-weight:600; color:var(--purple); margin-bottom:4px; }
-.modal-subtitle { font-size:12px; color:var(--text-muted); margin-bottom:16px; }
-.modal-content { font-size:13px; color:var(--text-secondary); line-height:1.7; }
-.modal-close {
-  margin-top:16px; padding:8px 20px; background:var(--bg-card); border:1px solid var(--border);
-  border-radius:6px; color:var(--text-secondary); cursor:pointer; font-family:var(--font); font-size:13px;
-}
-
-/* LOADING */
-.loading-container { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:60px 0; }
-.radar-spinner {
-  width:60px; height:60px; border-radius:50%; border:2px solid var(--border);
-  border-top-color:var(--accent); animation:spin 1s linear infinite; margin-bottom:16px;
-}
-@keyframes spin { to { transform:rotate(360deg); } }
-.loading-text { font-size:13px; color:var(--text-muted); font-family:var(--mono); }
-.loading-sub { font-size:11px; color:var(--text-muted); margin-top:4px; }
-
-/* DIGEST */
-.digest-box {
-  background:var(--bg-card); border:1px solid var(--border-light); border-radius:10px;
-  padding:20px; margin-bottom:16px;
-}
-.digest-title { font-size:14px; font-weight:600; color:var(--accent); margin-bottom:4px; }
-.digest-content { font-size:13px; color:var(--text-secondary); line-height:1.7; white-space:pre-wrap; }
-.digest-copy {
-  margin-top:12px; padding:6px 14px; background:var(--accent-dim); border:1px solid var(--accent-mid);
-  border-radius:6px; color:var(--accent); font-size:12px; cursor:pointer; font-family:var(--mono);
-}
-
-/* EMPTY */
-.empty-state { text-align:center; padding:60px 20px; }
-.empty-icon { font-size:40px; margin-bottom:12px; }
-.empty-title { font-size:16px; font-weight:500; margin-bottom:6px; }
-.empty-sub { font-size:13px; color:var(--text-muted); }
-
-/* RESPONSIVE */
-@media(max-width:768px) {
-  .sidebar { display:none; }
-  .app { flex-direction:column; }
-  .mobile-nav {
-    display:flex !important; overflow-x:auto; background:var(--bg-surface);
-    border-bottom:1px solid var(--border); padding:8px 12px; gap:6px;
-  }
-  .mobile-nav-btn {
-    white-space:nowrap; padding:6px 14px; background:var(--bg-card); border:1px solid var(--border);
-    border-radius:20px; color:var(--text-secondary); font-size:12px; cursor:pointer; font-family:var(--font);
-  }
-  .mobile-nav-btn.active { background:var(--accent-dim); border-color:var(--accent); color:var(--accent); }
-  .topbar { flex-wrap:wrap; padding:10px 16px; }
-  .content { padding:12px 16px; }
-}
-.mobile-nav { display:none; }
-
-/* SETTINGS */
-.settings-section { margin-bottom:24px; }
-.settings-title { font-size:14px; font-weight:600; margin-bottom:12px; color:var(--accent); }
-.settings-row { display:flex; align-items:center; gap:12px; margin-bottom:8px; }
-.settings-row label { font-size:13px; color:var(--text-secondary); min-width:120px; }
-.settings-row input[type="text"], .settings-row select {
-  flex:1; padding:8px 12px; background:var(--bg-input); border:1px solid var(--border);
-  border-radius:6px; color:var(--text); font-size:13px; font-family:var(--font); outline:none;
-}
-.priority-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
-.priority-tag {
-  padding:4px 12px; border-radius:20px; font-size:12px; cursor:pointer; border:1px solid var(--border);
-  background:var(--bg-card); color:var(--text-secondary); transition:all .15s;
-}
-.priority-tag.active { background:var(--accent-dim); border-color:var(--accent); color:var(--accent); }
-
-/* TRENDS */
-.trends-controls {
-  display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap; align-items:center;
-}
-.trends-input {
-  flex:1; min-width:200px; padding:10px 14px; background:var(--bg-input); border:1px solid var(--border);
-  border-radius:8px; color:var(--text); font-size:13px; font-family:var(--font); outline:none;
-}
-.trends-input:focus { border-color:var(--accent); }
-.trends-select {
-  padding:10px 14px; background:var(--bg-input); border:1px solid var(--border);
-  border-radius:8px; color:var(--text); font-size:13px; font-family:var(--font); outline:none;
-  cursor:pointer; min-width:140px;
-}
-.trends-search-btn {
-  padding:10px 20px; background:var(--accent); color:var(--bg-base); border:none;
-  border-radius:8px; font-family:var(--font); font-weight:600; font-size:13px; cursor:pointer;
-}
-.trends-search-btn:hover { opacity:.9; }
-.trends-tabs { display:flex; gap:6px; margin-bottom:16px; }
-.trends-tab {
-  padding:6px 16px; border-radius:20px; font-size:12px; cursor:pointer; border:1px solid var(--border);
-  background:var(--bg-card); color:var(--text-secondary); font-family:var(--font); transition:all .15s;
-}
-.trends-tab.active { background:var(--accent-dim); border-color:var(--accent); color:var(--accent); }
-.trend-signal {
-  display:inline-flex; align-items:center; gap:4px; font-size:11px; font-family:var(--mono);
-  padding:2px 8px; border-radius:4px; font-weight:500;
-}
-.signal-up { background:#00e87b22; color:#00e87b; }
-.signal-down { background:#ef444422; color:#ef4444; }
-.signal-stable { background:#3b82f622; color:#3b82f6; }
-.signal-new { background:#a855f722; color:#a855f7; }
+:root{--bg-base:#07070d;--bg-surface:#0f0f18;--bg-card:#161622;--bg-card-hover:#1c1c2e;--bg-input:#12121e;--accent:#00e87b;--accent-dim:#00e87b22;--accent-mid:#00e87b55;--blue:#3b82f6;--blue-dim:#3b82f622;--amber:#f59e0b;--amber-dim:#f59e0b22;--red:#ef4444;--red-dim:#ef444422;--purple:#a855f7;--purple-dim:#a855f722;--pink:#ec4899;--pink-dim:#ec489922;--cyan:#06b6d4;--cyan-dim:#06b6d422;--text:#e4e4e7;--text-secondary:#a1a1aa;--text-muted:#52525b;--border:#27273a;--border-light:#1e1e2e;--font:'Outfit',sans-serif;--mono:'JetBrains Mono',monospace}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg-base);color:var(--text);font-family:var(--font);min-height:100vh}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg-base)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:radial-gradient(ellipse at 50% 30%,#0a1a12 0%,var(--bg-base) 70%)}
+.login-box{text-align:center;max-width:420px;width:90%;padding:2.5rem;background:var(--bg-surface);border:1px solid var(--border);border-radius:16px}
+.login-logo{font-size:2.5rem;font-weight:700;letter-spacing:6px;color:var(--accent);margin-bottom:4px}
+.login-sub{font-size:13px;color:var(--text-muted);margin-bottom:2rem;font-family:var(--mono)}
+.login-input{width:100%;padding:12px 16px;background:var(--bg-input);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--mono);font-size:13px;margin-bottom:12px;outline:none;transition:border .2s}
+.login-input:focus{border-color:var(--accent)}
+.login-btn{width:100%;padding:12px;background:var(--accent);color:#07070d;border:none;border-radius:8px;font-family:var(--font);font-weight:600;font-size:14px;cursor:pointer;transition:opacity .2s}
+.login-btn:hover{opacity:.9}
+.login-hint{font-size:11px;color:var(--text-muted);margin-top:12px;line-height:1.5}
+.login-hint a{color:var(--accent);text-decoration:none}
+.app{display:none;height:100vh}.app.active{display:flex}
+.sidebar{width:230px;min-width:230px;background:var(--bg-surface);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:1rem 0;overflow-y:auto}
+.sidebar-logo{font-size:1.3rem;font-weight:700;letter-spacing:4px;color:var(--accent);padding:0 1.25rem;margin-bottom:4px}
+.sidebar-sub{font-size:10px;color:var(--text-muted);font-family:var(--mono);padding:0 1.25rem;margin-bottom:1.5rem}
+.nav-group{margin-bottom:.8rem}.nav-label{font-size:9px;text-transform:uppercase;letter-spacing:2px;color:var(--text-muted);padding:0 1.25rem;margin-bottom:4px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:6px 1.25rem;cursor:pointer;font-size:12.5px;color:var(--text-secondary);transition:all .15s;border-left:2px solid transparent}
+.nav-item:hover{background:var(--bg-card);color:var(--text)}
+.nav-item.active{color:var(--accent);border-left-color:var(--accent);background:var(--accent-dim)}
+.nav-icon{font-size:14px;width:18px;text-align:center}
+.nav-badge{margin-left:auto;font-size:10px;font-family:var(--mono);padding:1px 6px;border-radius:10px;background:var(--accent-dim);color:var(--accent)}
+.sidebar-footer{margin-top:auto;padding:.8rem 1.25rem;border-top:1px solid var(--border)}
+.sidebar-footer button{width:100%;padding:7px;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;color:var(--text-secondary);font-size:11px;cursor:pointer;font-family:var(--font);transition:all .15s}
+.sidebar-footer button:hover{border-color:var(--red);color:var(--red)}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{display:flex;align-items:center;gap:12px;padding:12px 24px;border-bottom:1px solid var(--border);background:var(--bg-surface)}
+.topbar-title{font-size:16px;font-weight:600}
+.topbar-date{margin-left:auto;display:flex;align-items:center;gap:8px}
+.topbar-date input{padding:6px 10px;background:var(--bg-input);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--mono);font-size:12px;outline:none;color-scheme:dark}
+.topbar-refresh{padding:6px 14px;background:var(--accent-dim);border:1px solid var(--accent-mid);border-radius:6px;color:var(--accent);font-size:12px;cursor:pointer;font-family:var(--mono);font-weight:500;transition:all .15s}
+.topbar-refresh:hover{background:var(--accent);color:var(--bg-base)}
+.topbar-filter{padding:6px 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;color:var(--text-secondary);font-size:12px;cursor:pointer;font-family:var(--font);transition:all .15s}
+.topbar-filter.active{border-color:var(--red);color:var(--red);background:var(--red-dim)}
+.content{flex:1;overflow-y:auto;padding:20px 24px}
+.cards-grid{display:flex;flex-direction:column;gap:12px}
+.news-card{background:var(--bg-card);border:1px solid var(--border-light);border-radius:10px;padding:16px 20px;transition:all .2s;cursor:default;position:relative}
+.news-card:hover{border-color:var(--border);background:var(--bg-card-hover)}
+.news-card.read{opacity:.55}
+.card-top{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.card-badge{font-size:10px;font-family:var(--mono);padding:2px 8px;border-radius:4px;font-weight:500}
+.badge-critical{background:var(--red-dim);color:var(--red)}.badge-informative{background:var(--blue-dim);color:var(--blue)}.badge-opportunity{background:var(--accent-dim);color:var(--accent)}.badge-threat{background:var(--amber-dim);color:var(--amber)}
+.card-source{font-size:11px;color:var(--text-muted);font-family:var(--mono)}
+.card-date{font-size:11px;color:var(--text-muted);margin-left:auto;font-family:var(--mono)}
+.card-title{font-size:15px;font-weight:500;line-height:1.4;margin-bottom:6px;color:var(--text)}
+.card-summary{font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:12px}
+.card-actions{display:flex;gap:6px;flex-wrap:wrap}
+.card-btn{padding:5px 12px;font-size:11px;border-radius:5px;cursor:pointer;border:1px solid var(--border);background:var(--bg-surface);color:var(--text-secondary);font-family:var(--font);transition:all .15s}
+.card-btn:hover{border-color:var(--accent);color:var(--accent)}
+.card-btn.favorited{border-color:var(--amber);color:var(--amber);background:var(--amber-dim)}
+.card-btn.link-btn{border-color:var(--blue);color:var(--blue);text-decoration:none;display:inline-flex}
+.card-btn.link-btn:hover{background:var(--blue-dim)}
+.card-btn.impact-btn{border-color:var(--purple);color:var(--purple)}
+.card-btn.impact-btn:hover{background:var(--purple-dim)}
+.card-note{margin-top:10px;padding:10px;background:var(--bg-input);border:1px solid var(--border);border-radius:6px;display:none}
+.card-note.open{display:block}
+.card-note textarea{width:100%;background:transparent;border:none;color:var(--text);font-size:12px;font-family:var(--font);resize:vertical;min-height:50px;outline:none}
+.card-note .note-save{margin-top:6px;padding:4px 10px;background:var(--accent);color:var(--bg-base);border:none;border-radius:4px;font-size:11px;cursor:pointer;font-family:var(--font);font-weight:500}
+.modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);z-index:100;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal-box{background:var(--bg-surface);border:1px solid var(--border);border-radius:12px;max-width:600px;width:90%;max-height:80vh;overflow-y:auto;padding:24px}
+.modal-title{font-size:16px;font-weight:600;color:var(--purple);margin-bottom:4px}
+.modal-subtitle{font-size:12px;color:var(--text-muted);margin-bottom:16px}
+.modal-content{font-size:13px;color:var(--text-secondary);line-height:1.7}
+.modal-close{margin-top:16px;padding:8px 20px;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;color:var(--text-secondary);cursor:pointer;font-family:var(--font);font-size:13px}
+.loading-container{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 0}
+.radar-spinner{width:60px;height:60px;border-radius:50%;border:2px solid var(--border);border-top-color:var(--accent);animation:spin 1s linear infinite;margin-bottom:16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-size:13px;color:var(--text-muted);font-family:var(--mono)}
+.loading-sub{font-size:11px;color:var(--text-muted);margin-top:4px}
+.digest-box{background:var(--bg-card);border:1px solid var(--border-light);border-radius:10px;padding:20px;margin-bottom:16px}
+.digest-title{font-size:14px;font-weight:600;color:var(--accent);margin-bottom:4px}
+.digest-content{font-size:13px;color:var(--text-secondary);line-height:1.7;white-space:pre-wrap}
+.digest-copy{margin-top:12px;padding:6px 14px;background:var(--accent-dim);border:1px solid var(--accent-mid);border-radius:6px;color:var(--accent);font-size:12px;cursor:pointer;font-family:var(--mono)}
+.empty-state{text-align:center;padding:60px 20px}
+.empty-icon{font-size:40px;margin-bottom:12px}
+.empty-title{font-size:16px;font-weight:500;margin-bottom:6px}
+.empty-sub{font-size:13px;color:var(--text-muted);max-width:400px;margin:0 auto;line-height:1.6}
+.settings-section{margin-bottom:24px}
+.settings-title{font-size:14px;font-weight:600;margin-bottom:12px;color:var(--accent)}
+.settings-row{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.settings-row input[type="text"]{flex:1;padding:8px 12px;background:var(--bg-input);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:13px;font-family:var(--font);outline:none}
+.welcome-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:16px}
+.welcome-card{background:var(--bg-card);border:1px solid var(--border-light);border-radius:10px;padding:16px;cursor:pointer;transition:all .2s;text-align:center}
+.welcome-card:hover{border-color:var(--accent);background:var(--bg-card-hover)}
+.welcome-card-icon{font-size:28px;margin-bottom:8px}
+.welcome-card-title{font-size:13px;font-weight:500;color:var(--text)}
+.welcome-card-sub{font-size:11px;color:var(--text-muted);margin-top:4px}
+@media(max-width:768px){.sidebar{display:none}.app{flex-direction:column}.mobile-nav{display:flex !important;overflow-x:auto;background:var(--bg-surface);border-bottom:1px solid var(--border);padding:8px 12px;gap:6px}.mobile-nav-btn{white-space:nowrap;padding:6px 12px;background:var(--bg-card);border:1px solid var(--border);border-radius:20px;color:var(--text-secondary);font-size:11px;cursor:pointer;font-family:var(--font)}.mobile-nav-btn.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent)}.topbar{flex-wrap:wrap;padding:10px 16px}.content{padding:12px 16px}}
+.mobile-nav{display:none}
 </style>
 </head>
 <body>
-
-<!-- LOGIN SCREEN -->
 <div class="login-screen" id="loginScreen">
   <div class="login-box">
     <div class="login-logo">RADAR</div>
     <div class="login-sub">inteligencia de marketing</div>
     <input type="password" class="login-input" id="apiKeyInput" placeholder="Ingresa tu API Key de Anthropic (sk-ant-...)">
     <button class="login-btn" onclick="handleLogin()">Entrar</button>
-    <div class="login-hint">
-      Consigue tu key en <a href="https://console.anthropic.com/settings/keys" target="_blank">console.anthropic.com</a><br>
-      Tu key se guarda solo en tu navegador. Nunca sale de tu dispositivo.
-    </div>
+    <div class="login-hint">Consigue tu key en <a href="https://console.anthropic.com/settings/keys" target="_blank">console.anthropic.com</a><br>Tu key se guarda solo en tu navegador.</div>
   </div>
 </div>
-
-<!-- MAIN APP -->
 <div class="app" id="app">
-  <!-- SIDEBAR -->
   <div class="sidebar">
     <div class="sidebar-logo">RADAR</div>
-    <div class="sidebar-sub">v1.0 · inteligencia</div>
-
-    <div class="nav-group">
-      <div class="nav-label">Fuentes</div>
-      <div class="nav-item active" data-section="noticias" onclick="switchSection('noticias')">
-        <span class="nav-icon">📡</span> Noticias
-      </div>
-      <div class="nav-item" data-section="youtube" onclick="switchSection('youtube')">
-        <span class="nav-icon">🎥</span> YouTube
-      </div>
-      <div class="nav-item" data-section="twitter" onclick="switchSection('twitter')">
-        <span class="nav-icon">𝕏</span> X / Twitter
-      </div>
-      <div class="nav-item" data-section="instagram" onclick="switchSection('instagram')">
-        <span class="nav-icon">📸</span> Instagram
-      </div>
+    <div class="sidebar-sub">v2.0 · inteligencia</div>
+    <div class="nav-group"><div class="nav-label">Plataformas</div>
+      <div class="nav-item" data-section="meta" onclick="switchSection('meta')"><span class="nav-icon">📘</span> Meta Ads</div>
+      <div class="nav-item" data-section="tiktok" onclick="switchSection('tiktok')"><span class="nav-icon">🎵</span> TikTok Ads</div>
+      <div class="nav-item" data-section="google" onclick="switchSection('google')"><span class="nav-icon">🔍</span> Google Ads</div>
+      <div class="nav-item" data-section="pinterest" onclick="switchSection('pinterest')"><span class="nav-icon">📌</span> Pinterest</div>
+      <div class="nav-item" data-section="shopify" onclick="switchSection('shopify')"><span class="nav-icon">🛒</span> Shopify</div>
+      <div class="nav-item" data-section="whatsapp" onclick="switchSection('whatsapp')"><span class="nav-icon">💬</span> WhatsApp</div>
     </div>
-
-    <div class="nav-group">
-      <div class="nav-label">Estrategia</div>
-      <div class="nav-item" data-section="inteligencia" onclick="switchSection('inteligencia')">
-        <span class="nav-icon">🧠</span> Inteligencia
-      </div>
-      <div class="nav-item" data-section="seguridad" onclick="switchSection('seguridad')">
-        <span class="nav-icon">🛡️</span> Seguridad Meta
-      </div>
-      <div class="nav-item" data-section="tendencias" onclick="switchSection('tendencias')">
-        <span class="nav-icon">📈</span> Tendencias
-      </div>
+    <div class="nav-group"><div class="nav-label">Industria</div>
+      <div class="nav-item" data-section="ecommerce" onclick="switchSection('ecommerce')"><span class="nav-icon">📦</span> Ecommerce / COD</div>
+      <div class="nav-item" data-section="copy" onclick="switchSection('copy')"><span class="nav-icon">✍️</span> Copywriting</div>
+      <div class="nav-item" data-section="ai" onclick="switchSection('ai')"><span class="nav-icon">🤖</span> AI Marketing</div>
     </div>
-
-    <div class="nav-group">
-      <div class="nav-label">Personal</div>
-      <div class="nav-item" data-section="favoritos" onclick="switchSection('favoritos')">
-        <span class="nav-icon">⭐</span> Favoritos <span class="nav-badge" id="favCount">0</span>
-      </div>
-      <div class="nav-item" data-section="digest" onclick="switchSection('digest')">
-        <span class="nav-icon">📋</span> Digest semanal
-      </div>
-      <div class="nav-item" data-section="config" onclick="switchSection('config')">
-        <span class="nav-icon">⚙️</span> Configuración
-      </div>
+    <div class="nav-group"><div class="nav-label">Estrategia</div>
+      <div class="nav-item" data-section="inteligencia" onclick="switchSection('inteligencia')"><span class="nav-icon">🧠</span> Inteligencia</div>
+      <div class="nav-item" data-section="seguridad" onclick="switchSection('seguridad')"><span class="nav-icon">🛡️</span> Seguridad Meta</div>
     </div>
-
-    <div class="sidebar-footer">
-      <button onclick="handleLogout()">Cerrar sesión</button>
+    <div class="nav-group"><div class="nav-label">Contenido</div>
+      <div class="nav-item" data-section="youtube" onclick="switchSection('youtube')"><span class="nav-icon">🎥</span> YouTube</div>
+      <div class="nav-item" data-section="twitter" onclick="switchSection('twitter')"><span class="nav-icon">𝕏</span> X / Twitter</div>
+      <div class="nav-item" data-section="instagram" onclick="switchSection('instagram')"><span class="nav-icon">📸</span> Instagram</div>
     </div>
+    <div class="nav-group"><div class="nav-label">Personal</div>
+      <div class="nav-item" data-section="favoritos" onclick="switchSection('favoritos')"><span class="nav-icon">⭐</span> Favoritos <span class="nav-badge" id="favCount">0</span></div>
+      <div class="nav-item" data-section="digest" onclick="switchSection('digest')"><span class="nav-icon">📋</span> Digest semanal</div>
+      <div class="nav-item active" data-section="config" onclick="switchSection('config')"><span class="nav-icon">⚙️</span> Configuración</div>
+    </div>
+    <div class="sidebar-footer"><button onclick="handleLogout()">Cerrar sesión</button></div>
   </div>
-
-  <!-- MOBILE NAV -->
   <div class="mobile-nav" id="mobileNav">
-    <button class="mobile-nav-btn active" data-section="noticias" onclick="switchSection('noticias')">📡 Noticias</button>
+    <button class="mobile-nav-btn" data-section="meta" onclick="switchSection('meta')">📘 Meta</button>
+    <button class="mobile-nav-btn" data-section="tiktok" onclick="switchSection('tiktok')">🎵 TikTok</button>
+    <button class="mobile-nav-btn" data-section="google" onclick="switchSection('google')">🔍 Google</button>
+    <button class="mobile-nav-btn" data-section="shopify" onclick="switchSection('shopify')">🛒 Shopify</button>
+    <button class="mobile-nav-btn" data-section="whatsapp" onclick="switchSection('whatsapp')">💬 WhatsApp</button>
+    <button class="mobile-nav-btn" data-section="ecommerce" onclick="switchSection('ecommerce')">📦 Ecom</button>
     <button class="mobile-nav-btn" data-section="youtube" onclick="switchSection('youtube')">🎥 YouTube</button>
-    <button class="mobile-nav-btn" data-section="twitter" onclick="switchSection('twitter')">𝕏 Twitter</button>
-    <button class="mobile-nav-btn" data-section="instagram" onclick="switchSection('instagram')">📸 Instagram</button>
-    <button class="mobile-nav-btn" data-section="inteligencia" onclick="switchSection('inteligencia')">🧠 Intel</button>
-    <button class="mobile-nav-btn" data-section="seguridad" onclick="switchSection('seguridad')">🛡️ Seguridad</button>
-    <button class="mobile-nav-btn" data-section="tendencias" onclick="switchSection('tendencias')">📈 Tendencias</button>
-    <button class="mobile-nav-btn" data-section="favoritos" onclick="switchSection('favoritos')">⭐ Favoritos</button>
-    <button class="mobile-nav-btn" data-section="digest" onclick="switchSection('digest')">📋 Digest</button>
-    <button class="mobile-nav-btn" data-section="config" onclick="switchSection('config')">⚙️ Config</button>
+    <button class="mobile-nav-btn" data-section="twitter" onclick="switchSection('twitter')">𝕏 X</button>
+    <button class="mobile-nav-btn" data-section="favoritos" onclick="switchSection('favoritos')">⭐ Favs</button>
+    <button class="mobile-nav-btn active" data-section="config" onclick="switchSection('config')">⚙️ Config</button>
   </div>
-
-  <!-- MAIN CONTENT -->
   <div class="main">
     <div class="topbar">
-      <div class="topbar-title" id="sectionTitle">📡 Noticias</div>
+      <div class="topbar-title" id="sectionTitle">⚙️ Configuración</div>
       <div class="topbar-date">
         <input type="date" id="dateInput" title="Buscar noticias de esta fecha">
         <button class="topbar-refresh" onclick="refreshCurrent()">↻ Actualizar</button>
         <button class="topbar-filter" id="criticalFilter" onclick="toggleCriticalFilter()">⚡ Solo crítico</button>
       </div>
     </div>
-    <div class="content" id="contentArea">
-      <div class="loading-container">
-        <div class="radar-spinner"></div>
-        <div class="loading-text">Escaneando señales...</div>
-      </div>
-    </div>
+    <div class="content" id="contentArea"></div>
   </div>
 </div>
-
-<!-- IMPACT MODAL -->
 <div class="modal-overlay" id="impactModal">
   <div class="modal-box">
     <div class="modal-title">¿Cómo me afecta esto?</div>
     <div class="modal-subtitle" id="impactSubtitle"></div>
-    <div class="modal-content" id="impactContent">
-      <div class="loading-container">
-        <div class="radar-spinner"></div>
-        <div class="loading-text">Analizando impacto en tu negocio...</div>
-      </div>
-    </div>
+    <div class="modal-content" id="impactContent"></div>
     <button class="modal-close" onclick="closeImpactModal()">Cerrar</button>
   </div>
 </div>
-
 <script>
-// === STATE ===
-let API_KEY = '';
-let currentSection = 'noticias';
-let criticalOnly = false;
-let cache = {};
-let favorites = JSON.parse(localStorage.getItem('radar_favs') || '{}');
-let readItems = JSON.parse(localStorage.getItem('radar_read') || '{}');
-let notes = JSON.parse(localStorage.getItem('radar_notes') || '{}');
-let priorities = JSON.parse(localStorage.getItem('radar_priorities') || '["meta","tiktok","ecommerce"]');
-
-// === CATEGORIES ===
-const NEWS_CATEGORIES = [
-  { id:'meta', label:'Meta Ads', color:'var(--blue)', query:'Meta Ads Facebook Instagram advertising platform updates changes' },
-  { id:'tiktok', label:'TikTok Ads', color:'var(--pink)', query:'TikTok Ads advertising platform updates features' },
-  { id:'google', label:'Google Ads', color:'var(--accent)', query:'Google Ads advertising PPC platform updates changes' },
-  { id:'pinterest', label:'Pinterest Ads', color:'var(--red)', query:'Pinterest advertising marketing updates' },
-  { id:'shopify', label:'Shopify', color:'var(--cyan)', query:'Shopify ecommerce platform updates features' },
-  { id:'ecommerce', label:'Ecommerce', color:'var(--amber)', query:'ecommerce dropshipping COD cash on delivery Latin America trends' },
-  { id:'copy', label:'Copywriting', color:'var(--purple)', query:'direct response copywriting advertising conversion optimization' },
-  { id:'ai', label:'AI Marketing', color:'var(--accent)', query:'AI artificial intelligence marketing advertising automation tools' },
-];
-
-const YOUTUBE_TOPICS = [
-  'Meta Ads Facebook advertising strategy tutorial',
-  'TikTok Ads ecommerce marketing',
-  'Google Ads PPC campaign optimization',
-  'ecommerce dropshipping scaling strategy',
-  'direct response copywriting ads',
-  'AI tools marketing advertising automation',
-  'digital marketing strategy growth',
-];
-
-const INTEL_TOPICS = [
-  { id:'bm', title:'Estructura de Business Manager', query:'Facebook Business Manager account structure best practices ban prevention advertising', color:'var(--blue)' },
-  { id:'dropi', title:'Dependencia en Dropi', query:'Dropi Colombia dropshipping platform alternatives risks ecommerce', color:'var(--cyan)' },
-  { id:'dian', title:'DIAN Obligaciones tributarias', query:'DIAN Colombia ecommerce obligaciones tributarias impuestos comercio electrónico 2026', color:'var(--amber)' },
-  { id:'tiktokshop', title:'TikTok Shop Colombia', query:'TikTok Shop Colombia Latin America ecommerce launch availability', color:'var(--pink)' },
-  { id:'scaling', title:'Advertisers grandes LATAM', query:'large scale Meta Ads advertisers supplements health Latin America scaling strategy', color:'var(--purple)' },
-  { id:'whatsapp', title:'WhatsApp API vs SellerChat', query:'WhatsApp Business API vs chatbot platforms ecommerce sales conversion comparison', color:'var(--accent)' },
-  { id:'retention', title:'Retención post-venta COD', query:'post sale customer retention COD cash on delivery supplements reorder strategy', color:'var(--amber)' },
-];
-
-const SECURITY_TOPICS = [
-  'Facebook fanpage hacked recovery protection 2026',
-  'Meta Ads account banned restricted appeal unblock',
-  'Facebook Business Manager backup contingency plan',
-  'Meta advertising account security best practices',
-  'Facebook ad account ban supplements health products policy',
-];
-
-// === LOGIN ===
-function handleLogin() {
-  const key = document.getElementById('apiKeyInput').value.trim();
-  if (!key) return;
-  API_KEY = key;
-  sessionStorage.setItem('radar_key', key);
-  document.getElementById('loginScreen').style.display = 'none';
-  document.getElementById('app').classList.add('active');
-  document.getElementById('dateInput').valueAsDate = new Date();
-  loadSection('noticias');
+let API_KEY='',currentSection='config',criticalOnly=false,cache={};
+let favorites=JSON.parse(localStorage.getItem('radar_favs')||'{}');
+let readItems=JSON.parse(localStorage.getItem('radar_read')||'{}');
+let notes=JSON.parse(localStorage.getItem('radar_notes')||'{}');
+const SECTIONS={
+  meta:{title:'📘 Meta Ads',icon:'📘',query:'Meta Ads Facebook Instagram advertising platform updates changes new features',loading:'Escaneando Meta Ads...'},
+  tiktok:{title:'🎵 TikTok Ads',icon:'🎵',query:'TikTok Ads advertising platform updates features changes',loading:'Escaneando TikTok Ads...'},
+  google:{title:'🔍 Google Ads',icon:'🔍',query:'Google Ads PPC advertising platform updates changes',loading:'Escaneando Google Ads...'},
+  pinterest:{title:'📌 Pinterest',icon:'📌',query:'Pinterest advertising marketing updates features',loading:'Escaneando Pinterest...'},
+  shopify:{title:'🛒 Shopify',icon:'🛒',query:'Shopify ecommerce platform updates features apps',loading:'Escaneando Shopify...'},
+  whatsapp:{title:'💬 WhatsApp',icon:'💬',query:'WhatsApp Business API marketing sales automation remarketing click-to-WhatsApp ecommerce',loading:'Escaneando WhatsApp...'},
+  ecommerce:{title:'📦 Ecommerce / COD',icon:'📦',query:'ecommerce dropshipping COD cash on delivery Latin America trends',loading:'Escaneando Ecommerce...'},
+  copy:{title:'✍️ Copywriting',icon:'✍️',query:'direct response copywriting advertising conversion hooks',loading:'Escaneando Copywriting...'},
+  ai:{title:'🤖 AI Marketing',icon:'🤖',query:'AI artificial intelligence marketing advertising automation tools',loading:'Escaneando AI Marketing...'},
+  youtube:{title:'🎥 YouTube',icon:'🎥',query:'youtube',loading:'Buscando videos de alto valor...'},
+  twitter:{title:'𝕏 X / Twitter',icon:'𝕏',query:'twitter',loading:'Rastreando hilos en X...'},
+  instagram:{title:'📸 Instagram',icon:'📸',query:'instagram',loading:'Filtrando contenido real...'},
+  inteligencia:{title:'🧠 Inteligencia',icon:'🧠',query:'inteligencia',loading:'Investigando temas estratégicos...'},
+  seguridad:{title:'🛡️ Seguridad Meta',icon:'🛡️',query:'seguridad',loading:'Analizando seguridad de Meta...'},
+  favoritos:{title:'⭐ Favoritos',icon:'⭐'},
+  digest:{title:'📋 Digest semanal',icon:'📋',loading:'Generando digest semanal...'},
+  config:{title:'⚙️ Configuración',icon:'⚙️'},
+};
+const TR='CRITICAL: ALL titles and summaries MUST be in Spanish. Translate everything from any language to Spanish. Keep original URLs.';
+function handleLogin(){const k=document.getElementById('apiKeyInput').value.trim();if(!k)return;API_KEY=k;sessionStorage.setItem('radar_key',k);document.getElementById('loginScreen').style.display='none';document.getElementById('app').classList.add('active');document.getElementById('dateInput').valueAsDate=new Date();renderConfig()}
+function handleLogout(){sessionStorage.removeItem('radar_key');API_KEY='';document.getElementById('app').classList.remove('active');document.getElementById('loginScreen').style.display='flex';document.getElementById('apiKeyInput').value=''}
+(function(){const s=sessionStorage.getItem('radar_key');if(s){API_KEY=s;document.getElementById('loginScreen').style.display='none';document.getElementById('app').classList.add('active');document.getElementById('dateInput').valueAsDate=new Date();setTimeout(()=>renderConfig(),100)}})();
+function switchSection(s){currentSection=s;document.querySelectorAll('.nav-item').forEach(e=>e.classList.toggle('active',e.dataset.section===s));document.querySelectorAll('.mobile-nav-btn').forEach(e=>e.classList.toggle('active',e.dataset.section===s));const sec=SECTIONS[s];document.getElementById('sectionTitle').textContent=sec?sec.title:s;loadSection(s)}
+function loadSection(s){if(s==='favoritos')return renderFavorites();if(s==='config')return renderConfig();if(s==='digest')return generateDigest();const dk=document.getElementById('dateInput').value,ck=s+'_'+dk;if(cache[ck]){renderResults(cache[ck]);return}showLoading(s);fetchData(s,dk).then(d=>{cache[ck]=d;renderResults(d)}).catch(e=>{document.getElementById('contentArea').innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error al cargar</div><div class="empty-sub">'+e.message+'</div></div>'})}
+function refreshCurrent(){const dk=document.getElementById('dateInput').value;delete cache[currentSection+'_'+dk];loadSection(currentSection)}
+document.getElementById('dateInput').addEventListener('change',()=>{if(currentSection!=='config'&&currentSection!=='favoritos')loadSection(currentSection)});
+function toggleCriticalFilter(){criticalOnly=!criticalOnly;document.getElementById('criticalFilter').classList.toggle('active',criticalOnly);if(currentSection!=='config'&&currentSection!=='favoritos')loadSection(currentSection)}
+async function callClaude(p,sys,deep){
+  const m=deep?'claude-sonnet-4-5':'claude-haiku-4-5-20251001';
+  const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:m,max_tokens:4096,system:sys,tools:[{type:'web_search_20250305',name:'web_search',max_uses:3}],messages:[{role:'user',content:p}]})});
+  if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error?.message||'Error '+r.status)}
+  const d=await r.json();let t='';for(const b of d.content){if(b.type==='text')t+=b.text}return t;
 }
-
-function handleLogout() {
-  sessionStorage.removeItem('radar_key');
-  API_KEY = '';
-  document.getElementById('app').classList.remove('active');
-  document.getElementById('loginScreen').style.display = 'flex';
-  document.getElementById('apiKeyInput').value = '';
-}
-
-// Check saved session
-(function() {
-  const saved = sessionStorage.getItem('radar_key');
-  if (saved) {
-    API_KEY = saved;
-    document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('app').classList.add('active');
-    document.getElementById('dateInput').valueAsDate = new Date();
-    setTimeout(() => loadSection('noticias'), 300);
+async function fetchData(section,dateStr){
+  const dc=dateStr?'Focus on news from '+dateStr+'.':'Focus on most recent news.';
+  const SYS='Marketing intelligence analyst. '+TR+' Respond ONLY with valid JSON array. No markdown, no backticks.';
+  let p='';
+  if(['meta','tiktok','google','pinterest','shopify','whatsapp','ecommerce','copy','ai'].includes(section)){
+    p='Search latest news: '+SECTIONS[section].query+'. '+dc+'\n\nReturn JSON array 5-8 items: {"id":"uid","title":"SPANISH","summary":"2 sentences SPANISH","source":"name","url":"url","date":"YYYY-MM-DD","urgency":"critical|informative|opportunity|threat"}\n\nFocus: updates, features, policy changes, strategies.';
+  }else if(section==='youtube'){
+    p='Search YouTube for best recent videos about Meta Ads, TikTok Ads, Google Ads, ecommerce, copywriting, AI marketing. Any language. '+dc+'\n\nReturn JSON array 5-8 items: {"id":"uid","title":"SPANISH","channel":"name","summary":"2 sentences SPANISH","url":"youtube url","duration":"duration"}\n\nReal value only — case studies, numbers, strategies.';
+  }else if(section==='twitter'){
+    p='Search valuable recent posts on X/Twitter about Meta Ads, TikTok Ads, ecommerce, marketing, AI tools. Any language. '+dc+'\n\nReturn JSON array 5-8 items: {"id":"uid","title":"SPANISH","author":"@handle","summary":"2 sentences SPANISH","url":"url","urgency":"critical|informative|opportunity"}\n\nPractitioners sharing real results only.';
+  }else if(section==='instagram'){
+    p='Search valuable recent Instagram posts/reels about Meta Ads, ecommerce, paid ads, copywriting, AI tools. Any language. '+dc+'\n\nReturn JSON array 5-8 items: {"id":"uid","title":"SPANISH","author":"@handle","summary":"2 sentences SPANISH","url":"url"}\n\nReal results only — ad screenshots, ROAS, strategies. No motivation.';
+  }else if(section==='inteligencia'){
+    p='Research strategic topics for COD ecommerce Colombia selling supplements via Meta Ads: Business Manager ban prevention, Dropi risks, DIAN taxes 2026, TikTok Shop LATAM, scaling supplements LATAM, WhatsApp API vs chatbots, post-sale retention COD. '+dc+'\n\nReturn JSON array 5-7 items: {"id":"uid","title":"SPANISH","summary":"3 sentences SPANISH actionable","source":"source","url":"url","urgency":"critical|informative|opportunity|threat"}';
+  }else if(section==='seguridad'){
+    p='Search latest about Facebook/Meta account security: fanpage hack recovery, ad account ban appeals, Business Manager backup, account security supplements advertisers. '+dc+'\n\nReturn JSON array 5-7 items: {"id":"uid","title":"SPANISH","summary":"2 sentences SPANISH actionable","source":"source","url":"url","urgency":"critical|informative"}';
   }
-})();
-
-// === NAVIGATION ===
-function switchSection(section) {
-  currentSection = section;
-  document.querySelectorAll('.nav-item').forEach(el => el.classList.toggle('active', el.dataset.section === section));
-  document.querySelectorAll('.mobile-nav-btn').forEach(el => el.classList.toggle('active', el.dataset.section === section));
-
-  const titles = {
-    noticias:'📡 Noticias', youtube:'🎥 YouTube', twitter:'𝕏 X / Twitter',
-    instagram:'📸 Instagram', inteligencia:'🧠 Inteligencia', seguridad:'🛡️ Seguridad Meta',
-    tendencias:'📈 Tendencias', favoritos:'⭐ Favoritos', digest:'📋 Digest semanal', config:'⚙️ Configuración'
-  };
-  document.getElementById('sectionTitle').textContent = titles[section] || section;
-  loadSection(section);
+  const text=await callClaude(p,SYS);
+  try{const c=text.replace(/```json\s*/g,'').replace(/```\s*/g,'').trim(),s=c.indexOf('['),e=c.lastIndexOf(']');if(s===-1||e===-1)throw new Error('No JSON');return JSON.parse(c.substring(s,e+1))}catch(e){console.error('Parse:',e,'Raw:',text);throw new Error('Error procesando. Intenta de nuevo.')}
 }
-
-function loadSection(section) {
-  const content = document.getElementById('contentArea');
-  if (section === 'favoritos') return renderFavorites();
-  if (section === 'config') return renderConfig();
-  if (section === 'digest') return generateDigest();
-  if (section === 'tendencias') return renderTrends();
-  // Check cache
-  const dateKey = document.getElementById('dateInput').value;
-  const cacheKey = `${section}_${dateKey}`;
-  if (cache[cacheKey]) {
-    renderResults(cache[cacheKey], section);
-    return;
-  }
-  // Load from API
-  showLoading(section);
-  fetchSectionData(section, dateKey).then(data => {
-    cache[cacheKey] = data;
-    renderResults(data, section);
-  }).catch(err => {
-    content.innerHTML = `<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error al cargar</div><div class="empty-sub">${err.message}</div></div>`;
-  });
+function showLoading(s){const sec=SECTIONS[s];document.getElementById('contentArea').innerHTML='<div class="loading-container"><div class="radar-spinner"></div><div class="loading-text">'+(sec?.loading||'Cargando...')+'</div><div class="loading-sub">15-30 segundos</div></div>'}
+function renderResults(items){
+  const c=document.getElementById('contentArea');
+  if(!items||!items.length){c.innerHTML='<div class="empty-state"><div class="empty-icon">📭</div><div class="empty-title">Sin resultados</div><div class="empty-sub">Intenta otra fecha o actualiza</div></div>';return}
+  let f=items;if(criticalOnly){f=items.filter(i=>i.urgency==='critical'||i.urgency==='threat');if(!f.length){c.innerHTML='<div class="empty-state"><div class="empty-icon">✅</div><div class="empty-title">Sin alertas críticas</div><div class="empty-sub">Todo tranquilo. Desactiva el filtro para ver todo.</div></div>';return}}
+  c.innerHTML='<div class="cards-grid">'+f.map(i=>renderCard(i)).join('')+'</div>';updateFavCount();
 }
-
-function refreshCurrent() {
-  const dateKey = document.getElementById('dateInput').value;
-  const cacheKey = `${currentSection}_${dateKey}`;
-  delete cache[cacheKey];
-  loadSection(currentSection);
+function renderCard(item){
+  const id=item.id||Math.random().toString(36).substr(2,9),isRead=readItems[id],isFav=favorites[id],note=notes[id]||'';
+  const uc={critical:'badge-critical',informative:'badge-informative',opportunity:'badge-opportunity',threat:'badge-threat'}[item.urgency]||'badge-informative';
+  const ul={critical:'CRÍTICO',informative:'INFORMATIVO',opportunity:'OPORTUNIDAD',threat:'AMENAZA'}[item.urgency]||'INFO';
+  const src=item.source||item.channel||item.author||'',url=item.url||'#';
+  const ij=JSON.stringify(item).replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'&quot;');
+  return '<div class="news-card '+(isRead?'read':'')+'" id="card-'+id+'"><div class="card-top"><span class="card-badge '+uc+'">'+ul+'</span><span class="card-source">'+src+'</span>'+(item.duration?'<span class="card-source">⏱ '+item.duration+'</span>':'')+'<span class="card-date">'+(item.date||'')+'</span></div><div class="card-title">'+(item.title||'')+'</div><div class="card-summary">'+(item.summary||'')+'</div><div class="card-actions">'+(url!=='#'?'<a href="'+url+'" target="_blank" class="card-btn link-btn">🔗 Ver fuente</a>':'')+'<button class="card-btn '+(isFav?'favorited':'')+'" onclick="toggleFav(\''+id+'\',this,'+ij+')">'+(isFav?'★ Guardado':'☆ Guardar')+'</button><button class="card-btn" onclick="toggleRead(\''+id+'\',this)">'+(isRead?'◉ No leído':'◎ Leído')+'</button><button class="card-btn" onclick="toggleNote(\''+id+'\')">📝 Nota</button><button class="card-btn impact-btn" onclick="analyzeImpact(\''+id+'\',\''+(item.title||'').replace(/'/g,"\\'")+'\',\''+(item.summary||'').replace(/'/g,"\\'")+'\')">🔮 ¿Cómo me afecta?</button></div><div class="card-note" id="note-'+id+'"><textarea placeholder="Escribe tu nota aquí..." id="notetext-'+id+'">'+note+'</textarea><button class="note-save" onclick="saveNote(\''+id+'\')">Guardar nota</button></div></div>';
 }
-
-document.getElementById('dateInput').addEventListener('change', () => loadSection(currentSection));
-
-function toggleCriticalFilter() {
-  criticalOnly = !criticalOnly;
-  document.getElementById('criticalFilter').classList.toggle('active', criticalOnly);
-  loadSection(currentSection);
+function toggleFav(id,btn,item){if(favorites[id]){delete favorites[id];btn.classList.remove('favorited');btn.innerHTML='☆ Guardar'}else{favorites[id]=item||{id};btn.classList.add('favorited');btn.innerHTML='★ Guardado'}localStorage.setItem('radar_favs',JSON.stringify(favorites));updateFavCount()}
+function toggleRead(id,btn){const c=document.getElementById('card-'+id);if(readItems[id]){delete readItems[id];c?.classList.remove('read');btn.textContent='◎ Leído'}else{readItems[id]=true;c?.classList.add('read');btn.textContent='◉ No leído'}localStorage.setItem('radar_read',JSON.stringify(readItems))}
+function toggleNote(id){document.getElementById('note-'+id)?.classList.toggle('open')}
+function saveNote(id){notes[id]=document.getElementById('notetext-'+id)?.value||'';localStorage.setItem('radar_notes',JSON.stringify(notes));toggleNote(id)}
+function updateFavCount(){document.getElementById('favCount').textContent=Object.keys(favorites).length}
+async function analyzeImpact(id,title,summary){
+  const modal=document.getElementById('impactModal');document.getElementById('impactSubtitle').textContent=title;modal.classList.add('open');
+  const c=document.getElementById('impactContent');c.innerHTML='<div class="loading-container"><div class="radar-spinner"></div><div class="loading-text">Analizando impacto...</div></div>';
+  try{const r=await callClaude('Analiza cómo esta noticia afecta mi negocio:\n\nNOTICIA: '+title+'\nRESUMEN: '+summary+'\n\nMi negocio: Ecommerce COD Colombia, suplementos salud vía Meta Ads y WhatsApp, Dropi, ENVÍA/Interrapidísimo.\n\nEn español:\n1. IMPACTO DIRECTO\n2. ACCIONES INMEDIATAS\n3. OPORTUNIDADES\n4. RIESGOS\n\nEspecífico. Sin relleno.','Strategic advisor COD ecommerce Colombia. Spanish. Direct.',true);c.innerHTML='<div style="white-space:pre-wrap;line-height:1.7;">'+r+'</div>'}catch(e){c.innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">'+e.message+'</div></div>'}
 }
-
-// === API ===
-async function callClaude(prompt, systemPrompt, useDeep) {
-  const model = useDeep ? 'claude-sonnet-4-5' : 'claude-haiku-4-5-20251001';
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
-    method:'POST',
-    headers:{ 'Content-Type':'application/json', 'x-api-key': API_KEY, 'anthropic-version':'2023-06-01', 'anthropic-dangerous-direct-browser-access':'true' },
-    body: JSON.stringify({
-      model: model,
-      max_tokens:4096,
-      system: systemPrompt,
-      tools:[{ type:'web_search_20250305', name:'web_search', max_uses:5 }],
-      messages:[{ role:'user', content: prompt }],
-    })
-  });
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.error?.message || `Error ${res.status}`);
-  }
-  const data = await res.json();
-  // Extract text from response
-  let text = '';
-  for (const block of data.content) {
-    if (block.type === 'text') text += block.text;
-  }
-  return text;
+function closeImpactModal(){document.getElementById('impactModal').classList.remove('open')}
+function renderFavorites(){
+  const c=document.getElementById('contentArea'),fl=Object.values(favorites);
+  if(!fl.length){c.innerHTML='<div class="empty-state"><div class="empty-icon">⭐</div><div class="empty-title">Sin favoritos</div><div class="empty-sub">Guarda noticias, videos o posts. Los favoritos no gastan tokens.</div></div>';return}
+  c.innerHTML='<div class="cards-grid">'+fl.map(i=>renderCard(i)).join('')+'</div>';
 }
-
-async function fetchSectionData(section, dateStr) {
-  const dateContext = dateStr ? `Focus on news from or around ${dateStr}.` : 'Focus on the most recent news.';
-
-  const SYSTEM = `You are a marketing intelligence analyst for a COD ecommerce business in Colombia selling health supplements via Meta Ads and WhatsApp. You MUST respond ONLY with a valid JSON array. No markdown, no backticks, no explanation. Just the JSON array.`;
-
-  let prompt = '';
-  if (section === 'noticias') {
-    const cats = NEWS_CATEGORIES.map(c => c.query).join('; ');
-    prompt = `Search for the latest marketing and advertising news across these topics: ${cats}. ${dateContext}
-
-Return a JSON array of 8-15 items. Each item: {"id":"unique_id","title":"title","summary":"2-3 sentence summary IN SPANISH","source":"source name","url":"source url","date":"YYYY-MM-DD","urgency":"critical|informative|opportunity|threat","category":"meta|tiktok|google|pinterest|shopify|ecommerce|copy|ai"}
-
-Focus on: platform updates, algorithm changes, new features, policy changes, industry trends, tools. Prioritize actionable news that affects advertisers directly.`;
-
-  } else if (section === 'youtube') {
-    const topics = YOUTUBE_TOPICS.join('; ');
-    prompt = `Search YouTube for the best recent videos about: ${topics}. ${dateContext}
-
-Find videos that provide REAL value — actual case studies, real numbers, actionable strategies. Any language is fine. Return a JSON array of 8-12 items: {"id":"unique_id","title":"video title","channel":"channel name","summary":"2-3 sentence summary IN SPANISH of what you would learn","url":"youtube url","duration":"estimated duration","category":"meta|tiktok|google|ecommerce|copy|ai"}`;
-
-  } else if (section === 'twitter') {
-    prompt = `Search for the most valuable recent posts and threads on X/Twitter about Meta Ads, TikTok Ads, Google Ads, ecommerce, dropshipping, direct response marketing, and AI marketing tools. ${dateContext}
-
-Find posts from practitioners sharing real results, strategies, case studies, or breaking news. Any language. Return a JSON array of 8-12 items: {"id":"unique_id","title":"key insight or topic","author":"@handle","summary":"2-3 sentence summary IN SPANISH","url":"tweet or thread url","urgency":"critical|informative|opportunity","category":"meta|tiktok|google|ecommerce|copy|ai"}`;
-
-  } else if (section === 'instagram') {
-    prompt = `Search for the most valuable recent Instagram posts and reels about Meta Ads, ecommerce, paid advertising, marketing digital, copywriting, and AI marketing tools. ${dateContext}
-
-Find accounts sharing real results: screenshots of ad accounts, real ROAS numbers, creative strategies, hooks that work. Not motivation, not lifestyle — REAL value. Any language. Return a JSON array of 6-10 items: {"id":"unique_id","title":"key insight","author":"@handle","summary":"2-3 sentence summary IN SPANISH","url":"instagram url","category":"meta|tiktok|ecommerce|copy|ai"}`;
-
-  } else if (section === 'inteligencia') {
-    const topics = INTEL_TOPICS.map(t => `${t.title}: ${t.query}`).join('\n');
-    prompt = `Research these strategic topics for a COD ecommerce business in Colombia selling health supplements via Meta Ads: 
-${topics}
-
-${dateContext}
-
-Return a JSON array of 7-10 items with the latest information: {"id":"unique_id","title":"topic title","summary":"3-4 sentence analysis IN SPANISH with specific actionable insights","source":"source","url":"url","urgency":"critical|informative|opportunity|threat","topic":"bm|dropi|dian|tiktokshop|scaling|whatsapp|retention"}`;
-
-  } else if (section === 'seguridad') {
-    const topics = SECURITY_TOPICS.join('; ');
-    prompt = `Search for the latest information, guides, and updates about: ${topics}. ${dateContext}
-
-Focus on: current methods to protect, recover, and manage Facebook/Meta advertising accounts and fanpages. Include contingency strategies and backup structures. Return a JSON array of 6-10 items: {"id":"unique_id","title":"title","summary":"2-3 sentence summary IN SPANISH with actionable advice","source":"source","url":"url","urgency":"critical|informative","category":"protection|recovery|contingency|policy"}`;
-  }
-
-  const text = await callClaude(prompt, SYSTEM);
-  // Parse JSON from response
-  try {
-    const clean = text.replace(/```json\s*/g,'').replace(/```\s*/g,'').trim();
-    const start = clean.indexOf('[');
-    const end = clean.lastIndexOf(']');
-    if (start === -1 || end === -1) throw new Error('No JSON array found');
-    return JSON.parse(clean.substring(start, end + 1));
-  } catch(e) {
-    console.error('Parse error:', e, 'Raw:', text);
-    throw new Error('Error procesando resultados. Intenta de nuevo.');
-  }
-}
-
-// === RENDER ===
-function showLoading(section) {
-  const msgs = {
-    noticias:'Escaneando noticias de marketing...', youtube:'Buscando videos de alto valor...',
-    twitter:'Rastreando hilos en X...', instagram:'Filtrando contenido real...',
-    inteligencia:'Investigando temas estratégicos...', seguridad:'Analizando seguridad de Meta...',
-    tendencias:'Rastreando tendencias de productos...', digest:'Generando tu digest semanal...'
-  };
-  document.getElementById('contentArea').innerHTML = `
-    <div class="loading-container">
-      <div class="radar-spinner"></div>
-      <div class="loading-text">${msgs[section] || 'Cargando...'}</div>
-      <div class="loading-sub">Esto puede tomar 15-30 segundos</div>
-    </div>`;
-}
-
-function renderResults(items, section) {
-  const content = document.getElementById('contentArea');
-  if (!items || items.length === 0) {
-    content.innerHTML = `<div class="empty-state"><div class="empty-icon">📭</div><div class="empty-title">Sin resultados</div><div class="empty-sub">Intenta otra fecha o actualiza</div></div>`;
-    return;
-  }
-
-  let filtered = items;
-  if (criticalOnly) {
-    filtered = items.filter(i => i.urgency === 'critical' || i.urgency === 'threat');
-    if (filtered.length === 0) {
-      content.innerHTML = `<div class="empty-state"><div class="empty-icon">✅</div><div class="empty-title">Sin alertas críticas</div><div class="empty-sub">Todo tranquilo por ahora. Desactiva el filtro para ver todo.</div></div>`;
-      return;
-    }
-  }
-
-  content.innerHTML = `<div class="cards-grid">${filtered.map(item => renderCard(item, section)).join('')}</div>`;
-  updateFavCount();
-}
-
-function renderCard(item, section) {
-  const id = item.id || Math.random().toString(36).substr(2,9);
-  const isRead = readItems[id];
-  const isFav = favorites[id];
-  const note = notes[id] || '';
-
-  const urgencyClass = {
-    critical:'badge-critical', informative:'badge-informative',
-    opportunity:'badge-opportunity', threat:'badge-threat'
-  }[item.urgency] || 'badge-informative';
-
-  const urgencyLabel = {
-    critical:'CRÍTICO', informative:'INFORMATIVO',
-    opportunity:'OPORTUNIDAD', threat:'AMENAZA'
-  }[item.urgency] || 'INFO';
-
-  const source = item.source || item.channel || item.author || '';
-  const url = item.url || '#';
-
-  return `
-    <div class="news-card ${isRead ? 'read' : ''}" id="card-${id}">
-      <div class="card-top">
-        <span class="card-badge ${urgencyClass}">${urgencyLabel}</span>
-        <span class="card-source">${source}</span>
-        ${item.duration ? `<span class="card-source">⏱ ${item.duration}</span>` : ''}
-        <span class="card-date">${item.date || ''}</span>
-      </div>
-      <div class="card-title">${item.title || ''}</div>
-      <div class="card-summary">${item.summary || ''}</div>
-      <div class="card-actions">
-        ${url !== '#' ? `<a href="${url}" target="_blank" class="card-btn link-btn">🔗 Ver fuente</a>` : ''}
-        <button class="card-btn ${isFav ? 'favorited' : ''}" onclick="toggleFav('${id}', this, ${JSON.stringify(item).replace(/'/g,"\\'").replace(/"/g,'&quot;')})">
-          ${isFav ? '★ Guardado' : '☆ Guardar'}
-        </button>
-        <button class="card-btn" onclick="toggleRead('${id}', this)">${isRead ? '◉ No leído' : '◎ Leído'}</button>
-        <button class="card-btn" onclick="toggleNote('${id}')">📝 Nota</button>
-        <button class="card-btn impact-btn" onclick="analyzeImpact('${id}', '${(item.title||'').replace(/'/g,"\\'")}', '${(item.summary||'').replace(/'/g,"\\'")}')">🔮 ¿Cómo me afecta?</button>
-      </div>
-      <div class="card-note" id="note-${id}">
-        <textarea placeholder="Escribe tu nota aquí..." id="notetext-${id}">${note}</textarea>
-        <button class="note-save" onclick="saveNote('${id}')">Guardar nota</button>
-      </div>
-    </div>`;
-}
-
-// === ACTIONS ===
-function toggleFav(id, btn, item) {
-  if (favorites[id]) {
-    delete favorites[id];
-    btn.classList.remove('favorited');
-    btn.innerHTML = '☆ Guardar';
-  } else {
-    favorites[id] = item || {id};
-    btn.classList.add('favorited');
-    btn.innerHTML = '★ Guardado';
-  }
-  localStorage.setItem('radar_favs', JSON.stringify(favorites));
-  updateFavCount();
-}
-
-function toggleRead(id, btn) {
-  const card = document.getElementById(`card-${id}`);
-  if (readItems[id]) {
-    delete readItems[id];
-    card?.classList.remove('read');
-    btn.textContent = '◎ Leído';
-  } else {
-    readItems[id] = true;
-    card?.classList.add('read');
-    btn.textContent = '◉ No leído';
-  }
-  localStorage.setItem('radar_read', JSON.stringify(readItems));
-}
-
-function toggleNote(id) {
-  document.getElementById(`note-${id}`)?.classList.toggle('open');
-}
-
-function saveNote(id) {
-  const text = document.getElementById(`notetext-${id}`)?.value || '';
-  notes[id] = text;
-  localStorage.setItem('radar_notes', JSON.stringify(notes));
-  toggleNote(id);
-}
-
-function updateFavCount() {
-  const count = Object.keys(favorites).length;
-  document.getElementById('favCount').textContent = count;
-}
-
-// === IMPACT ANALYSIS ===
-async function analyzeImpact(id, title, summary) {
-  const modal = document.getElementById('impactModal');
-  const subtitle = document.getElementById('impactSubtitle');
-  const content = document.getElementById('impactContent');
-  modal.classList.add('open');
-  subtitle.textContent = title;
-  content.innerHTML = `<div class="loading-container"><div class="radar-spinner"></div><div class="loading-text">Analizando impacto en tu negocio...</div></div>`;
-
-  try {
-    const result = await callClaude(
-      `Analiza cómo esta noticia afecta directamente a mi negocio:
-
-NOTICIA: ${title}
-RESUMEN: ${summary}
-
-Mi negocio: Ecommerce COD en Colombia vendiendo suplementos de salud (colágeno, articulaciones, próstata, salud femenina) vía Meta Ads y WhatsApp, con Dropi como plataforma y ENVÍA/Interrapidísimo como carriers.
-
-Responde en español con:
-1. IMPACTO DIRECTO — cómo afecta mi operación
-2. ACCIONES INMEDIATAS — qué hacer ahora
-3. OPORTUNIDADES — cómo puedo aprovechar esto
-4. RIESGOS — qué puede salir mal si no actúo
-
-Sé específico y directo. Sin relleno.`,
-      'You are a strategic business advisor for a COD ecommerce operation in Colombia. Be specific, actionable, and direct. Respond in Spanish.',
-      true
-    );
-    content.innerHTML = `<div style="white-space:pre-wrap;line-height:1.7;">${result}</div>`;
-  } catch(err) {
-    content.innerHTML = `<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">${err.message}</div></div>`;
-  }
-}
-
-function closeImpactModal() {
-  document.getElementById('impactModal').classList.remove('open');
-}
-
-// === FAVORITES ===
-function renderFavorites() {
-  const content = document.getElementById('contentArea');
-  const favList = Object.values(favorites);
-  if (favList.length === 0) {
-    content.innerHTML = `<div class="empty-state"><div class="empty-icon">⭐</div><div class="empty-title">Sin favoritos</div><div class="empty-sub">Guarda noticias, videos o posts para revisarlos después</div></div>`;
-    return;
-  }
-  content.innerHTML = `<div class="cards-grid">${favList.map(item => renderCard(item, 'favoritos')).join('')}</div>`;
-}
-
-// === DIGEST ===
-async function generateDigest() {
-  const content = document.getElementById('contentArea');
+async function generateDigest(){
   showLoading('digest');
-
-  try {
-    const result = await callClaude(
-      `Generate a weekly marketing intelligence digest. Search for the most important events, updates, and changes from the past 7 days across: Meta Ads, TikTok Ads, Google Ads, Shopify, ecommerce, direct response copywriting, AI marketing tools, and Facebook/Meta account security.
-
-Respond in Spanish with this structure:
-🔴 ALERTAS CRÍTICAS (changes that require immediate action)
-🟡 ACTUALIZACIONES IMPORTANTES (significant but not urgent)  
-🟢 OPORTUNIDADES (new things to explore or test)
-🎯 ACCIÓN DE LA SEMANA (one specific thing to do this week)
-📊 TERMÓMETRO DEL ECOSISTEMA (brief assessment — is the ecosystem expanding, stable, or contracting this week?)
-
-Context: This is for a COD ecommerce business in Colombia selling health supplements via Meta Ads and WhatsApp.
-
-Be specific, name sources, include dates. No fluff.`,
-      'You are a marketing intelligence analyst. Respond in Spanish. Be specific and actionable.',
-      true
-    );
-
-    content.innerHTML = `
-      <div class="digest-box">
-        <div class="digest-title">Digest semanal — ${new Date().toLocaleDateString('es-CO', {day:'numeric', month:'long', year:'numeric'})}</div>
-        <div class="digest-content">${result}</div>
-        <button class="digest-copy" onclick="copyDigest()">📋 Copiar para enviar al trafficker</button>
-      </div>`;
-  } catch(err) {
-    content.innerHTML = `<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">${err.message}</div></div>`;
-  }
+  try{const r=await callClaude('Weekly marketing digest past 7 days: Meta Ads, TikTok Ads, Google Ads, Shopify, ecommerce, copywriting, AI tools, Meta security, WhatsApp Business.\n\nIn Spanish:\n🔴 ALERTAS CRÍTICAS\n🟡 ACTUALIZACIONES IMPORTANTES\n🟢 OPORTUNIDADES\n🎯 ACCIÓN DE LA SEMANA\n📊 TERMÓMETRO DEL ECOSISTEMA\n\nCOD ecommerce Colombia, supplements, Meta Ads + WhatsApp. Specific.','Marketing analyst. Spanish. Actionable.',true);
+  document.getElementById('contentArea').innerHTML='<div class="digest-box"><div class="digest-title">Digest semanal — '+new Date().toLocaleDateString('es-CO',{day:'numeric',month:'long',year:'numeric'})+'</div><div class="digest-content">'+r+'</div><button class="digest-copy" onclick="copyDigest()">📋 Copiar para enviar al trafficker</button></div>'}catch(e){document.getElementById('contentArea').innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">'+e.message+'</div></div>'}
 }
-
-function copyDigest() {
-  const text = document.querySelector('.digest-content')?.textContent || '';
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = document.querySelector('.digest-copy');
-    btn.textContent = '✅ Copiado';
-    setTimeout(() => btn.textContent = '📋 Copiar para enviar al trafficker', 2000);
-  });
+function copyDigest(){const t=document.querySelector('.digest-content')?.textContent||'';navigator.clipboard.writeText(t).then(()=>{const b=document.querySelector('.digest-copy');b.textContent='✅ Copiado';setTimeout(()=>b.textContent='📋 Copiar para enviar al trafficker',2000)})}
+function renderConfig(){
+  const secs=Object.entries(SECTIONS).filter(([k])=>!['favoritos','digest','config'].includes(k));
+  const cards=secs.map(([k,v])=>'<div class="welcome-card" onclick="switchSection(\''+k+'\')"><div class="welcome-card-icon">'+v.icon+'</div><div class="welcome-card-title">'+v.title.replace(/^[^\s]+\s/,'')+'</div><div class="welcome-card-sub">Clic para buscar</div></div>').join('');
+  document.getElementById('contentArea').innerHTML='<div style="margin-bottom:32px"><div style="font-size:20px;font-weight:600;margin-bottom:4px">Bienvenido a RADAR</div><div style="font-size:13px;color:var(--text-secondary);margin-bottom:16px">Selecciona una sección. Cada una busca solo lo que necesitas — sin gastar tokens de más.</div><div class="welcome-grid">'+cards+'</div></div><div class="settings-section"><div class="settings-title">Alertas de palabras clave</div><div style="font-size:12px;color:var(--text-muted);margin-bottom:8px">Noticias con estas palabras se resaltan</div><div class="settings-row"><input type="text" id="keywordsInput" value="'+(localStorage.getItem('radar_keywords')||'API de conversiones, Meta policy, ban, restricción, INVIMA, COD Colombia')+'" placeholder="Separadas por coma"></div><button class="card-btn" style="margin-top:8px" onclick="saveKeywords()">Guardar keywords</button></div><div class="settings-section"><div class="settings-title">Datos</div><button class="card-btn" style="border-color:var(--red);color:var(--red)" onclick="clearAllData()">🗑 Borrar datos locales</button><div style="font-size:11px;color:var(--text-muted);margin-top:6px">Borra favoritos, notas y lecturas. Tu API key se mantiene.</div></div><div class="settings-section"><div class="settings-title">Acerca de</div><div style="font-size:13px;color:var(--text-secondary);line-height:1.6">RADAR v2.0 — Centro de inteligencia de marketing digital<br>Haiku para búsqueda rápida · Sonnet para análisis profundo<br>Favoritos no gastan tokens · Tus datos solo en este navegador.</div></div>';
 }
-
-// === CONFIG ===
-function renderConfig() {
-  const allCats = NEWS_CATEGORIES.map(c => 
-    `<span class="priority-tag ${priorities.includes(c.id)?'active':''}" onclick="togglePriority('${c.id}', this)">${c.label}</span>`
-  ).join('');
-
-  document.getElementById('contentArea').innerHTML = `
-    <div class="settings-section">
-      <div class="settings-title">Temas prioritarios</div>
-      <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px;">Los temas marcados aparecen primero en tus resultados</div>
-      <div class="priority-tags">${allCats}</div>
-    </div>
-    <div class="settings-section">
-      <div class="settings-title">Alertas de palabras clave</div>
-      <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px;">Noticias con estas palabras se resaltan automáticamente</div>
-      <div class="settings-row">
-        <input type="text" id="keywordsInput" value="${localStorage.getItem('radar_keywords') || 'API de conversiones, Meta policy, ban, restricción, INVIMA, COD Colombia'}" placeholder="Separadas por coma">
-      </div>
-      <button class="card-btn" style="margin-top:8px;" onclick="saveKeywords()">Guardar keywords</button>
-    </div>
-    <div class="settings-section">
-      <div class="settings-title">Datos</div>
-      <button class="card-btn" style="border-color:var(--red);color:var(--red);" onclick="clearAllData()">🗑 Borrar todos los datos locales</button>
-      <div style="font-size:11px;color:var(--text-muted);margin-top:6px;">Esto borra favoritos, notas y lecturas. Tu API key se mantiene.</div>
-    </div>
-    <div class="settings-section">
-      <div class="settings-title">Acerca de</div>
-      <div style="font-size:13px;color:var(--text-secondary);line-height:1.6;">
-        RADAR v1.0 — Centro de inteligencia de marketing digital<br>
-        Usa la API de Anthropic (Claude) con búsqueda web en tiempo real.<br>
-        Tus datos se guardan solo en este navegador.<br>
-        Tu API key se guarda solo en la sesión actual.
-      </div>
-    </div>`;
-}
-
-function togglePriority(id, el) {
-  if (priorities.includes(id)) {
-    priorities = priorities.filter(p => p !== id);
-    el.classList.remove('active');
-  } else {
-    priorities.push(id);
-    el.classList.add('active');
-  }
-  localStorage.setItem('radar_priorities', JSON.stringify(priorities));
-}
-
-function saveKeywords() {
-  const val = document.getElementById('keywordsInput')?.value || '';
-  localStorage.setItem('radar_keywords', val);
-  alert('Keywords guardadas');
-}
-
-function clearAllData() {
-  if (!confirm('¿Borrar todos los datos? Esto no se puede deshacer.')) return;
-  favorites = {}; readItems = {}; notes = {}; cache = {};
-  localStorage.removeItem('radar_favs');
-  localStorage.removeItem('radar_read');
-  localStorage.removeItem('radar_notes');
-  updateFavCount();
-  alert('Datos borrados');
-}
-
-// === INIT ===
-updateFavCount();
-
-// === TRENDS ===
-const TREND_COUNTRIES = [
-  { id:'co', label:'Colombia 🇨🇴' },
-  { id:'mx', label:'México 🇲🇽' },
-  { id:'ar', label:'Argentina 🇦🇷' },
-  { id:'cl', label:'Chile 🇨🇱' },
-  { id:'pe', label:'Perú 🇵🇪' },
-  { id:'br', label:'Brasil 🇧🇷' },
-  { id:'es', label:'España 🇪🇸' },
-  { id:'us', label:'USA 🇺🇸' },
-  { id:'uk', label:'UK 🇬🇧' },
-  { id:'de', label:'Alemania 🇩🇪' },
-];
-
-let currentTrendTab = 'ranking';
-let currentTrendCountry = 'co';
-
-function renderTrends() {
-  const countryOptions = TREND_COUNTRIES.map(c =>
-    `<option value="${c.id}" ${c.id === currentTrendCountry ? 'selected' : ''}>${c.label}</option>`
-  ).join('');
-
-  document.getElementById('contentArea').innerHTML = `
-    <div class="trends-tabs">
-      <button class="trends-tab ${currentTrendTab==='ranking'?'active':''}" onclick="switchTrendTab('ranking')">🏆 Top 10 en tendencia</button>
-      <button class="trends-tab ${currentTrendTab==='search'?'active':''}" onclick="switchTrendTab('search')">🔍 Buscar producto</button>
-    </div>
-    <div id="trendsContent"></div>`;
-
-  if (currentTrendTab === 'ranking') renderTrendRanking();
-  else renderTrendSearch();
-}
-
-function switchTrendTab(tab) {
-  currentTrendTab = tab;
-  renderTrends();
-}
-
-function renderTrendRanking() {
-  const countryOptions = TREND_COUNTRIES.map(c =>
-    `<option value="${c.id}" ${c.id === currentTrendCountry ? 'selected' : ''}>${c.label}</option>`
-  ).join('');
-
-  document.getElementById('trendsContent').innerHTML = `
-    <div class="trends-controls">
-      <select class="trends-select" id="trendCountry" onchange="currentTrendCountry=this.value">${countryOptions}</select>
-      <button class="trends-search-btn" onclick="fetchTrendRanking()">📈 Ver tendencias</button>
-    </div>
-    <div id="trendResults">
-      <div class="empty-state">
-        <div class="empty-icon">📈</div>
-        <div class="empty-title">Selecciona un país y presiona "Ver tendencias"</div>
-        <div class="empty-sub">RADAR buscará los productos más trending en ecommerce esta semana</div>
-      </div>
-    </div>`;
-}
-
-function renderTrendSearch() {
-  const countryOptions = TREND_COUNTRIES.map(c =>
-    `<option value="${c.id}" ${c.id === currentTrendCountry ? 'selected' : ''}>${c.label}</option>`
-  ).join('');
-
-  document.getElementById('trendsContent').innerHTML = `
-    <div class="trends-controls">
-      <input type="text" class="trends-input" id="trendProduct" placeholder="Escribe el producto... (ej: colágeno en polvo, creatina, probióticos)" onkeydown="if(event.key==='Enter')fetchProductTrend()">
-      <select class="trends-select" id="trendCountrySearch" onchange="currentTrendCountry=this.value">${countryOptions}</select>
-      <button class="trends-search-btn" onclick="fetchProductTrend()">🔍 Analizar</button>
-    </div>
-    <div id="trendResults">
-      <div class="empty-state">
-        <div class="empty-icon">🔍</div>
-        <div class="empty-title">Escribe un producto para analizar</div>
-        <div class="empty-sub">RADAR te dirá si está subiendo, bajando, o estable — y en qué países</div>
-      </div>
-    </div>`;
-}
-
-async function fetchTrendRanking() {
-  const country = document.getElementById('trendCountry').value;
-  const countryName = TREND_COUNTRIES.find(c => c.id === country)?.label || country;
-  const resultsDiv = document.getElementById('trendResults');
-  resultsDiv.innerHTML = `<div class="loading-container"><div class="radar-spinner"></div><div class="loading-text">Rastreando tendencias en ${countryName}...</div><div class="loading-sub">Esto puede tomar 20-30 segundos</div></div>`;
-
-  const cacheKey = `trends_rank_${country}`;
-  if (cache[cacheKey]) { renderTrendCards(cache[cacheKey]); return; }
-
-  try {
-    const text = await callClaude(
-      `Top 10 trending ecommerce products in ${countryName} right now. Focus on products sold via Facebook/TikTok/Google ads and dropshipping.
-
-Return JSON array of 10 items: {"id":"uid","rank":1,"product":"name in Spanish","category":"supplements|beauty|wellness|gadgets|other","search_trend":"up|down|stable","ad_trend":"up|down|stable|new","summary":"2 sentences IN SPANISH on why trending","opportunity_score":"high|medium|low","country":"${country}"}
-
-Order: high opportunity first. Be specific.`,
-      'Respond ONLY with valid JSON array. No markdown, no backticks.'
-    );
-
-    const clean = text.replace(/```json\s*/g,'').replace(/```\s*/g,'').trim();
-    const start = clean.indexOf('[');
-    const end = clean.lastIndexOf(']');
-    const data = JSON.parse(clean.substring(start, end + 1));
-    cache[cacheKey] = data;
-    renderTrendCards(data);
-  } catch(err) {
-    resultsDiv.innerHTML = `<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">${err.message}</div></div>`;
-  }
-}
-
-async function fetchProductTrend() {
-  const product = document.getElementById('trendProduct')?.value?.trim();
-  if (!product) return;
-  const country = document.getElementById('trendCountrySearch').value;
-  const countryName = TREND_COUNTRIES.find(c => c.id === country)?.label || country;
-  const resultsDiv = document.getElementById('trendResults');
-  resultsDiv.innerHTML = `<div class="loading-container"><div class="radar-spinner"></div><div class="loading-text">Analizando "${product}" en múltiples mercados...</div><div class="loading-sub">Esto puede tomar 20-30 segundos</div></div>`;
-
-  const allCountries = TREND_COUNTRIES.map(c => c.label).join(', ');
-
-  try {
-    const text = await callClaude(
-      `Analyze ecommerce trend for: "${product}" in these markets: Colombia, México, Argentina, Chile, Perú, España, USA, UK. Give extra focus to ${countryName}.
-
-Return JSON array, one item per country + one "global" summary: {"id":"uid","product":"${product}","country_code":"co","country_name":"Colombia","search_trend":"up|down|stable","ad_trend":"up|down|stable|new","combined_signal":"enter_now|opportunity|wait|saturated|declining","summary":"2 sentences IN SPANISH","competitor_level":"low|medium|high"}
-
-Primary country (${country}) first, then by opportunity.`,
-      'Respond ONLY with valid JSON array. No markdown, no backticks.'
-    );
-
-    const clean = text.replace(/```json\s*/g,'').replace(/```\s*/g,'').trim();
-    const start = clean.indexOf('[');
-    const end = clean.lastIndexOf(']');
-    const data = JSON.parse(clean.substring(start, end + 1));
-    renderProductTrendCards(data, product);
-  } catch(err) {
-    resultsDiv.innerHTML = `<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">${err.message}</div></div>`;
-  }
-}
-
-function renderTrendCards(items) {
-  const resultsDiv = document.getElementById('trendResults');
-  const signalIcon = (s) => ({up:'↑',down:'↓',stable:'→',new:'★'}[s]||'→');
-  const signalClass = (s) => ({up:'signal-up',down:'signal-down',stable:'signal-stable',new:'signal-new'}[s]||'signal-stable');
-  const scoreColor = (s) => ({high:'var(--accent)',medium:'var(--amber)',low:'var(--text-muted)'}[s]||'var(--text-muted)');
-
-  resultsDiv.innerHTML = `<div class="cards-grid">${items.map((item, i) => `
-    <div class="news-card">
-      <div class="card-top">
-        <span style="font-size:18px;font-weight:600;color:var(--accent);font-family:var(--mono);min-width:30px;">#${item.rank || i+1}</span>
-        <span class="card-badge" style="background:var(--purple-dim);color:var(--purple);">${item.category || 'producto'}</span>
-        <span style="margin-left:auto;font-size:12px;color:${scoreColor(item.opportunity_score)};font-weight:500;">
-          ${({high:'🔥 ALTA OPORTUNIDAD',medium:'⚡ MEDIA',low:'📊 BAJA'}[item.opportunity_score])||''}
-        </span>
-      </div>
-      <div class="card-title">${item.product || ''}</div>
-      <div style="display:flex;gap:12px;margin-bottom:8px;">
-        <span class="trend-signal ${signalClass(item.search_trend)}">${signalIcon(item.search_trend)} Búsquedas ${item.search_trend}</span>
-        <span class="trend-signal ${signalClass(item.ad_trend)}">${signalIcon(item.ad_trend)} Anuncios ${item.ad_trend}</span>
-      </div>
-      <div class="card-summary">${item.summary || ''}</div>
-      <div class="card-actions">
-        <button class="card-btn impact-btn" onclick="analyzeImpact('trend_${item.id}', '${(item.product||'').replace(/'/g,"\\'")} trending', '${(item.summary||'').replace(/'/g,"\\'")}')">🔮 ¿Cómo me afecta?</button>
-        <button class="card-btn ${favorites['trend_'+item.id]?'favorited':''}" onclick="toggleFav('trend_${item.id}', this, ${JSON.stringify(item).replace(/'/g,"\\'").replace(/"/g,'&quot;')})">
-          ${favorites['trend_'+item.id] ? '★ Guardado' : '☆ Guardar'}
-        </button>
-      </div>
-    </div>`).join('')}</div>`;
-}
-
-function renderProductTrendCards(items, product) {
-  const resultsDiv = document.getElementById('trendResults');
-  const signalIcon = (s) => ({up:'↑',down:'↓',stable:'→',new:'★'}[s]||'→');
-  const signalClass = (s) => ({up:'signal-up',down:'signal-down',stable:'signal-stable',new:'signal-new'}[s]||'signal-stable');
-  const verdictInfo = (v) => ({
-    enter_now:{label:'🟢 ENTRAR AHORA',color:'var(--accent)'},
-    opportunity:{label:'🟡 OPORTUNIDAD',color:'var(--amber)'},
-    wait:{label:'⏳ ESPERAR',color:'var(--blue)'},
-    saturated:{label:'🟠 SATURADO',color:'var(--amber)'},
-    declining:{label:'🔴 EN DECLIVE',color:'var(--red)'}
-  }[v]||{label:v,color:'var(--text-muted)'});
-  const compColor = (c) => ({low:'var(--accent)',medium:'var(--amber)',high:'var(--red)'}[c]||'var(--text-muted)');
-
-  resultsDiv.innerHTML = `
-    <div style="font-size:16px;font-weight:500;margin-bottom:16px;">Análisis: <span style="color:var(--accent)">${product}</span></div>
-    <div class="cards-grid">${items.map(item => {
-      const v = verdictInfo(item.combined_signal);
-      const isGlobal = item.country_code === 'global';
-      return `
-      <div class="news-card" style="${isGlobal?'border-color:var(--accent);border-width:1.5px;':''}">
-        <div class="card-top">
-          <span style="font-size:14px;font-weight:500;">${isGlobal?'🌍 RESUMEN GLOBAL':item.country_name}</span>
-          <span style="margin-left:auto;font-size:12px;font-weight:500;color:${v.color}">${v.label}</span>
-        </div>
-        ${!isGlobal ? `<div style="display:flex;gap:12px;margin-bottom:8px;">
-          <span class="trend-signal ${signalClass(item.search_trend)}">${signalIcon(item.search_trend)} Búsquedas ${item.search_trend}</span>
-          <span class="trend-signal ${signalClass(item.ad_trend)}">${signalIcon(item.ad_trend)} Anuncios ${item.ad_trend}</span>
-          <span style="font-size:11px;color:${compColor(item.competitor_level)};font-family:var(--mono);">Competencia: ${item.competitor_level}</span>
-        </div>` : ''}
-        <div class="card-summary">${item.summary || ''}</div>
-      </div>`;
-    }).join('')}</div>`
-}
-
-// === INIT ===
+function saveKeywords(){localStorage.setItem('radar_keywords',document.getElementById('keywordsInput')?.value||'');alert('Keywords guardadas')}
+function clearAllData(){if(!confirm('¿Borrar todos los datos?'))return;favorites={};readItems={};notes={};cache={};localStorage.removeItem('radar_favs');localStorage.removeItem('radar_read');localStorage.removeItem('radar_notes');updateFavCount();alert('Datos borrados')}
 updateFavCount();
 </script>
 </body>
