@@ -250,6 +250,40 @@ body { background:var(--bg-base); color:var(--text); font-family:var(--font); mi
   background:var(--bg-card); color:var(--text-secondary); transition:all .15s;
 }
 .priority-tag.active { background:var(--accent-dim); border-color:var(--accent); color:var(--accent); }
+
+/* TRENDS */
+.trends-controls {
+  display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap; align-items:center;
+}
+.trends-input {
+  flex:1; min-width:200px; padding:10px 14px; background:var(--bg-input); border:1px solid var(--border);
+  border-radius:8px; color:var(--text); font-size:13px; font-family:var(--font); outline:none;
+}
+.trends-input:focus { border-color:var(--accent); }
+.trends-select {
+  padding:10px 14px; background:var(--bg-input); border:1px solid var(--border);
+  border-radius:8px; color:var(--text); font-size:13px; font-family:var(--font); outline:none;
+  cursor:pointer; min-width:140px;
+}
+.trends-search-btn {
+  padding:10px 20px; background:var(--accent); color:var(--bg-base); border:none;
+  border-radius:8px; font-family:var(--font); font-weight:600; font-size:13px; cursor:pointer;
+}
+.trends-search-btn:hover { opacity:.9; }
+.trends-tabs { display:flex; gap:6px; margin-bottom:16px; }
+.trends-tab {
+  padding:6px 16px; border-radius:20px; font-size:12px; cursor:pointer; border:1px solid var(--border);
+  background:var(--bg-card); color:var(--text-secondary); font-family:var(--font); transition:all .15s;
+}
+.trends-tab.active { background:var(--accent-dim); border-color:var(--accent); color:var(--accent); }
+.trend-signal {
+  display:inline-flex; align-items:center; gap:4px; font-size:11px; font-family:var(--mono);
+  padding:2px 8px; border-radius:4px; font-weight:500;
+}
+.signal-up { background:#00e87b22; color:#00e87b; }
+.signal-down { background:#ef444422; color:#ef4444; }
+.signal-stable { background:#3b82f622; color:#3b82f6; }
+.signal-new { background:#a855f722; color:#a855f7; }
 </style>
 </head>
 <body>
@@ -299,6 +333,9 @@ body { background:var(--bg-base); color:var(--text); font-family:var(--font); mi
       <div class="nav-item" data-section="seguridad" onclick="switchSection('seguridad')">
         <span class="nav-icon">🛡️</span> Seguridad Meta
       </div>
+      <div class="nav-item" data-section="tendencias" onclick="switchSection('tendencias')">
+        <span class="nav-icon">📈</span> Tendencias
+      </div>
     </div>
 
     <div class="nav-group">
@@ -327,6 +364,7 @@ body { background:var(--bg-base); color:var(--text); font-family:var(--font); mi
     <button class="mobile-nav-btn" data-section="instagram" onclick="switchSection('instagram')">📸 Instagram</button>
     <button class="mobile-nav-btn" data-section="inteligencia" onclick="switchSection('inteligencia')">🧠 Intel</button>
     <button class="mobile-nav-btn" data-section="seguridad" onclick="switchSection('seguridad')">🛡️ Seguridad</button>
+    <button class="mobile-nav-btn" data-section="tendencias" onclick="switchSection('tendencias')">📈 Tendencias</button>
     <button class="mobile-nav-btn" data-section="favoritos" onclick="switchSection('favoritos')">⭐ Favoritos</button>
     <button class="mobile-nav-btn" data-section="digest" onclick="switchSection('digest')">📋 Digest</button>
     <button class="mobile-nav-btn" data-section="config" onclick="switchSection('config')">⚙️ Config</button>
@@ -458,7 +496,7 @@ function switchSection(section) {
   const titles = {
     noticias:'📡 Noticias', youtube:'🎥 YouTube', twitter:'𝕏 X / Twitter',
     instagram:'📸 Instagram', inteligencia:'🧠 Inteligencia', seguridad:'🛡️ Seguridad Meta',
-    favoritos:'⭐ Favoritos', digest:'📋 Digest semanal', config:'⚙️ Configuración'
+    tendencias:'📈 Tendencias', favoritos:'⭐ Favoritos', digest:'📋 Digest semanal', config:'⚙️ Configuración'
   };
   document.getElementById('sectionTitle').textContent = titles[section] || section;
   loadSection(section);
@@ -469,6 +507,7 @@ function loadSection(section) {
   if (section === 'favoritos') return renderFavorites();
   if (section === 'config') return renderConfig();
   if (section === 'digest') return generateDigest();
+  if (section === 'tendencias') return renderTrends();
   // Check cache
   const dateKey = document.getElementById('dateInput').value;
   const cacheKey = `${section}_${dateKey}`;
@@ -593,7 +632,7 @@ function showLoading(section) {
     noticias:'Escaneando noticias de marketing...', youtube:'Buscando videos de alto valor...',
     twitter:'Rastreando hilos en X...', instagram:'Filtrando contenido real...',
     inteligencia:'Investigando temas estratégicos...', seguridad:'Analizando seguridad de Meta...',
-    digest:'Generando tu digest semanal...'
+    tendencias:'Rastreando tendencias de productos...', digest:'Generando tu digest semanal...'
   };
   document.getElementById('contentArea').innerHTML = `
     <div class="loading-container">
@@ -864,6 +903,224 @@ function clearAllData() {
   localStorage.removeItem('radar_notes');
   updateFavCount();
   alert('Datos borrados');
+}
+
+// === INIT ===
+updateFavCount();
+
+// === TRENDS ===
+const TREND_COUNTRIES = [
+  { id:'co', label:'Colombia 🇨🇴' },
+  { id:'mx', label:'México 🇲🇽' },
+  { id:'ar', label:'Argentina 🇦🇷' },
+  { id:'cl', label:'Chile 🇨🇱' },
+  { id:'pe', label:'Perú 🇵🇪' },
+  { id:'br', label:'Brasil 🇧🇷' },
+  { id:'es', label:'España 🇪🇸' },
+  { id:'us', label:'USA 🇺🇸' },
+  { id:'uk', label:'UK 🇬🇧' },
+  { id:'de', label:'Alemania 🇩🇪' },
+];
+
+let currentTrendTab = 'ranking';
+let currentTrendCountry = 'co';
+
+function renderTrends() {
+  const countryOptions = TREND_COUNTRIES.map(c =>
+    `<option value="${c.id}" ${c.id === currentTrendCountry ? 'selected' : ''}>${c.label}</option>`
+  ).join('');
+
+  document.getElementById('contentArea').innerHTML = `
+    <div class="trends-tabs">
+      <button class="trends-tab ${currentTrendTab==='ranking'?'active':''}" onclick="switchTrendTab('ranking')">🏆 Top 10 en tendencia</button>
+      <button class="trends-tab ${currentTrendTab==='search'?'active':''}" onclick="switchTrendTab('search')">🔍 Buscar producto</button>
+    </div>
+    <div id="trendsContent"></div>`;
+
+  if (currentTrendTab === 'ranking') renderTrendRanking();
+  else renderTrendSearch();
+}
+
+function switchTrendTab(tab) {
+  currentTrendTab = tab;
+  renderTrends();
+}
+
+function renderTrendRanking() {
+  const countryOptions = TREND_COUNTRIES.map(c =>
+    `<option value="${c.id}" ${c.id === currentTrendCountry ? 'selected' : ''}>${c.label}</option>`
+  ).join('');
+
+  document.getElementById('trendsContent').innerHTML = `
+    <div class="trends-controls">
+      <select class="trends-select" id="trendCountry" onchange="currentTrendCountry=this.value">${countryOptions}</select>
+      <button class="trends-search-btn" onclick="fetchTrendRanking()">📈 Ver tendencias</button>
+    </div>
+    <div id="trendResults">
+      <div class="empty-state">
+        <div class="empty-icon">📈</div>
+        <div class="empty-title">Selecciona un país y presiona "Ver tendencias"</div>
+        <div class="empty-sub">RADAR buscará los productos más trending en ecommerce esta semana</div>
+      </div>
+    </div>`;
+}
+
+function renderTrendSearch() {
+  const countryOptions = TREND_COUNTRIES.map(c =>
+    `<option value="${c.id}" ${c.id === currentTrendCountry ? 'selected' : ''}>${c.label}</option>`
+  ).join('');
+
+  document.getElementById('trendsContent').innerHTML = `
+    <div class="trends-controls">
+      <input type="text" class="trends-input" id="trendProduct" placeholder="Escribe el producto... (ej: colágeno en polvo, creatina, probióticos)" onkeydown="if(event.key==='Enter')fetchProductTrend()">
+      <select class="trends-select" id="trendCountrySearch" onchange="currentTrendCountry=this.value">${countryOptions}</select>
+      <button class="trends-search-btn" onclick="fetchProductTrend()">🔍 Analizar</button>
+    </div>
+    <div id="trendResults">
+      <div class="empty-state">
+        <div class="empty-icon">🔍</div>
+        <div class="empty-title">Escribe un producto para analizar</div>
+        <div class="empty-sub">RADAR te dirá si está subiendo, bajando, o estable — y en qué países</div>
+      </div>
+    </div>`;
+}
+
+async function fetchTrendRanking() {
+  const country = document.getElementById('trendCountry').value;
+  const countryName = TREND_COUNTRIES.find(c => c.id === country)?.label || country;
+  const resultsDiv = document.getElementById('trendResults');
+  resultsDiv.innerHTML = `<div class="loading-container"><div class="radar-spinner"></div><div class="loading-text">Rastreando tendencias en ${countryName}...</div><div class="loading-sub">Esto puede tomar 20-30 segundos</div></div>`;
+
+  const cacheKey = `trends_rank_${country}`;
+  if (cache[cacheKey]) { renderTrendCards(cache[cacheKey]); return; }
+
+  try {
+    const text = await callClaude(
+      `Search for the top 10 trending ecommerce products right now in ${countryName}. Focus on products being sold via online ads (Facebook, TikTok, Google), dropshipping, and direct-to-consumer ecommerce. Include health supplements, beauty, wellness, gadgets, and any product category that's growing fast.
+
+For each product analyze TWO signals:
+1. SEARCH TREND — is search volume for this product going up, down, or stable?
+2. AD TREND — are there more or fewer advertisers running ads for this product compared to recent months?
+
+Return ONLY a JSON array of 10 items: {"id":"unique_id","rank":1,"product":"product name IN SPANISH","category":"supplements|beauty|wellness|gadgets|fashion|home|fitness|other","search_trend":"up|down|stable","ad_trend":"up|down|stable|new","summary":"2-3 sentences IN SPANISH explaining why this product is trending, with specific data or signals","opportunity_score":"high|medium|low","country":"${country}"}
+
+Order by opportunity score — high first. Be specific with product names, not generic categories.`,
+      'You are an ecommerce trend analyst. Respond ONLY with a valid JSON array. No markdown, no backticks, no explanation.'
+    );
+
+    const clean = text.replace(/```json\s*/g,'').replace(/```\s*/g,'').trim();
+    const start = clean.indexOf('[');
+    const end = clean.lastIndexOf(']');
+    const data = JSON.parse(clean.substring(start, end + 1));
+    cache[cacheKey] = data;
+    renderTrendCards(data);
+  } catch(err) {
+    resultsDiv.innerHTML = `<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">${err.message}</div></div>`;
+  }
+}
+
+async function fetchProductTrend() {
+  const product = document.getElementById('trendProduct')?.value?.trim();
+  if (!product) return;
+  const country = document.getElementById('trendCountrySearch').value;
+  const countryName = TREND_COUNTRIES.find(c => c.id === country)?.label || country;
+  const resultsDiv = document.getElementById('trendResults');
+  resultsDiv.innerHTML = `<div class="loading-container"><div class="radar-spinner"></div><div class="loading-text">Analizando "${product}" en múltiples mercados...</div><div class="loading-sub">Esto puede tomar 20-30 segundos</div></div>`;
+
+  const allCountries = TREND_COUNTRIES.map(c => c.label).join(', ');
+
+  try {
+    const text = await callClaude(
+      `Analyze the ecommerce trend for this specific product: "${product}"
+
+Research this product across ALL these markets: ${allCountries}
+But give extra detail for: ${countryName}
+
+For each country analyze:
+1. SEARCH TREND — is search volume going up, down, or stable?
+2. AD TREND — are advertisers increasing, decreasing, or stable for this product?
+3. COMBINED SIGNAL — based on both signals, what's the verdict?
+
+Return ONLY a JSON array with one item per country: {"id":"unique_id","product":"${product}","country_code":"xx","country_name":"country name","search_trend":"up|down|stable","ad_trend":"up|down|stable|new","combined_signal":"enter_now|opportunity|wait|saturated|declining","summary":"2-3 sentences IN SPANISH with specific insights for this market","competitor_level":"low|medium|high"}
+
+Also include one EXTRA item at the end with country_code "global" that gives an overall summary and recommendation.
+
+Order by: the primary country (${country}) first, then by opportunity (enter_now first, declining last).`,
+      'You are an ecommerce trend analyst. Respond ONLY with a valid JSON array. No markdown, no backticks, no explanation.'
+    );
+
+    const clean = text.replace(/```json\s*/g,'').replace(/```\s*/g,'').trim();
+    const start = clean.indexOf('[');
+    const end = clean.lastIndexOf(']');
+    const data = JSON.parse(clean.substring(start, end + 1));
+    renderProductTrendCards(data, product);
+  } catch(err) {
+    resultsDiv.innerHTML = `<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">${err.message}</div></div>`;
+  }
+}
+
+function renderTrendCards(items) {
+  const resultsDiv = document.getElementById('trendResults');
+  const signalIcon = (s) => ({up:'↑',down:'↓',stable:'→',new:'★'}[s]||'→');
+  const signalClass = (s) => ({up:'signal-up',down:'signal-down',stable:'signal-stable',new:'signal-new'}[s]||'signal-stable');
+  const scoreColor = (s) => ({high:'var(--accent)',medium:'var(--amber)',low:'var(--text-muted)'}[s]||'var(--text-muted)');
+
+  resultsDiv.innerHTML = `<div class="cards-grid">${items.map((item, i) => `
+    <div class="news-card">
+      <div class="card-top">
+        <span style="font-size:18px;font-weight:600;color:var(--accent);font-family:var(--mono);min-width:30px;">#${item.rank || i+1}</span>
+        <span class="card-badge" style="background:var(--purple-dim);color:var(--purple);">${item.category || 'producto'}</span>
+        <span style="margin-left:auto;font-size:12px;color:${scoreColor(item.opportunity_score)};font-weight:500;">
+          ${({high:'🔥 ALTA OPORTUNIDAD',medium:'⚡ MEDIA',low:'📊 BAJA'}[item.opportunity_score])||''}
+        </span>
+      </div>
+      <div class="card-title">${item.product || ''}</div>
+      <div style="display:flex;gap:12px;margin-bottom:8px;">
+        <span class="trend-signal ${signalClass(item.search_trend)}">${signalIcon(item.search_trend)} Búsquedas ${item.search_trend}</span>
+        <span class="trend-signal ${signalClass(item.ad_trend)}">${signalIcon(item.ad_trend)} Anuncios ${item.ad_trend}</span>
+      </div>
+      <div class="card-summary">${item.summary || ''}</div>
+      <div class="card-actions">
+        <button class="card-btn impact-btn" onclick="analyzeImpact('trend_${item.id}', '${(item.product||'').replace(/'/g,"\\'")} trending', '${(item.summary||'').replace(/'/g,"\\'")}')">🔮 ¿Cómo me afecta?</button>
+        <button class="card-btn ${favorites['trend_'+item.id]?'favorited':''}" onclick="toggleFav('trend_${item.id}', this, ${JSON.stringify(item).replace(/'/g,"\\'").replace(/"/g,'&quot;')})">
+          ${favorites['trend_'+item.id] ? '★ Guardado' : '☆ Guardar'}
+        </button>
+      </div>
+    </div>`).join('')}</div>`;
+}
+
+function renderProductTrendCards(items, product) {
+  const resultsDiv = document.getElementById('trendResults');
+  const signalIcon = (s) => ({up:'↑',down:'↓',stable:'→',new:'★'}[s]||'→');
+  const signalClass = (s) => ({up:'signal-up',down:'signal-down',stable:'signal-stable',new:'signal-new'}[s]||'signal-stable');
+  const verdictInfo = (v) => ({
+    enter_now:{label:'🟢 ENTRAR AHORA',color:'var(--accent)'},
+    opportunity:{label:'🟡 OPORTUNIDAD',color:'var(--amber)'},
+    wait:{label:'⏳ ESPERAR',color:'var(--blue)'},
+    saturated:{label:'🟠 SATURADO',color:'var(--amber)'},
+    declining:{label:'🔴 EN DECLIVE',color:'var(--red)'}
+  }[v]||{label:v,color:'var(--text-muted)'});
+  const compColor = (c) => ({low:'var(--accent)',medium:'var(--amber)',high:'var(--red)'}[c]||'var(--text-muted)');
+
+  resultsDiv.innerHTML = `
+    <div style="font-size:16px;font-weight:500;margin-bottom:16px;">Análisis: <span style="color:var(--accent)">${product}</span></div>
+    <div class="cards-grid">${items.map(item => {
+      const v = verdictInfo(item.combined_signal);
+      const isGlobal = item.country_code === 'global';
+      return `
+      <div class="news-card" style="${isGlobal?'border-color:var(--accent);border-width:1.5px;':''}">
+        <div class="card-top">
+          <span style="font-size:14px;font-weight:500;">${isGlobal?'🌍 RESUMEN GLOBAL':item.country_name}</span>
+          <span style="margin-left:auto;font-size:12px;font-weight:500;color:${v.color}">${v.label}</span>
+        </div>
+        ${!isGlobal ? `<div style="display:flex;gap:12px;margin-bottom:8px;">
+          <span class="trend-signal ${signalClass(item.search_trend)}">${signalIcon(item.search_trend)} Búsquedas ${item.search_trend}</span>
+          <span class="trend-signal ${signalClass(item.ad_trend)}">${signalIcon(item.ad_trend)} Anuncios ${item.ad_trend}</span>
+          <span style="font-size:11px;color:${compColor(item.competitor_level)};font-family:var(--mono);">Competencia: ${item.competitor_level}</span>
+        </div>` : ''}
+        <div class="card-summary">${item.summary || ''}</div>
+      </div>`;
+    }).join('')}</div>`
 }
 
 // === INIT ===
