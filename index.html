@@ -996,16 +996,12 @@ async function fetchTrendRanking() {
 
   try {
     const text = await callClaude(
-      `Search for the top 10 trending ecommerce products right now in ${countryName}. Focus on products being sold via online ads (Facebook, TikTok, Google), dropshipping, and direct-to-consumer ecommerce. Include health supplements, beauty, wellness, gadgets, and any product category that's growing fast.
+      `Top 10 trending ecommerce products in ${countryName} right now. Focus on products sold via Facebook/TikTok/Google ads and dropshipping.
 
-For each product analyze TWO signals:
-1. SEARCH TREND — is search volume for this product going up, down, or stable?
-2. AD TREND — are there more or fewer advertisers running ads for this product compared to recent months?
+Return JSON array of 10 items: {"id":"uid","rank":1,"product":"name in Spanish","category":"supplements|beauty|wellness|gadgets|other","search_trend":"up|down|stable","ad_trend":"up|down|stable|new","summary":"2 sentences IN SPANISH on why trending","opportunity_score":"high|medium|low","country":"${country}"}
 
-Return ONLY a JSON array of 10 items: {"id":"unique_id","rank":1,"product":"product name IN SPANISH","category":"supplements|beauty|wellness|gadgets|fashion|home|fitness|other","search_trend":"up|down|stable","ad_trend":"up|down|stable|new","summary":"2-3 sentences IN SPANISH explaining why this product is trending, with specific data or signals","opportunity_score":"high|medium|low","country":"${country}"}
-
-Order by opportunity score — high first. Be specific with product names, not generic categories.`,
-      'You are an ecommerce trend analyst. Respond ONLY with a valid JSON array. No markdown, no backticks, no explanation.'
+Order: high opportunity first. Be specific.`,
+      'Respond ONLY with valid JSON array. No markdown, no backticks.'
     );
 
     const clean = text.replace(/```json\s*/g,'').replace(/```\s*/g,'').trim();
@@ -1031,22 +1027,12 @@ async function fetchProductTrend() {
 
   try {
     const text = await callClaude(
-      `Analyze the ecommerce trend for this specific product: "${product}"
+      `Analyze ecommerce trend for: "${product}" in these markets: Colombia, México, Argentina, Chile, Perú, España, USA, UK. Give extra focus to ${countryName}.
 
-Research this product across ALL these markets: ${allCountries}
-But give extra detail for: ${countryName}
+Return JSON array, one item per country + one "global" summary: {"id":"uid","product":"${product}","country_code":"co","country_name":"Colombia","search_trend":"up|down|stable","ad_trend":"up|down|stable|new","combined_signal":"enter_now|opportunity|wait|saturated|declining","summary":"2 sentences IN SPANISH","competitor_level":"low|medium|high"}
 
-For each country analyze:
-1. SEARCH TREND — is search volume going up, down, or stable?
-2. AD TREND — are advertisers increasing, decreasing, or stable for this product?
-3. COMBINED SIGNAL — based on both signals, what's the verdict?
-
-Return ONLY a JSON array with one item per country: {"id":"unique_id","product":"${product}","country_code":"xx","country_name":"country name","search_trend":"up|down|stable","ad_trend":"up|down|stable|new","combined_signal":"enter_now|opportunity|wait|saturated|declining","summary":"2-3 sentences IN SPANISH with specific insights for this market","competitor_level":"low|medium|high"}
-
-Also include one EXTRA item at the end with country_code "global" that gives an overall summary and recommendation.
-
-Order by: the primary country (${country}) first, then by opportunity (enter_now first, declining last).`,
-      'You are an ecommerce trend analyst. Respond ONLY with a valid JSON array. No markdown, no backticks, no explanation.'
+Primary country (${country}) first, then by opportunity.`,
+      'Respond ONLY with valid JSON array. No markdown, no backticks.'
     );
 
     const clean = text.replace(/```json\s*/g,'').replace(/```\s*/g,'').trim();
