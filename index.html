@@ -541,12 +541,13 @@ function toggleCriticalFilter() {
 }
 
 // === API ===
-async function callClaude(prompt, systemPrompt) {
+async function callClaude(prompt, systemPrompt, useDeep) {
+  const model = useDeep ? 'claude-sonnet-4-5' : 'claude-haiku-4-5-20251001';
   const res = await fetch('https://api.anthropic.com/v1/messages', {
     method:'POST',
     headers:{ 'Content-Type':'application/json', 'x-api-key': API_KEY, 'anthropic-version':'2023-06-01', 'anthropic-dangerous-direct-browser-access':'true' },
     body: JSON.stringify({
-      model:'claude-sonnet-4-5',
+      model: model,
       max_tokens:4096,
       system: systemPrompt,
       tools:[{ type:'web_search_20250305', name:'web_search', max_uses:5 }],
@@ -777,7 +778,8 @@ Responde en español con:
 4. RIESGOS — qué puede salir mal si no actúo
 
 Sé específico y directo. Sin relleno.`,
-      'You are a strategic business advisor for a COD ecommerce operation in Colombia. Be specific, actionable, and direct. Respond in Spanish.'
+      'You are a strategic business advisor for a COD ecommerce operation in Colombia. Be specific, actionable, and direct. Respond in Spanish.',
+      true
     );
     content.innerHTML = `<div style="white-space:pre-wrap;line-height:1.7;">${result}</div>`;
   } catch(err) {
@@ -819,7 +821,8 @@ Respond in Spanish with this structure:
 Context: This is for a COD ecommerce business in Colombia selling health supplements via Meta Ads and WhatsApp.
 
 Be specific, name sources, include dates. No fluff.`,
-      'You are a marketing intelligence analyst. Respond in Spanish. Be specific and actionable.'
+      'You are a marketing intelligence analyst. Respond in Spanish. Be specific and actionable.',
+      true
     );
 
     content.innerHTML = `
