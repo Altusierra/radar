@@ -150,7 +150,7 @@ body{background:var(--bg-base);color:var(--text);font-family:var(--font);min-hei
 <div class="app" id="app">
   <div class="sidebar">
     <div class="sidebar-logo">RADAR</div>
-    <div class="sidebar-sub">v3.0 · inteligencia</div>
+    <div class="sidebar-sub">v6.0 · inteligencia</div>
     <div id="sidebarNav"></div>
     <div class="sidebar-footer"><button onclick="handleLogout()">Cerrar sesión</button></div>
   </div>
@@ -267,6 +267,12 @@ const SECTIONS={
   youtube:{title:'🎥 YouTube',icon:'🎥',query:'youtube',loading:'Buscando videos de alto valor...'},
   twitter:{title:'𝕏 X / Twitter',icon:'𝕏',query:'twitter',loading:'Rastreando hilos en X...'},
   instagram:{title:'📸 Instagram',icon:'📸',query:'instagram',loading:'Filtrando contenido real...'},
+  // PERSONAL TOOLS
+  acciones:{title:'📋 Acciones pendientes',icon:'📋'},
+  brainstorm:{title:'🧠 Brainstorming',icon:'🧠'},
+  diario:{title:'📔 Diario',icon:'📔'},
+  coach:{title:'🤝 Coach diario',icon:'🤝'},
+  aprende:{title:'🎓 Aprende algo nuevo',icon:'🎓'},
   // AMENAZAS (sidebar)
   amenazas:{title:'🚨 Amenazas',icon:'🚨',query:'amenazas',loading:'Detectando amenazas activas...'},
   // PERSONAL
@@ -458,9 +464,14 @@ const NAV_GROUPS=[
   ]},
   {label:'Personal',items:[
     {id:'amenazas',icon:'🚨',label:'Amenazas',sub:'amenazas'},
+    {id:'acciones',icon:'📋',label:'Acciones',sub:'acciones'},
+    {id:'brainstorm',icon:'🧠',label:'Brainstorming',sub:'brainstorm'},
+    {id:'diario',icon:'📔',label:'Diario',sub:'diario'},
+    {id:'coach',icon:'🤝',label:'Coach diario',sub:'coach'},
+    {id:'aprende',icon:'🎓',label:'Aprende algo',sub:'aprende'},
     {id:'favoritos',icon:'⭐',label:'Favoritos',sub:'favoritos',badge:true},
     {id:'digest',icon:'📋',label:'Digest semanal',sub:'digest'},
-    {id:'config',icon:'⚙️',label:'Configuración',sub:'config'},
+    {id:'config',icon:'⚙️',label:'Inicio',sub:'config'},
   ]},
 ];
 const TR='CRITICAL: ALL titles and summaries MUST be in Spanish. Translate everything from any language to Spanish. Keep original URLs.';
@@ -518,7 +529,7 @@ function renderMobileNav(){
   mn.innerHTML=html;
 }
 function switchSection(s){currentSection=s;const sec=SECTIONS[s];document.getElementById('sectionTitle').textContent=sec?sec.title:s;renderSidebar();loadSection(s)}
-function loadSection(s){if(s==='favoritos')return renderFavorites();if(s==='config')return renderConfig();if(s==='digest')return generateDigest();const dk=document.getElementById('dateInput').value,ck=s+'_'+dk;if(cache[ck]){renderResults(cache[ck]);return}showLoading(s);fetchData(s,dk).then(d=>{cache[ck]=d;renderResults(d)}).catch(e=>{document.getElementById('contentArea').innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error al cargar</div><div class="empty-sub">'+e.message+'</div></div>'})}
+function loadSection(s){if(s==='favoritos')return renderFavorites();if(s==='config')return renderConfig();if(s==='digest')return generateDigest();if(s==='acciones')return renderAcciones();if(s==='brainstorm')return renderBrainstorm();if(s==='diario')return renderDiario();if(s==='coach')return renderCoach();if(s==='aprende')return renderAprende();const dk=document.getElementById('dateInput').value,ck=s+'_'+dk;if(cache[ck]){renderResults(cache[ck]);return}showLoading(s);fetchData(s,dk).then(d=>{cache[ck]=d;renderResults(d)}).catch(e=>{document.getElementById('contentArea').innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error al cargar</div><div class="empty-sub">'+e.message+'</div></div>'})}
 function refreshCurrent(){const dk=document.getElementById('dateInput').value;delete cache[currentSection+'_'+dk];loadSection(currentSection)}
 document.getElementById('dateInput').addEventListener('change',()=>{if(currentSection!=='config'&&currentSection!=='favoritos')loadSection(currentSection)});
 function toggleCriticalFilter(){criticalOnly=!criticalOnly;document.getElementById('criticalFilter').classList.toggle('active',criticalOnly);if(currentSection!=='config'&&currentSection!=='favoritos')loadSection(currentSection)}
@@ -780,7 +791,8 @@ function renderConfig(){
     }
     groupsHTML+='</div></div>';
   }
-  document.getElementById('contentArea').innerHTML='<div style="margin-bottom:28px"><div style="font-size:20px;font-weight:600;margin-bottom:4px">Bienvenido a RADAR</div><div style="font-size:13px;color:var(--text-secondary);margin-bottom:16px">Busca cualquier tema o selecciona una sección.</div><div style="display:flex;gap:8px;margin-bottom:24px"><input type="text" id="globalSearchInput" placeholder="Busca lo que quieras... (ej: Meta Marketing API, colágeno tendencias, WhatsApp Flows)" style="flex:1;padding:12px 16px;background:var(--bg-input);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;font-family:var(--font);outline:none" onkeydown="if(event.key===\'Enter\')globalSearch()"><button onclick="globalSearch()" style="padding:12px 24px;background:var(--accent);color:var(--bg-base);border:none;border-radius:8px;font-family:var(--font);font-weight:600;font-size:14px;cursor:pointer;white-space:nowrap">🔍 Buscar</button></div></div>'+groupsHTML+'<div class="settings-section"><div class="settings-title">Alertas de palabras clave</div><div style="font-size:12px;color:var(--text-muted);margin-bottom:8px">Noticias con estas palabras se resaltan</div><div class="settings-row"><input type="text" id="keywordsInput" value="'+(localStorage.getItem('radar_keywords')||'API de conversiones, Meta policy, ban, restricción, INVIMA, COD Colombia')+'" placeholder="Separadas por coma"></div><button class="card-btn" style="margin-top:8px" onclick="saveKeywords()">Guardar keywords</button></div><div class="settings-section"><div class="settings-title">Datos</div><button class="card-btn" style="border-color:var(--red);color:var(--red)" onclick="clearAllData()">🗑 Borrar datos locales</button><div style="font-size:11px;color:var(--text-muted);margin-top:6px">Borra favoritos, notas y lecturas. Tu API key se mantiene.</div></div><div class="settings-section"><div class="settings-title">Acerca de</div><div style="font-size:13px;color:var(--text-secondary);line-height:1.6">RADAR v3.0 — Centro de inteligencia de marketing digital<br>Haiku para búsqueda rápida · Sonnet para análisis profundo<br>Favoritos no gastan tokens · Tus datos solo en este navegador.</div></div>';
+  document.getElementById('contentArea').innerHTML='<div style="margin-bottom:28px"><div style="font-size:20px;font-weight:600;margin-bottom:4px">Bienvenido a RADAR</div><div style="font-size:13px;color:var(--text-secondary);margin-bottom:16px">Busca cualquier tema o selecciona una sección.</div><div id="dailyQuestionBox" style="background:linear-gradient(135deg,#a855f722,#3b82f622);border:1px solid var(--purple);border-radius:10px;padding:16px;margin-bottom:20px"><div style="font-size:11px;color:var(--purple);font-family:var(--mono);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px">💡 Pregunta del día</div><div id="dailyQuestionText" style="font-size:15px;color:var(--text);line-height:1.5;font-weight:500">⏳ Generando...</div></div><div style="display:flex;gap:8px;margin-bottom:24px"><input type="text" id="globalSearchInput" placeholder="Busca lo que quieras... (ej: Meta Marketing API, colágeno tendencias, WhatsApp Flows)" style="flex:1;padding:12px 16px;background:var(--bg-input);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;font-family:var(--font);outline:none" onkeydown="if(event.key===\'Enter\')globalSearch()"><button onclick="globalSearch()" style="padding:12px 24px;background:var(--accent);color:var(--bg-base);border:none;border-radius:8px;font-family:var(--font);font-weight:600;font-size:14px;cursor:pointer;white-space:nowrap">🔍 Buscar</button></div></div>'+groupsHTML+'<div class="settings-section"><div class="settings-title">Alertas de palabras clave</div><div style="font-size:12px;color:var(--text-muted);margin-bottom:8px">Noticias con estas palabras se resaltan</div><div class="settings-row"><input type="text" id="keywordsInput" value="'+(localStorage.getItem('radar_keywords')||'API de conversiones, Meta policy, ban, restricción, INVIMA, COD Colombia')+'" placeholder="Separadas por coma"></div><button class="card-btn" style="margin-top:8px" onclick="saveKeywords()">Guardar keywords</button></div><div class="settings-section"><div class="settings-title">Datos</div><button class="card-btn" style="border-color:var(--red);color:var(--red)" onclick="clearAllData()">🗑 Borrar datos locales</button><div style="font-size:11px;color:var(--text-muted);margin-top:6px">Borra favoritos, notas y lecturas. Tu API key se mantiene.</div></div><div class="settings-section"><div class="settings-title">Acerca de</div><div style="font-size:13px;color:var(--text-secondary);line-height:1.6">RADAR v6.0 — Centro de inteligencia de marketing digital<br>Haiku para búsqueda rápida · Sonnet para análisis profundo<br>Favoritos no gastan tokens · Tus datos solo en este navegador.</div></div>';
+  generateDailyQuestion().then(q=>{const el=document.getElementById('dailyQuestionText');if(el)el.textContent=q});
 }
 async function globalSearch(){
   const q=document.getElementById('globalSearchInput')?.value?.trim();
@@ -801,6 +813,270 @@ async function globalSearch(){
 }
 function saveKeywords(){localStorage.setItem('radar_keywords',document.getElementById('keywordsInput')?.value||'');alert('Keywords guardadas')}
 function clearAllData(){if(!confirm('¿Borrar todos los datos?'))return;favorites={};readItems={};notes={};cache={};localStorage.removeItem('radar_favs');localStorage.removeItem('radar_read');localStorage.removeItem('radar_notes');updateFavCount();alert('Datos borrados')}
+
+// === ACCIONES PENDIENTES ===
+let actions=JSON.parse(localStorage.getItem('radar_actions')||'[]');
+function renderAcciones(){
+  const c=document.getElementById('contentArea');
+  const pending=actions.filter(a=>!a.done);
+  const done=actions.filter(a=>a.done);
+  let html='<div style="margin-bottom:20px"><div style="font-size:20px;font-weight:600;margin-bottom:4px">📋 Mis acciones</div><div style="font-size:13px;color:var(--text-secondary);margin-bottom:16px">Tu plan ejecutable. Sin esto los planes se quedan en planes.</div>';
+  html+='<div style="display:flex;gap:8px;margin-bottom:20px"><input type="text" id="actionInput" placeholder="Nueva acción... (ej: Revisar campañas Meta hoy)" style="flex:1;padding:10px 14px;background:var(--bg-input);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;font-family:var(--font);outline:none" onkeydown="if(event.key===\'Enter\')addAction()"><button onclick="addAction()" style="padding:10px 20px;background:var(--accent);color:var(--bg-base);border:none;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer">+ Agregar</button></div>';
+  if(!pending.length&&!done.length){html+='<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">Sin acciones aún</div><div class="empty-sub">Agrega acciones manualmente o desde el chat de "Tomar acción" de cualquier noticia.</div></div></div>';c.innerHTML=html;return}
+  if(pending.length){
+    html+='<div style="font-size:12px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px">Pendientes ('+pending.length+')</div>';
+    pending.forEach(a=>{
+      html+='<div style="background:var(--bg-card);border:1px solid var(--border-light);border-radius:10px;padding:12px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px"><input type="checkbox" onchange="toggleAction(\''+a.id+'\')" style="cursor:pointer;width:18px;height:18px"><div style="flex:1"><div style="font-size:13px;color:var(--text);line-height:1.5">'+a.text+'</div>'+(a.date?'<div style="font-size:11px;color:var(--text-muted);font-family:var(--mono);margin-top:4px">'+a.date+(a.source?' · '+a.source:'')+'</div>':'')+'</div><button onclick="deleteAction(\''+a.id+'\')" style="background:transparent;border:none;color:var(--text-muted);cursor:pointer;font-size:14px;padding:4px 8px">✕</button></div>';
+    });
+  }
+  if(done.length){
+    html+='<div style="font-size:12px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1.5px;margin:20px 0 8px">Hechas ('+done.length+')</div>';
+    done.forEach(a=>{
+      html+='<div style="background:var(--bg-card);border:1px solid var(--border-light);border-radius:10px;padding:12px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px;opacity:.55"><input type="checkbox" checked onchange="toggleAction(\''+a.id+'\')" style="cursor:pointer;width:18px;height:18px"><div style="flex:1"><div style="font-size:13px;color:var(--text);line-height:1.5;text-decoration:line-through">'+a.text+'</div></div><button onclick="deleteAction(\''+a.id+'\')" style="background:transparent;border:none;color:var(--text-muted);cursor:pointer;font-size:14px;padding:4px 8px">✕</button></div>';
+    });
+  }
+  html+='</div>';
+  c.innerHTML=html;
+}
+function addAction(text,source){
+  const input=document.getElementById('actionInput');
+  const t=text||input?.value?.trim();if(!t)return;
+  actions.unshift({id:Date.now().toString(36),text:t,done:false,date:new Date().toLocaleDateString('es-CO'),source:source||''});
+  localStorage.setItem('radar_actions',JSON.stringify(actions));
+  if(input)input.value='';
+  if(currentSection==='acciones')renderAcciones();
+}
+function toggleAction(id){const a=actions.find(x=>x.id===id);if(!a)return;a.done=!a.done;localStorage.setItem('radar_actions',JSON.stringify(actions));renderAcciones()}
+function deleteAction(id){if(!confirm('¿Borrar esta acción?'))return;actions=actions.filter(x=>x.id!==id);localStorage.setItem('radar_actions',JSON.stringify(actions));renderAcciones()}
+
+// === BRAINSTORMING ===
+let brainstormChat={messages:[],idea:''};
+function renderBrainstorm(){
+  const c=document.getElementById('contentArea');
+  c.innerHTML='<div style="margin-bottom:20px"><div style="font-size:20px;font-weight:600;margin-bottom:4px">🧠 Brainstorming estructurado</div><div style="font-size:13px;color:var(--text-secondary);margin-bottom:16px">Desarrolla una idea desde cero. Claude te hace preguntas dirigidas hasta dejarla lista para ejecutar.</div></div>'+
+    '<div style="display:flex;gap:8px;margin-bottom:16px"><input type="text" id="brainIdea" placeholder="Escribe tu idea... (ej: lanzar línea de probióticos, contratar editor, expandir a México)" style="flex:1;padding:12px 16px;background:var(--bg-input);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;font-family:var(--font);outline:none" onkeydown="if(event.key===\'Enter\')startBrainstorm()"><button onclick="startBrainstorm()" style="padding:12px 24px;background:var(--purple);color:var(--bg-base);border:none;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer">Empezar</button></div>'+
+    '<div class="chat-area" id="brainArea" style="max-height:500px"></div>'+
+    '<div class="chat-input-row" id="brainInputRow" style="display:none">'+
+      '<textarea class="chat-input" id="brainInput" placeholder="Responde la pregunta o aporta más detalles..." onkeydown="if(event.key===\'Enter\'&&!event.shiftKey){event.preventDefault();sendBrainstorm()}"></textarea>'+
+      '<button class="chat-send" style="background:var(--purple)" onclick="sendBrainstorm()">Enviar</button>'+
+    '</div>';
+}
+async function startBrainstorm(){
+  const idea=document.getElementById('brainIdea')?.value?.trim();
+  if(!idea)return;
+  brainstormChat={messages:[],idea:idea};
+  document.getElementById('brainInputRow').style.display='flex';
+  document.getElementById('brainArea').innerHTML='<div class="chat-loading">⏳ Iniciando brainstorming...</div>';
+  const prompt='Quiero desarrollar esta idea: "'+idea+'"\n\nMi negocio: Ecommerce COD Colombia, suplementos vía Meta Ads + WhatsApp.\n\nActúa como un estratega senior haciendo brainstorming conmigo. NO me des respuestas todavía. Hazme las 3-5 preguntas más importantes que necesito responder para que esta idea pase de idea a plan ejecutable. Una pregunta a la vez si es muy compleja, o todas si son simples. En español, directo, sin relleno.';
+  brainstormChat.messages.push({role:'user',content:prompt});
+  try{
+    const r=await callBrainstormAPI();
+    brainstormChat.messages.push({role:'assistant',content:r});
+    renderBrainArea();
+  }catch(e){document.getElementById('brainArea').innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">'+e.message+'</div></div>'}
+}
+async function sendBrainstorm(){
+  const input=document.getElementById('brainInput');
+  const t=input?.value?.trim();if(!t)return;
+  input.value='';
+  brainstormChat.messages.push({role:'user',content:t});
+  renderBrainArea();
+  const area=document.getElementById('brainArea');
+  area.innerHTML+='<div class="chat-loading" id="brainLoading">⏳ Pensando...</div>';
+  area.scrollTop=area.scrollHeight;
+  try{
+    const r=await callBrainstormAPI();
+    brainstormChat.messages.push({role:'assistant',content:r});
+    renderBrainArea();
+  }catch(e){document.getElementById('brainLoading')?.remove();brainstormChat.messages.push({role:'assistant',content:'⚠️ Error: '+e.message});renderBrainArea()}
+}
+async function callBrainstormAPI(){
+  const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:2048,system:'Strategic brainstorming partner for COD ecommerce Colombia (supplements via Meta Ads + WhatsApp). Spanish. Use Socratic method — ask sharp questions, challenge assumptions, push toward executable plan. Goal: take a vague idea and develop it into a concrete plan through dialogue. Be direct, no fluff. Current idea being developed: '+brainstormChat.idea,messages:brainstormChat.messages})});
+  if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||'Error '+res.status)}
+  const data=await res.json();let t='';for(const b of data.content){if(b.type==='text')t+=b.text}return t;
+}
+function renderBrainArea(){
+  const area=document.getElementById('brainArea');if(!area)return;
+  let html='';
+  for(let i=0;i<brainstormChat.messages.length;i++){
+    const m=brainstormChat.messages[i];
+    if(i===0&&m.role==='user')continue;
+    const cls=m.role==='user'?'chat-msg-user':'chat-msg-assistant';
+    html+='<div class="chat-msg '+cls+'">'+m.content+'</div>';
+  }
+  area.innerHTML=html;
+  area.scrollTop=area.scrollHeight;
+}
+
+// === DIARIO (decisiones + aprendizajes) ===
+let journal=JSON.parse(localStorage.getItem('radar_journal')||'[]');
+let journalType='decision';
+function renderDiario(){
+  const c=document.getElementById('contentArea');
+  const types={decision:{label:'Decisión',color:'var(--blue)'},aprendizaje:{label:'Aprendizaje',color:'var(--accent)'},idea:{label:'Idea',color:'var(--amber)'},reflexion:{label:'Reflexión',color:'var(--purple)'}};
+  let html='<div style="margin-bottom:20px"><div style="font-size:20px;font-weight:600;margin-bottom:4px">📔 Mi diario</div><div style="font-size:13px;color:var(--text-secondary);margin-bottom:16px">Documenta decisiones, aprendizajes, ideas y reflexiones. Después Claude puede leer y mostrarte patrones.</div></div>';
+  html+='<div style="background:var(--bg-card);border:1px solid var(--border-light);border-radius:10px;padding:16px;margin-bottom:16px">';
+  html+='<div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap">';
+  Object.entries(types).forEach(([k,v])=>{
+    html+='<button class="card-btn '+(journalType===k?'favorited':'')+'" style="'+(journalType===k?'border-color:'+v.color+';color:'+v.color+';background:'+v.color+'22':'')+'" onclick="setJournalType(\''+k+'\')">'+v.label+'</button>';
+  });
+  html+='</div>';
+  html+='<input type="text" id="journalCat" placeholder="Categoría (ej: Meta Ads, Copy, COD, Hiring)" style="width:100%;padding:8px 12px;background:var(--bg-input);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:13px;font-family:var(--font);outline:none;margin-bottom:8px">';
+  html+='<textarea id="journalText" placeholder="Escribe tu entrada..." style="width:100%;min-height:80px;padding:10px;background:var(--bg-input);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:13px;font-family:var(--font);outline:none;resize:vertical"></textarea>';
+  html+='<div style="display:flex;gap:8px;margin-top:8px"><button onclick="addJournal()" style="padding:8px 20px;background:var(--accent);color:var(--bg-base);border:none;border-radius:6px;font-weight:600;font-size:12px;cursor:pointer">+ Guardar entrada</button><button onclick="analyzeJournal()" style="padding:8px 20px;background:var(--purple-dim);border:1px solid var(--purple);color:var(--purple);border-radius:6px;font-weight:500;font-size:12px;cursor:pointer">🔍 Analizar patrones</button></div>';
+  html+='</div>';
+  html+='<div id="journalAnalysis"></div>';
+  if(!journal.length){html+='<div class="empty-state"><div class="empty-icon">📔</div><div class="empty-title">Empieza tu diario</div><div class="empty-sub">Cada entrada se queda contigo. Después de 3 meses tendrás un manual personalizado.</div></div>';c.innerHTML=html;return}
+  html+='<div style="font-size:12px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px">Tus entradas ('+journal.length+')</div>';
+  journal.forEach(e=>{
+    const t=types[e.type]||{label:e.type,color:'var(--text-muted)'};
+    html+='<div style="background:var(--bg-card);border:1px solid var(--border-light);border-radius:10px;padding:14px 16px;margin-bottom:8px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:10px;font-family:var(--mono);padding:2px 8px;border-radius:4px;background:'+t.color+'22;color:'+t.color+'">'+t.label.toUpperCase()+'</span>'+(e.category?'<span style="font-size:11px;color:var(--text-muted);font-family:var(--mono)">'+e.category+'</span>':'')+'<span style="font-size:11px;color:var(--text-muted);margin-left:auto;font-family:var(--mono)">'+e.date+'</span><button onclick="deleteJournal(\''+e.id+'\')" style="background:transparent;border:none;color:var(--text-muted);cursor:pointer;font-size:14px;padding:0 4px">✕</button></div><div style="font-size:13px;color:var(--text-secondary);line-height:1.6;white-space:pre-wrap">'+e.text+'</div></div>';
+  });
+  c.innerHTML=html;
+}
+function setJournalType(t){journalType=t;renderDiario()}
+function addJournal(){
+  const text=document.getElementById('journalText')?.value?.trim();if(!text)return;
+  const cat=document.getElementById('journalCat')?.value?.trim()||'';
+  journal.unshift({id:Date.now().toString(36),text:text,category:cat,type:journalType,date:new Date().toLocaleDateString('es-CO')});
+  localStorage.setItem('radar_journal',JSON.stringify(journal));
+  renderDiario();
+}
+function deleteJournal(id){if(!confirm('¿Borrar entrada?'))return;journal=journal.filter(x=>x.id!==id);localStorage.setItem('radar_journal',JSON.stringify(journal));renderDiario()}
+async function analyzeJournal(){
+  if(!journal.length){alert('Necesitas al menos algunas entradas para analizar');return}
+  const div=document.getElementById('journalAnalysis');
+  div.innerHTML='<div class="loading-container"><div class="radar-spinner"></div><div class="loading-text">Analizando patrones en tu diario...</div></div>';
+  const entries=journal.map(e=>'['+e.date+' · '+e.type+(e.category?' · '+e.category:'')+'] '+e.text).join('\n\n');
+  try{
+    const r=await callClaude('Lee mi diario y muéstrame patrones. Mi negocio: COD ecommerce Colombia, suplementos, Meta Ads + WhatsApp.\n\nDIARIO:\n'+entries+'\n\nEn español dame:\n📊 PATRONES IDENTIFICADOS\n✅ DECISIONES QUE FUNCIONAN\n❌ DECISIONES O ERRORES RECURRENTES\n🎯 RECOMENDACIONES BASADAS EN MI HISTORIAL\n\nSé directo, específico, basado solo en lo que escribí.','Análisis personal basado en diario propio. Spanish. Específico y honesto.',true);
+    div.innerHTML='<div style="background:var(--bg-card);border:1px solid var(--purple);border-radius:10px;padding:20px;margin-bottom:16px"><div style="font-size:14px;font-weight:600;color:var(--purple);margin-bottom:8px">🔍 Análisis de tu diario</div><div style="font-size:13px;color:var(--text-secondary);line-height:1.7;white-space:pre-wrap">'+r+'</div></div>';
+  }catch(e){div.innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">'+e.message+'</div></div>'}
+}
+
+// === COACH MODE ===
+let coachChat={messages:[],date:''};
+function renderCoach(){
+  const c=document.getElementById('contentArea');
+  const today=new Date().toLocaleDateString('es-CO');
+  c.innerHTML='<div style="margin-bottom:20px"><div style="font-size:20px;font-weight:600;margin-bottom:4px">🤝 Coach diario</div><div style="font-size:13px;color:var(--text-secondary);margin-bottom:8px">Revisión 5 minutos. Claude te hace 3 preguntas, tú respondes, te da feedback de coach.</div><div style="font-size:11px;color:var(--text-muted);font-family:var(--mono)">'+today+'</div></div>'+
+    '<div class="chat-area" id="coachArea" style="max-height:500px"></div>'+
+    '<div class="chat-input-row"><textarea class="chat-input" id="coachInput" placeholder="Responde aquí..." onkeydown="if(event.key===\'Enter\'&&!event.shiftKey){event.preventDefault();sendCoach()}"></textarea><button class="chat-send" onclick="sendCoach()">Enviar</button></div>';
+
+  // Reset and start
+  coachChat={messages:[],date:today};
+  document.getElementById('coachArea').innerHTML='<div class="chat-loading">⏳ El coach está preparándose...</div>';
+  const prompt='Soy un emprendedor de ecommerce COD en Colombia, vendo suplementos vía Meta Ads + WhatsApp. Vas a ser mi coach por 5 minutos. Empieza haciéndome estas 3 preguntas (de a una si lo prefieres, o todas juntas):\n\n1. ¿Qué hiciste ayer en tu negocio?\n2. ¿Qué vas a hacer hoy?\n3. ¿Qué te traba?\n\nDespués de mis respuestas darás feedback como coach — directo, sin endulzar, retándome a ejecutar mejor.';
+  coachChat.messages.push({role:'user',content:prompt});
+  (async()=>{
+    try{
+      const r=await callCoachAPI();
+      coachChat.messages.push({role:'assistant',content:r});
+      renderCoachArea();
+    }catch(e){document.getElementById('coachArea').innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">'+e.message+'</div></div>'}
+  })();
+}
+async function sendCoach(){
+  const input=document.getElementById('coachInput');
+  const t=input?.value?.trim();if(!t)return;
+  input.value='';
+  coachChat.messages.push({role:'user',content:t});
+  renderCoachArea();
+  const area=document.getElementById('coachArea');
+  area.innerHTML+='<div class="chat-loading" id="coachLoading">⏳ Coach pensando...</div>';
+  area.scrollTop=area.scrollHeight;
+  try{
+    const r=await callCoachAPI();
+    coachChat.messages.push({role:'assistant',content:r});
+    renderCoachArea();
+  }catch(e){document.getElementById('coachLoading')?.remove();coachChat.messages.push({role:'assistant',content:'⚠️ Error: '+e.message});renderCoachArea()}
+}
+async function callCoachAPI(){
+  const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:1500,system:'Eres un coach senior de ecommerce COD (Colombia, suplementos, Meta Ads + WhatsApp). Estilo: directo, exigente, sin endulzar, retas al usuario a ejecutar mejor. No le des palmaditas. Identificas patrones, le cuestionas prioridades, le exiges claridad. Respuestas en español, cortas y punzantes. Coach NO consultor — tu trabajo es que ejecute más y mejor.',messages:coachChat.messages})});
+  if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||'Error '+res.status)}
+  const data=await res.json();let t='';for(const b of data.content){if(b.type==='text')t+=b.text}return t;
+}
+function renderCoachArea(){
+  const area=document.getElementById('coachArea');if(!area)return;
+  let html='';
+  for(let i=0;i<coachChat.messages.length;i++){
+    const m=coachChat.messages[i];
+    if(i===0&&m.role==='user')continue;
+    const cls=m.role==='user'?'chat-msg-user':'chat-msg-assistant';
+    html+='<div class="chat-msg '+cls+'">'+m.content+'</div>';
+  }
+  area.innerHTML=html;area.scrollTop=area.scrollHeight;
+}
+
+// === APRENDE ===
+let learnChat={messages:[],topic:''};
+function renderAprende(){
+  const c=document.getElementById('contentArea');
+  c.innerHTML='<div style="margin-bottom:20px"><div style="font-size:20px;font-weight:600;margin-bottom:4px">🎓 Aprende algo nuevo</div><div style="font-size:13px;color:var(--text-secondary);margin-bottom:16px">Le dices qué quieres aprender y Claude te lo enseña paso a paso, usando tu negocio como ejemplo.</div></div>'+
+    '<div style="display:flex;gap:8px;margin-bottom:16px"><input type="text" id="learnTopic" placeholder="¿Qué quieres aprender? (ej: VBO, CAPI, Performance Max, prelanders rusos, escalado CBO)" style="flex:1;padding:12px 16px;background:var(--bg-input);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;font-family:var(--font);outline:none" onkeydown="if(event.key===\'Enter\')startLearn()"><button onclick="startLearn()" style="padding:12px 24px;background:var(--cyan);color:var(--bg-base);border:none;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer">Empezar</button></div>'+
+    '<div class="chat-area" id="learnArea" style="max-height:500px"></div>'+
+    '<div class="chat-input-row" id="learnInputRow" style="display:none">'+
+      '<textarea class="chat-input" id="learnInput" placeholder="Pregunta o pide más detalle..." onkeydown="if(event.key===\'Enter\'&&!event.shiftKey){event.preventDefault();sendLearn()}"></textarea>'+
+      '<button class="chat-send" style="background:var(--cyan)" onclick="sendLearn()">Enviar</button>'+
+    '</div>';
+}
+async function startLearn(){
+  const topic=document.getElementById('learnTopic')?.value?.trim();
+  if(!topic)return;
+  learnChat={messages:[],topic:topic};
+  document.getElementById('learnInputRow').style.display='flex';
+  document.getElementById('learnArea').innerHTML='<div class="chat-loading">⏳ Preparando tu lección...</div>';
+  const prompt='Quiero aprender: "'+topic+'"\n\nMi contexto: Ecommerce COD Colombia, suplementos vía Meta Ads + WhatsApp.\n\nEnseñame esto paso a paso, asumiendo que sé poco. Estructura:\n\n1. ¿QUÉ ES? (definición simple)\n2. ¿POR QUÉ IMPORTA PARA MÍ?\n3. PASO A PASO de cómo aplicarlo (números reales si aplica)\n4. EJEMPLO concreto con mi negocio\n5. ERRORES COMUNES que debo evitar\n6. PRÓXIMO PASO (qué hacer hoy mismo)\n\nEspañol claro, sin jerga innecesaria.';
+  learnChat.messages.push({role:'user',content:prompt});
+  try{
+    const r=await callLearnAPI();
+    learnChat.messages.push({role:'assistant',content:r});
+    renderLearnArea();
+  }catch(e){document.getElementById('learnArea').innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">'+e.message+'</div></div>'}
+}
+async function sendLearn(){
+  const input=document.getElementById('learnInput');
+  const t=input?.value?.trim();if(!t)return;
+  input.value='';
+  learnChat.messages.push({role:'user',content:t});
+  renderLearnArea();
+  const area=document.getElementById('learnArea');
+  area.innerHTML+='<div class="chat-loading" id="learnLoading">⏳ Pensando...</div>';
+  area.scrollTop=area.scrollHeight;
+  try{
+    const r=await callLearnAPI();
+    learnChat.messages.push({role:'assistant',content:r});
+    renderLearnArea();
+  }catch(e){document.getElementById('learnLoading')?.remove();learnChat.messages.push({role:'assistant',content:'⚠️ Error: '+e.message});renderLearnArea()}
+}
+async function callLearnAPI(){
+  const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:2048,system:'Profesor experto en marketing digital y ecommerce. Tu estudiante: emprendedor de COD Colombia (suplementos via Meta + WhatsApp). Estilo: pedagógico, ejemplos concretos con su negocio, sin jerga innecesaria. Spanish. Tema actual: '+learnChat.topic,messages:learnChat.messages})});
+  if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||'Error '+res.status)}
+  const data=await res.json();let t='';for(const b of data.content){if(b.type==='text')t+=b.text}return t;
+}
+function renderLearnArea(){
+  const area=document.getElementById('learnArea');if(!area)return;
+  let html='';
+  for(let i=0;i<learnChat.messages.length;i++){
+    const m=learnChat.messages[i];
+    if(i===0&&m.role==='user')continue;
+    const cls=m.role==='user'?'chat-msg-user':'chat-msg-assistant';
+    html+='<div class="chat-msg '+cls+'">'+m.content+'</div>';
+  }
+  area.innerHTML=html;area.scrollTop=area.scrollHeight;
+}
+
+// === PREGUNTA DEL DÍA ===
+async function generateDailyQuestion(){
+  const today=new Date().toLocaleDateString('es-CO');
+  const saved=JSON.parse(localStorage.getItem('radar_daily_q')||'{}');
+  if(saved.date===today&&saved.q){return saved.q}
+  try{
+    const r=await callClaude('Genera UNA pregunta provocadora para empezar el día. Mi negocio: COD Colombia, suplementos via Meta Ads + WhatsApp.\n\nLa pregunta debe:\n- Forzarme a reflexionar antes de operar en piloto automático\n- Ser específica, no genérica\n- Reto mental real\n- Una sola oración\n- En español\n\nEjemplos del estilo:\n"¿Qué campaña deberías matar hoy y no has matado?"\n"¿Qué hiciste esta semana que tu competencia no hizo?"\n"¿Cuál es tu botella?"\n\nDame UNA pregunta nueva.','Generador de preguntas reflexivas. Spanish. Una sola pregunta corta.',false);
+    localStorage.setItem('radar_daily_q',JSON.stringify({date:today,q:r.trim()}));
+    return r.trim();
+  }catch(e){return '¿Cuál es tu prioridad #1 hoy?'}
+}
 
 // === FAB (Floating PDF/Text Analyzer) ===
 let fabMode='resumen';
