@@ -98,6 +98,25 @@ body{background:var(--bg-base);color:var(--text);font-family:var(--font);min-hei
 .welcome-card-sub{font-size:11px;color:var(--text-muted);margin-top:4px}
 @media(max-width:768px){.sidebar{display:none}.app{flex-direction:column}.mobile-nav{display:flex !important;overflow-x:auto;background:var(--bg-surface);border-bottom:1px solid var(--border);padding:8px 12px;gap:6px}.mobile-nav-btn{white-space:nowrap;padding:6px 12px;background:var(--bg-card);border:1px solid var(--border);border-radius:20px;color:var(--text-secondary);font-size:11px;cursor:pointer;font-family:var(--font)}.mobile-nav-btn.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent)}.topbar{flex-wrap:wrap;padding:10px 16px}.content{padding:12px 16px}}
 .mobile-nav{display:none}
+.fab{position:fixed;bottom:24px;right:24px;width:56px;height:56px;border-radius:50%;background:var(--accent);color:var(--bg-base);border:none;font-size:24px;cursor:pointer;box-shadow:0 4px 16px rgba(0,232,123,0.4);z-index:90;transition:transform .2s}
+.fab:hover{transform:scale(1.05)}
+.fab-modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);z-index:100;align-items:center;justify-content:center}
+.fab-modal.open{display:flex}
+.fab-box{background:var(--bg-surface);border:1px solid var(--border);border-radius:12px;max-width:700px;width:90%;max-height:85vh;overflow-y:auto;padding:24px}
+.fab-title{font-size:18px;font-weight:600;color:var(--accent);margin-bottom:4px}
+.fab-sub{font-size:12px;color:var(--text-muted);margin-bottom:16px}
+.fab-textarea{width:100%;min-height:140px;padding:12px;background:var(--bg-input);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font);font-size:13px;outline:none;resize:vertical;margin-bottom:12px}
+.fab-textarea:focus{border-color:var(--accent)}
+.fab-file{display:block;padding:10px;background:var(--bg-input);border:1px dashed var(--border);border-radius:8px;color:var(--text-secondary);font-size:12px;margin-bottom:12px;cursor:pointer;text-align:center}
+.fab-file:hover{border-color:var(--accent);color:var(--accent)}
+.fab-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.fab-action-btn{padding:8px 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;color:var(--text-secondary);font-size:12px;cursor:pointer;font-family:var(--font);transition:all .15s}
+.fab-action-btn:hover{border-color:var(--accent);color:var(--accent)}
+.fab-action-btn.active{border-color:var(--accent);color:var(--accent);background:var(--accent-dim)}
+.fab-submit{padding:10px 20px;background:var(--accent);color:var(--bg-base);border:none;border-radius:6px;font-weight:600;font-size:13px;cursor:pointer;font-family:var(--font)}
+.fab-submit:disabled{opacity:.5;cursor:not-allowed}
+.fab-result{margin-top:16px;padding:16px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;font-size:13px;color:var(--text-secondary);line-height:1.7;white-space:pre-wrap}
+.fab-close{margin-top:12px;padding:8px 16px;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;color:var(--text-secondary);cursor:pointer;font-family:var(--font);font-size:12px}
 </style>
 </head>
 <body>
@@ -162,6 +181,7 @@ body{background:var(--bg-base);color:var(--text);font-family:var(--font);min-hei
         <input type="date" id="dateInput" title="Buscar noticias de esta fecha">
         <button class="topbar-refresh" onclick="refreshCurrent()">↻ Actualizar</button>
         <button class="topbar-filter" id="criticalFilter" onclick="toggleCriticalFilter()">⚡ Solo crítico</button>
+        <button class="topbar-filter" id="threatFilter" onclick="toggleThreatFilter()" style="border-color:var(--red);color:var(--red)">🚨 Amenaza</button>
       </div>
     </div>
     <div class="content" id="contentArea"></div>
@@ -175,8 +195,29 @@ body{background:var(--bg-base);color:var(--text);font-family:var(--font);min-hei
     <button class="modal-close" onclick="closeImpactModal()">Cerrar</button>
   </div>
 </div>
+<button class="fab" onclick="openFab()" title="Analizar PDF o texto">📄</button>
+<div class="fab-modal" id="fabModal">
+  <div class="fab-box">
+    <div class="fab-title">📄 Analizar documento o texto</div>
+    <div class="fab-sub">Sube un PDF, pega texto o ingresa una URL para que RADAR lo analice</div>
+    <input type="file" id="fabFile" accept=".pdf,.txt" style="display:none" onchange="handleFabFile(event)">
+    <label for="fabFile" class="fab-file">📎 Click para subir archivo PDF o TXT</label>
+    <textarea class="fab-textarea" id="fabText" placeholder="O pega aquí el texto que quieres analizar..."></textarea>
+    <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px">Tipo de análisis:</div>
+    <div class="fab-actions" id="fabActions">
+      <button class="fab-action-btn active" data-mode="resumen" onclick="setFabMode('resumen',this)">📋 Resumen</button>
+      <button class="fab-action-btn" data-mode="clave" onclick="setFabMode('clave',this)">📌 Lo clave</button>
+      <button class="fab-action-btn" data-mode="afecta" onclick="setFabMode('afecta',this)">🔮 ¿Cómo me afecta?</button>
+      <button class="fab-action-btn" data-mode="accion" onclick="setFabMode('accion',this)">⚡ Tomar acción</button>
+    </div>
+    <button class="fab-submit" onclick="analyzeFab()">Analizar</button>
+    <button class="fab-close" onclick="closeFab()">Cerrar</button>
+    <div class="fab-result" id="fabResult" style="display:none"></div>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.min.js"></script>
 <script>
-let API_KEY='',currentSection='config',criticalOnly=false,cache={},itemStore={};
+let API_KEY='',currentSection='config',criticalOnly=false,threatOnly=false,cache={},itemStore={};
 let favorites=JSON.parse(localStorage.getItem('radar_favs')||'{}');
 let readItems=JSON.parse(localStorage.getItem('radar_read')||'{}');
 let notes=JSON.parse(localStorage.getItem('radar_notes')||'{}');
@@ -208,6 +249,7 @@ function loadSection(s){if(s==='favoritos')return renderFavorites();if(s==='conf
 function refreshCurrent(){const dk=document.getElementById('dateInput').value;delete cache[currentSection+'_'+dk];loadSection(currentSection)}
 document.getElementById('dateInput').addEventListener('change',()=>{if(currentSection!=='config'&&currentSection!=='favoritos')loadSection(currentSection)});
 function toggleCriticalFilter(){criticalOnly=!criticalOnly;document.getElementById('criticalFilter').classList.toggle('active',criticalOnly);if(currentSection!=='config'&&currentSection!=='favoritos')loadSection(currentSection)}
+function toggleThreatFilter(){threatOnly=!threatOnly;document.getElementById('threatFilter').classList.toggle('active',threatOnly);if(currentSection!=='config'&&currentSection!=='favoritos')loadSection(currentSection);else if(currentSection==='favoritos')renderFavorites()}
 async function callClaude(p,sys,deep){
   const m=deep?'claude-sonnet-4-5':'claude-haiku-4-5-20251001';
   const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:m,max_tokens:4096,system:sys,tools:[{type:'web_search_20250305',name:'web_search',max_uses:3}],messages:[{role:'user',content:p}]})});
@@ -238,7 +280,9 @@ function showLoading(s){const sec=SECTIONS[s];document.getElementById('contentAr
 function renderResults(items){
   const c=document.getElementById('contentArea');
   if(!items||!items.length){c.innerHTML='<div class="empty-state"><div class="empty-icon">📭</div><div class="empty-title">Sin resultados</div><div class="empty-sub">Intenta otra fecha o actualiza</div></div>';return}
-  let f=items;if(criticalOnly){f=items.filter(i=>i.urgency==='critical'||i.urgency==='threat');if(!f.length){c.innerHTML='<div class="empty-state"><div class="empty-icon">✅</div><div class="empty-title">Sin alertas críticas</div><div class="empty-sub">Todo tranquilo. Desactiva el filtro para ver todo.</div></div>';return}}
+  let f=items;
+  if(threatOnly){f=f.filter(i=>i.urgency==='threat');if(!f.length){c.innerHTML='<div class="empty-state"><div class="empty-icon">✅</div><div class="empty-title">Sin amenazas detectadas</div><div class="empty-sub">No hay amenazas directas. Desactiva el filtro para ver todo.</div></div>';return}}
+  if(criticalOnly){f=f.filter(i=>i.urgency==='critical'||i.urgency==='threat');if(!f.length){c.innerHTML='<div class="empty-state"><div class="empty-icon">✅</div><div class="empty-title">Sin alertas críticas</div><div class="empty-sub">Todo tranquilo. Desactiva el filtro para ver todo.</div></div>';return}}
   c.innerHTML='<div class="cards-grid">'+f.map(i=>renderCard(i)).join('')+'</div>';updateFavCount();
 }
 function renderCard(item){
@@ -260,6 +304,7 @@ function renderCard(item){
       '<button class="card-btn" onclick="toggleNote(\''+id+'\')">📝 Nota</button>'+
       '<button class="card-btn impact-btn" onclick="analyzeImpact(\''+id+'\')">🔮 ¿Cómo me afecta?</button>'+
       '<button class="card-btn" style="border-color:var(--cyan);color:var(--cyan)" onclick="extractKey(\''+id+'\')">📌 Lo clave</button>'+
+      '<button class="card-btn" style="border-color:var(--amber);color:var(--amber)" onclick="takeAction(\''+id+'\')">⚡ Tomar acción</button>'+
     '</div>'+
     '<div class="card-note" id="note-'+id+'"><textarea placeholder="Escribe tu nota aquí..." id="notetext-'+id+'">'+note+'</textarea><button class="note-save" onclick="saveNote(\''+id+'\')">Guardar nota</button></div>'+
     '<div class="card-note" id="key-'+id+'" style="display:none;border-color:var(--cyan)"><div id="keytext-'+id+'" style="font-size:12px;color:var(--text-secondary);line-height:1.6"></div></div>'+
@@ -294,7 +339,26 @@ async function extractKey(id){
     keyText.innerHTML='<div style="white-space:pre-wrap;line-height:1.6">'+r+'</div>';
   }catch(e){keyText.innerHTML='Error: '+e.message}
 }
-function closeImpactModal(){document.getElementById('impactModal').classList.remove('open')}
+async function takeAction(id){
+  const item=itemStore[id]||favorites[id]||{};
+  const title=item.title||'',summary=item.summary||'';
+  const modal=document.getElementById('impactModal');
+  document.querySelector('#impactModal .modal-title').textContent='⚡ Tomar acción';
+  document.querySelector('#impactModal .modal-title').style.color='var(--amber)';
+  document.getElementById('impactSubtitle').textContent=title;
+  modal.classList.add('open');
+  const c=document.getElementById('impactContent');
+  c.innerHTML='<div class="loading-container"><div class="radar-spinner"></div><div class="loading-text">Generando plan de acción...</div></div>';
+  try{
+    const r=await callClaude('Dame un plan de acción concreto y ejecutable para esta noticia:\n\nNOTICIA: '+title+'\nRESUMEN: '+summary+'\n\nMi negocio: Ecommerce COD Colombia, suplementos salud vía Meta Ads y WhatsApp, Dropi, ENVÍA/Interrapidísimo.\n\nResponde en español con pasos numerados y específicos:\n\n⚡ ACCIÓN INMEDIATA (qué hacer en las próximas 24 horas)\n📋 ACCIÓN ESTA SEMANA (qué implementar antes de 7 días)\n🎯 RESULTADO ESPERADO (qué debe pasar si ejecutas bien)\n\nSé directo. Pasos concretos. Sin explicación larga. Listo para ejecutar.','Action-oriented strategic advisor. Spanish. Concrete steps only.',true);
+    c.innerHTML='<div style="white-space:pre-wrap;line-height:1.7;">'+r+'</div>';
+  }catch(e){c.innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">'+e.message+'</div></div>'}
+}
+function closeImpactModal(){
+  document.getElementById('impactModal').classList.remove('open');
+  document.querySelector('#impactModal .modal-title').textContent='¿Cómo me afecta esto?';
+  document.querySelector('#impactModal .modal-title').style.color='var(--purple)';
+}
 function renderFavorites(){
   const c=document.getElementById('contentArea'),fl=Object.values(favorites);
   if(!fl.length){c.innerHTML='<div class="empty-state"><div class="empty-icon">⭐</div><div class="empty-title">Sin favoritos</div><div class="empty-sub">Guarda noticias, videos o posts. Los favoritos no gastan tokens.</div></div>';return}
@@ -331,6 +395,52 @@ async function globalSearch(){
 }
 function saveKeywords(){localStorage.setItem('radar_keywords',document.getElementById('keywordsInput')?.value||'');alert('Keywords guardadas')}
 function clearAllData(){if(!confirm('¿Borrar todos los datos?'))return;favorites={};readItems={};notes={};cache={};localStorage.removeItem('radar_favs');localStorage.removeItem('radar_read');localStorage.removeItem('radar_notes');updateFavCount();alert('Datos borrados')}
+
+// === FAB (Floating PDF/Text Analyzer) ===
+let fabMode='resumen';
+if(typeof pdfjsLib!=='undefined'){pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.worker.min.js'}
+function openFab(){document.getElementById('fabModal').classList.add('open')}
+function closeFab(){document.getElementById('fabModal').classList.remove('open');document.getElementById('fabResult').style.display='none'}
+function setFabMode(mode,btn){fabMode=mode;document.querySelectorAll('#fabActions .fab-action-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}
+async function handleFabFile(event){
+  const file=event.target.files[0];if(!file)return;
+  const label=document.querySelector('label[for="fabFile"]');
+  label.textContent='⏳ Procesando '+file.name+'...';
+  try{
+    let text='';
+    if(file.type==='application/pdf'||file.name.endsWith('.pdf')){
+      if(typeof pdfjsLib==='undefined'){label.textContent='❌ Error cargando lector PDF';return}
+      const arrayBuffer=await file.arrayBuffer();
+      const pdf=await pdfjsLib.getDocument({data:arrayBuffer}).promise;
+      for(let i=1;i<=pdf.numPages;i++){
+        const page=await pdf.getPage(i);
+        const content=await page.getTextContent();
+        text+=content.items.map(it=>it.str).join(' ')+'\n';
+      }
+    }else{text=await file.text()}
+    document.getElementById('fabText').value=text.substring(0,15000);
+    label.textContent='✅ '+file.name+' cargado ('+text.length+' caracteres)';
+  }catch(e){label.textContent='❌ Error: '+e.message}
+}
+async function analyzeFab(){
+  const text=document.getElementById('fabText').value.trim();
+  if(!text){alert('Pega texto o sube un archivo primero');return}
+  const resultDiv=document.getElementById('fabResult');
+  resultDiv.style.display='block';
+  resultDiv.innerHTML='<div class="loading-container" style="padding:20px 0"><div class="radar-spinner" style="width:30px;height:30px"></div><div class="loading-text">Analizando...</div></div>';
+  const prompts={
+    resumen:'Haz un resumen claro y conciso en español de este contenido. Estructura: puntos principales, datos clave, conclusiones.',
+    clave:'Extrae lo más importante de este contenido en español. Dame: 3-5 puntos clave, dato más importante, fuente si aparece. Sé conciso.',
+    afecta:'Analiza cómo este contenido afecta mi negocio en español. Mi negocio: Ecommerce COD Colombia, suplementos salud vía Meta Ads y WhatsApp. Responde con: IMPACTO DIRECTO, ACCIONES INMEDIATAS, OPORTUNIDADES, RIESGOS. Específico, sin relleno.',
+    accion:'Dame un plan de acción concreto en español basado en este contenido. Mi negocio: Ecommerce COD Colombia, suplementos vía Meta Ads y WhatsApp. Responde con: ACCIÓN INMEDIATA (24h), ACCIÓN ESTA SEMANA (7 días), RESULTADO ESPERADO. Pasos específicos, listo para ejecutar.'
+  };
+  const deepModes=['afecta','accion'];
+  try{
+    const r=await callClaude(prompts[fabMode]+'\n\nCONTENIDO:\n'+text,'Analista de inteligencia. Respuesta en español. Directo y específico.',deepModes.includes(fabMode));
+    resultDiv.innerHTML=r;
+  }catch(e){resultDiv.innerHTML='<div style="color:var(--red)">Error: '+e.message+'</div>'}
+}
+
 updateFavCount();
 </script>
 </body>
