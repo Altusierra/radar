@@ -251,36 +251,161 @@ const SECTIONS={
   // AMENAZAS (sidebar)
   amenazas:{title:'🚨 Amenazas',icon:'🚨',query:'amenazas',loading:'Detectando amenazas activas...'},
   // PERSONAL
+  // META ADS - NEW
+  'meta-scaling':{title:'📘 Meta Ads · Escalado (CBO/ABO)',icon:'📘',query:'Meta Facebook Ads scaling CBO Campaign Budget Optimization ABO ad set budget Surescale horizontal vertical',loading:'Buscando escalado Meta...'},
+  'meta-audiences':{title:'📘 Meta Ads · Audiencias y Lookalikes',icon:'📘',query:'Meta Facebook Ads audiences Lookalike Custom Saved targeting strategies 2026',loading:'Buscando audiencias...'},
+  'meta-pixel':{title:'📘 Meta Ads · Pixel y CAPI',icon:'📘',query:'Meta Pixel Conversions API CAPI events tracking iOS 14.5 attribution',loading:'Buscando Pixel y CAPI...'},
+  'meta-bidding':{title:'📘 Meta Ads · Pujas y presupuesto',icon:'📘',query:'Meta Facebook Ads bid strategies budget rules cost cap minimum ROAS lowest cost',loading:'Buscando pujas y presupuesto...'},
+  'meta-abtesting':{title:'📘 Meta Ads · A/B Testing',icon:'📘',query:'Meta Facebook Ads A/B testing split testing multivariate creative testing best practices',loading:'Buscando A/B testing...'},
+  'meta-catalog':{title:'📘 Meta Ads · Catálogos y DPA',icon:'📘',query:'Meta Facebook Dynamic Product Ads DPA catalog feed advantage shopping',loading:'Buscando catálogos y DPA...'},
+  'meta-learning':{title:'📘 Meta Ads · Optimización aprendizaje',icon:'📘',query:'Meta Facebook Ads learning phase optimization algorithm reset 50 conversions',loading:'Buscando optimización...'},
+  'meta-advantage':{title:'📘 Meta Ads · Advantage+ campaigns',icon:'📘',query:'Meta Advantage Plus Shopping Campaigns ASC advantage audience automated',loading:'Buscando Advantage+...'},
+  'meta-placements':{title:'📘 Meta Ads · Placements',icon:'📘',query:'Meta Facebook Ads placements Reels Stories Feed Marketplace audience network',loading:'Buscando placements...'},
+  'meta-attribution':{title:'📘 Meta Ads · Atribución y métricas',icon:'📘',query:'Meta Facebook Ads attribution window aggregated event measurement ROAS CPM CTR',loading:'Buscando atribución...'},
+  'meta-discover':{title:'📘 Meta Ads · 🔍 Descubrir',icon:'📘',query:'Meta Facebook Ads emerging techniques new features 2026 unknown tactics advanced',loading:'Descubriendo Meta Ads...'},
+  // TIKTOK NEW
+  'tiktok-algorithm':{title:'🎵 TikTok Ads · Algoritmo',icon:'🎵',query:'TikTok algorithm For You Page FYP ranking signals 2026',loading:'Buscando algoritmo TikTok...'},
+  'tiktok-spark':{title:'🎵 TikTok Ads · Spark Ads',icon:'🎵',query:'TikTok Spark Ads organic boost authentic content advertising',loading:'Buscando Spark Ads...'},
+  'tiktok-smart':{title:'🎵 TikTok Ads · Smart Performance',icon:'🎵',query:'TikTok Smart Performance Campaigns SPC automation AI driven',loading:'Buscando Smart Performance...'},
+  'tiktok-pixel':{title:'🎵 TikTok Ads · Pixel y eventos',icon:'🎵',query:'TikTok Pixel Events API EAPI conversion tracking ecommerce',loading:'Buscando Pixel TikTok...'},
+  'tiktok-creators':{title:'🎵 TikTok Ads · Creator Marketplace',icon:'🎵',query:'TikTok Creator Marketplace influencer partnership UGC ecommerce',loading:'Buscando creators...'},
+  'tiktok-vbo':{title:'🎵 TikTok Ads · VBO y bidding',icon:'🎵',query:'TikTok Value-Based Optimization VBO bidding strategies cost cap',loading:'Buscando VBO...'},
+  'tiktok-ugc':{title:'🎵 TikTok Ads · UGC y creators',icon:'🎵',query:'TikTok UGC user generated content native ads creator collaborations ecommerce',loading:'Buscando UGC...'},
+  'tiktok-discover':{title:'🎵 TikTok Ads · 🔍 Descubrir',icon:'🎵',query:'TikTok Ads emerging techniques new features unknown tactics 2026',loading:'Descubriendo TikTok...'},
+  // GOOGLE NEW
+  'google-pmax':{title:'🔍 Google Ads · Performance Max',icon:'🔍',query:'Google Performance Max PMax campaigns automation asset groups',loading:'Buscando Performance Max...'},
+  'google-search':{title:'🔍 Google Ads · Search Ads',icon:'🔍',query:'Google Search Ads keywords match types Responsive Search Ads',loading:'Buscando Search Ads...'},
+  'google-shopping':{title:'🔍 Google Ads · Shopping Ads',icon:'🔍',query:'Google Shopping Ads Merchant Center product feed optimization',loading:'Buscando Shopping...'},
+  'google-display':{title:'🔍 Google Ads · Display y YouTube',icon:'🔍',query:'Google Display Network YouTube Ads video advertising targeting',loading:'Buscando Display/YouTube...'},
+  'google-bidding':{title:'🔍 Google Ads · Smart Bidding',icon:'🔍',query:'Google Smart Bidding tCPA tROAS Maximize Conversions strategies',loading:'Buscando Smart Bidding...'},
+  'google-quality':{title:'🔍 Google Ads · Quality Score',icon:'🔍',query:'Google Ads Quality Score ad relevance landing page experience CTR optimization',loading:'Buscando Quality Score...'},
+  'google-keywords':{title:'🔍 Google Ads · Keywords y match',icon:'🔍',query:'Google Ads keyword research match types broad phrase exact negative',loading:'Buscando keywords...'},
+  'google-attribution':{title:'🔍 Google Ads · Atribución',icon:'🔍',query:'Google Ads attribution model data driven last click conversion paths',loading:'Buscando atribución...'},
+  'google-discover':{title:'🔍 Google Ads · 🔍 Descubrir',icon:'🔍',query:'Google Ads emerging features new tools unknown tactics 2026',loading:'Descubriendo Google Ads...'},
+  // WHATSAPP NEW
+  'whatsapp-flows':{title:'💬 WhatsApp · Flows',icon:'💬',query:'WhatsApp Flows forms interactive forms in-chat experiences API',loading:'Buscando WhatsApp Flows...'},
+  'whatsapp-ctw':{title:'💬 WhatsApp · Click-to-WhatsApp',icon:'💬',query:'Click to WhatsApp Ads CTW Meta integration conversion tracking',loading:'Buscando CTW Ads...'},
+  'whatsapp-catalog':{title:'💬 WhatsApp · Catálogos',icon:'💬',query:'WhatsApp Business catalog products commerce shopping experience',loading:'Buscando catálogos...'},
+  'whatsapp-templates':{title:'💬 WhatsApp · Plantillas y aprobaciones',icon:'💬',query:'WhatsApp template messages approvals categories marketing utility authentication',loading:'Buscando plantillas...'},
+  'whatsapp-bots':{title:'💬 WhatsApp · Chatbots con IA',icon:'💬',query:'WhatsApp chatbots AI ChatGPT GPT-4 sales automation conversational',loading:'Buscando chatbots IA...'},
+  'whatsapp-tracking':{title:'💬 WhatsApp · Pixel y tracking',icon:'💬',query:'WhatsApp tracking conversion attribution click-to-chat analytics',loading:'Buscando tracking...'},
+  'whatsapp-broadcast':{title:'💬 WhatsApp · Listas de difusión',icon:'💬',query:'WhatsApp broadcast lists groups marketing campaigns segmentation',loading:'Buscando difusión...'},
+  'whatsapp-discover':{title:'💬 WhatsApp · 🔍 Descubrir',icon:'💬',query:'WhatsApp Business emerging features new tools unknown tactics 2026',loading:'Descubriendo WhatsApp...'},
+  // SHOPIFY NEW
+  'shopify-checkout':{title:'🛒 Shopify · Conversión y checkout',icon:'🛒',query:'Shopify checkout optimization conversion rate apps best practices',loading:'Buscando checkout...'},
+  'shopify-email':{title:'🛒 Shopify · Email marketing',icon:'🛒',query:'Shopify email marketing Klaviyo Mailchimp flows automation abandoned cart',loading:'Buscando email marketing...'},
+  'shopify-reviews':{title:'🛒 Shopify · Reviews y prueba social',icon:'🛒',query:'Shopify reviews apps Loox Judge me Yotpo social proof user generated',loading:'Buscando reviews...'},
+  'shopify-cod':{title:'🛒 Shopify · Integraciones COD',icon:'🛒',query:'Shopify cash on delivery COD apps Latin America Colombia integrations',loading:'Buscando integraciones COD...'},
+  'shopify-theme':{title:'🛒 Shopify · Theme y diseño',icon:'🛒',query:'Shopify themes design conversion optimization Dawn Impulse Prestige',loading:'Buscando themes...'},
+  'shopify-analytics':{title:'🛒 Shopify · Analytics y dashboards',icon:'🛒',query:'Shopify analytics reports dashboards Triple Whale Polar metrics',loading:'Buscando analytics...'},
+  'shopify-headless':{title:'🛒 Shopify · Headless commerce',icon:'🛒',query:'Shopify Hydrogen headless commerce Storefront API frontend',loading:'Buscando headless...'},
+  'shopify-discover':{title:'🛒 Shopify · 🔍 Descubrir',icon:'🛒',query:'Shopify emerging apps tools features unknown tactics 2026',loading:'Descubriendo Shopify...'},
+  // PINTEREST NEW
+  'pinterest-ads':{title:'📌 Pinterest · Pinterest Ads',icon:'📌',query:'Pinterest Ads campaigns advertising strategies ecommerce conversion',loading:'Buscando Pinterest Ads...'},
+  'pinterest-organic':{title:'📌 Pinterest · Crecimiento orgánico',icon:'📌',query:'Pinterest organic growth strategies pins boards algorithm',loading:'Buscando orgánico Pinterest...'},
+  'pinterest-ideapins':{title:'📌 Pinterest · Idea Pins',icon:'📌',query:'Pinterest Idea Pins video stories engagement reach',loading:'Buscando Idea Pins...'},
+  'pinterest-seo':{title:'📌 Pinterest · SEO',icon:'📌',query:'Pinterest SEO keywords pin optimization search ranking',loading:'Buscando SEO Pinterest...'},
+  'pinterest-discover':{title:'📌 Pinterest · 🔍 Descubrir',icon:'📌',query:'Pinterest emerging features unknown tactics 2026',loading:'Descubriendo Pinterest...'},
+  // ECOMMERCE NEW
+  'ecom-aov':{title:'📦 Ecommerce · AOV y upselling',icon:'📦',query:'ecommerce AOV average order value upselling cross-selling bundles',loading:'Buscando AOV...'},
+  'ecom-checkout':{title:'📦 Ecommerce · Conversión y checkout',icon:'📦',query:'ecommerce conversion rate optimization CRO checkout abandonment cart',loading:'Buscando conversión...'},
+  'ecom-payments':{title:'📦 Ecommerce · Procesamiento de pagos',icon:'📦',query:'ecommerce payment processing gateways Latin America Colombia COD methods',loading:'Buscando pagos...'},
+  'ecom-metrics':{title:'📦 Ecommerce · Métricas y dashboards',icon:'📦',query:'ecommerce metrics KPI dashboards CAC LTV ROAS conversion rates',loading:'Buscando métricas...'},
+  'ecom-competition':{title:'📦 Ecommerce · Análisis competencia',icon:'📦',query:'ecommerce competitor analysis spy tools market research strategies',loading:'Buscando competencia...'},
+  'ecom-ltv':{title:'📦 Ecommerce · Customer LTV',icon:'📦',query:'ecommerce customer lifetime value LTV retention strategies recurring',loading:'Buscando LTV...'},
+  'ecom-subscription':{title:'📦 Ecommerce · Subscription models',icon:'📦',query:'ecommerce subscription models recurring revenue Recharge Bold',loading:'Buscando subscriptions...'},
+  'ecom-pricing':{title:'📦 Ecommerce · Pricing strategies',icon:'📦',query:'ecommerce pricing psychology strategies anchor decoy bundle discount',loading:'Buscando pricing...'},
+  'ecom-discover':{title:'📦 Ecommerce · 🔍 Descubrir',icon:'📦',query:'ecommerce emerging models trends unknown tactics 2026',loading:'Descubriendo Ecommerce...'},
+  // COPYWRITING NEW
+  'copy-vsl':{title:'✍️ Copy · VSL',icon:'✍️',query:'video sales letter VSL direct response copywriting scripts structure',loading:'Buscando VSL...'},
+  'copy-email':{title:'✍️ Copy · Email copy',icon:'✍️',query:'email copywriting direct response sequences subject lines hooks',loading:'Buscando email copy...'},
+  'copy-headlines':{title:'✍️ Copy · Headlines ganadores',icon:'✍️',query:'winning headlines direct response advertising David Ogilvy John Caples examples',loading:'Buscando headlines...'},
+  'copy-ctas':{title:'✍️ Copy · CTAs que convierten',icon:'✍️',query:'high converting call to action CTA copy direct response button text',loading:'Buscando CTAs...'},
+  'copy-bigidea':{title:'✍️ Copy · Big idea hunting',icon:'✍️',query:'big idea direct response copywriting concept hunting Gary Halbert Eugene Schwartz',loading:'Buscando big ideas...'},
+  'copy-avatar':{title:'✍️ Copy · Avatar research',icon:'✍️',query:'customer avatar research persona direct response copywriting techniques',loading:'Buscando avatar research...'},
+  'copy-story':{title:'✍️ Copy · Storytelling',icon:'✍️',query:'storytelling direct response copywriting narrative structures hero journey',loading:'Buscando storytelling...'},
+  'copy-format':{title:'✍️ Copy · Long form vs short form',icon:'✍️',query:'long form short form copywriting when to use direct response',loading:'Buscando formatos copy...'},
+  'copy-discover':{title:'✍️ Copy · 🔍 Descubrir',icon:'✍️',query:'copywriting emerging techniques unknown frameworks 2026 advanced',loading:'Descubriendo Copy...'},
+  // AI NEW
+  'ai-creative':{title:'🤖 AI · Creativos (video/imagen)',icon:'🤖',query:'AI creative generation Midjourney DALL-E Sora Runway video image ads',loading:'Buscando AI creativos...'},
+  'ai-copy':{title:'🤖 AI · Copy con IA',icon:'🤖',query:'AI copywriting ChatGPT Claude Jasper Copy.ai marketing content',loading:'Buscando AI copy...'},
+  'ai-voice':{title:'🤖 AI · Voice cloning',icon:'🤖',query:'AI voice cloning ElevenLabs voiceover ads VSL advertising',loading:'Buscando voice cloning...'},
+  'ai-automation':{title:'🤖 AI · Automatización',icon:'🤖',query:'AI automation workflows Zapier Make n8n marketing operations',loading:'Buscando automatización...'},
+  'ai-data':{title:'🤖 AI · Análisis de datos',icon:'🤖',query:'AI data analysis marketing insights ChatGPT data interpretation',loading:'Buscando AI data...'},
+  'ai-agents':{title:'🤖 AI · AI agents ecommerce',icon:'🤖',query:'AI agents autonomous ecommerce customer service sales operations 2026',loading:'Buscando AI agents...'},
+  'ai-prompt':{title:'🤖 AI · Prompt engineering',icon:'🤖',query:'prompt engineering techniques ChatGPT Claude best practices marketing',loading:'Buscando prompts...'},
+  'ai-discover':{title:'🤖 AI · 🔍 Descubrir',icon:'🤖',query:'AI marketing emerging tools unknown techniques 2026 breakthrough',loading:'Descubriendo AI...'},
+  // INTELIGENCIA NEW
+  'intel-hiring':{title:'🧠 Inteligencia · Hiring',icon:'🧠',query:'hiring ecommerce roles media buyer copywriter editor video Latin America',loading:'Buscando hiring...'},
+  'intel-legal':{title:'🧠 Inteligencia · Estructuras legales',icon:'🧠',query:'legal structures ecommerce LLC SAS Colombia LATAM offshore optimization',loading:'Buscando estructuras...'},
+  'intel-sourcing':{title:'🧠 Inteligencia · Sourcing',icon:'🧠',query:'sourcing suppliers Alibaba 1688 Mercado Libre private label supplements LATAM',loading:'Buscando sourcing...'},
+  'intel-discover':{title:'🧠 Inteligencia · 🔍 Descubrir',icon:'🧠',query:'COD ecommerce LATAM emerging strategies unknown tactics 2026',loading:'Descubriendo inteligencia...'},
+  // SEGURIDAD NEW
+  'sec-identity':{title:'🛡️ Seguridad · Identidades',icon:'🛡️',query:'Facebook identity verification ad accounts BM verified business documents',loading:'Buscando identidades...'},
+  'sec-payments':{title:'🛡️ Seguridad · Métodos de pago',icon:'🛡️',query:'Facebook ads payment methods cards safe billing thresholds',loading:'Buscando métodos pago...'},
+  'sec-agency':{title:'🛡️ Seguridad · Cuentas de agencia',icon:'🛡️',query:'Facebook agency ad accounts whitelabel partners spending limits',loading:'Buscando cuentas agencia...'},
+  'sec-cloaking':{title:'🛡️ Seguridad · Cloaking',icon:'🛡️',query:'Facebook cloaking ads technical landing page dynamic content',loading:'Buscando cloaking...'},
+  'sec-discover':{title:'🛡️ Seguridad · 🔍 Descubrir',icon:'🛡️',query:'Facebook Meta account security emerging techniques unknown 2026',loading:'Descubriendo seguridad...'},
+  // VIETNAM NEW
+  'vn-accounts':{title:'🇻🇳 Vietnam · Cuentas',icon:'🇻🇳',query:'Vietnam Facebook ad accounts buying sources marketplace MMO',loading:'Buscando cuentas VN...'},
+  'vn-winners':{title:'🇻🇳 Vietnam · Productos winners',icon:'🇻🇳',query:'Vietnam winning products ecommerce dropshipping ganadores MMO',loading:'Buscando winners VN...'},
+  'vn-payments':{title:'🇻🇳 Vietnam · Métodos de cobro',icon:'🇻🇳',query:'Vietnam payment methods international transfers cobrar dollars Vietnamese',loading:'Buscando cobros VN...'},
+  'vn-whitehat':{title:'🇻🇳 Vietnam · Whitehat vs Blackhat',icon:'🇻🇳',query:'Vietnam Facebook Ads whitehat blackhat ethical advertising techniques',loading:'Buscando whitehat/blackhat...'},
+  'vn-communities':{title:'🇻🇳 Vietnam · Comunidades MMO',icon:'🇻🇳',query:'Vietnam MMO communities forums Telegram Facebook groups Make Money Online',loading:'Buscando comunidades...'},
+  'vn-discover':{title:'🇻🇳 Vietnam · 🔍 Descubrir',icon:'🇻🇳',query:'Vietnam advertising emerging techniques unknown tactics 2026',loading:'Descubriendo Vietnam...'},
+  // GRANDES LIGAS NEW
+  'big-walmart':{title:'🏢 Walmart',icon:'🏢',query:'Walmart ecommerce strategies marketplace Walmart Connect advertising',loading:'Investigando Walmart...'},
+  'big-falabella':{title:'🏢 Falabella',icon:'🏢',query:'Falabella Colombia ecommerce marketplace seller strategies',loading:'Investigando Falabella...'},
+  'big-rappi':{title:'🏢 Rappi',icon:'🏢',query:'Rappi Colombia logistics last mile delivery ecommerce integration',loading:'Investigando Rappi...'},
+  'big-dtc':{title:'🏢 DTC Brands ganadoras',icon:'🏢',query:'DTC direct to consumer brands winning case studies Allbirds Glossier Casper',loading:'Investigando DTC...'},
+  'big-temu':{title:'🏢 Temu',icon:'🏢',query:'Temu ecommerce strategy growth advertising spending model',loading:'Investigando Temu...'},
+  'big-discover':{title:'🏢 Grandes Ligas · 🔍 Descubrir',icon:'🏢',query:'ecommerce giants emerging companies unknown strategies 2026',loading:'Descubriendo grandes ligas...'},
+  // LOGISTICA NEW
+  'log-negotiation':{title:'🚚 Logística · Negociación',icon:'🚚',query:'carrier negotiation rates volume ecommerce Colombia ENVIA Interrapidisimo',loading:'Buscando negociación...'},
+  'log-returns':{title:'🚚 Logística · Devoluciones',icon:'🚚',query:'ecommerce returns COD cash on delivery management reduce returns',loading:'Buscando devoluciones...'},
+  'log-packaging':{title:'🚚 Logística · Empaque y branding',icon:'🚚',query:'ecommerce packaging branding unboxing experience COD supplements',loading:'Buscando empaque...'},
+  'log-orders':{title:'🚚 Logística · Procesamiento órdenes',icon:'🚚',query:'order processing fulfillment ecommerce automation COD Latin America',loading:'Buscando procesamiento...'},
+  'log-wms':{title:'🚚 Logística · WMS y sistemas',icon:'🚚',query:'warehouse management system WMS ecommerce inventory tracking software',loading:'Buscando WMS...'},
+  'log-discover':{title:'🚚 Logística · 🔍 Descubrir',icon:'🚚',query:'logistics ecommerce emerging tools unknown techniques 2026 LATAM',loading:'Descubriendo logística...'},
+  // PATRONES TEMPORALES
+  'pat-30d':{title:'📈 Patrones · Tendencias 30 días',icon:'📈',query:'patrones',loading:'Detectando patrones 30 días...'},
+  'pat-60d':{title:'📈 Patrones · Patrones 60 días',icon:'📈',query:'patrones',loading:'Detectando patrones 60 días...'},
+  'pat-90d':{title:'📈 Patrones · Movimientos 90 días',icon:'📈',query:'patrones',loading:'Detectando movimientos 90 días...'},
+  'pat-momentum':{title:'📈 Patrones · Acelerando vs decayendo',icon:'📈',query:'patrones',loading:'Analizando momentum...'},
+  'pat-discover':{title:'📈 Patrones · 🔍 Descubrir',icon:'📈',query:'patrones',loading:'Descubriendo patrones ocultos...'},
   favoritos:{title:'⭐ Favoritos',icon:'⭐'},
   digest:{title:'📋 Digest semanal',icon:'📋',loading:'Generando digest semanal...'},
   config:{title:'⚙️ Configuración',icon:'⚙️'},
 };
 const NAV_GROUPS=[
   {label:'Plataformas',items:[
-    {id:'meta',icon:'📘',label:'Meta Ads',subs:['meta-news','meta-api','meta-policy','meta-creative']},
-    {id:'tiktok',icon:'🎵',label:'TikTok Ads',subs:['tiktok-news','tiktok-tools','tiktok-strategy']},
-    {id:'google',icon:'🔍',label:'Google Ads',subs:['google-news','google-tools']},
-    {id:'whatsapp',icon:'💬',label:'WhatsApp',subs:['whatsapp-news','whatsapp-api','whatsapp-sales','whatsapp-remarketing']},
-    {id:'shopify',icon:'🛒',label:'Shopify',subs:['shopify-news','shopify-apps']},
-    {id:'pinterest',icon:'📌',label:'Pinterest',subs:['pinterest-news']},
+    {id:'meta',icon:'📘',label:'Meta Ads',subs:['meta-news','meta-api','meta-policy','meta-creative','meta-scaling','meta-audiences','meta-pixel','meta-bidding','meta-abtesting','meta-catalog','meta-learning','meta-advantage','meta-placements','meta-attribution','meta-discover']},
+    {id:'tiktok',icon:'🎵',label:'TikTok Ads',subs:['tiktok-news','tiktok-tools','tiktok-strategy','tiktok-algorithm','tiktok-spark','tiktok-smart','tiktok-pixel','tiktok-creators','tiktok-vbo','tiktok-ugc','tiktok-discover']},
+    {id:'google',icon:'🔍',label:'Google Ads',subs:['google-news','google-tools','google-pmax','google-search','google-shopping','google-display','google-bidding','google-quality','google-keywords','google-attribution','google-discover']},
+    {id:'whatsapp',icon:'💬',label:'WhatsApp',subs:['whatsapp-news','whatsapp-api','whatsapp-sales','whatsapp-remarketing','whatsapp-flows','whatsapp-ctw','whatsapp-catalog','whatsapp-templates','whatsapp-bots','whatsapp-tracking','whatsapp-broadcast','whatsapp-discover']},
+    {id:'shopify',icon:'🛒',label:'Shopify',subs:['shopify-news','shopify-apps','shopify-checkout','shopify-email','shopify-reviews','shopify-cod','shopify-theme','shopify-analytics','shopify-headless','shopify-discover']},
+    {id:'pinterest',icon:'📌',label:'Pinterest',subs:['pinterest-news','pinterest-ads','pinterest-organic','pinterest-ideapins','pinterest-seo','pinterest-discover']},
   ]},
   {label:'Industria',items:[
-    {id:'ecom',icon:'📦',label:'Ecommerce / COD',subs:['ecom-news','ecom-latam','ecom-models']},
-    {id:'copy',icon:'✍️',label:'Copywriting',subs:['copy-frameworks','copy-hooks','copy-cases']},
-    {id:'ai',icon:'🤖',label:'AI Marketing',subs:['ai-tools','ai-strategy']},
+    {id:'ecom',icon:'📦',label:'Ecommerce / COD',subs:['ecom-news','ecom-latam','ecom-models','ecom-aov','ecom-checkout','ecom-payments','ecom-metrics','ecom-competition','ecom-ltv','ecom-subscription','ecom-pricing','ecom-discover']},
+    {id:'copy',icon:'✍️',label:'Copywriting',subs:['copy-frameworks','copy-hooks','copy-cases','copy-vsl','copy-email','copy-headlines','copy-ctas','copy-bigidea','copy-avatar','copy-story','copy-format','copy-discover']},
+    {id:'ai',icon:'🤖',label:'AI Marketing',subs:['ai-tools','ai-strategy','ai-creative','ai-copy','ai-voice','ai-automation','ai-data','ai-agents','ai-prompt','ai-discover']},
   ]},
   {label:'Estrategia',items:[
-    {id:'intel',icon:'🧠',label:'Inteligencia',subs:['intel-bm','intel-dropi','intel-dian','intel-tiktokshop','intel-scaling','intel-retention']},
-    {id:'sec',icon:'🛡️',label:'Seguridad Meta',subs:['sec-protection','sec-recovery','sec-contingency']},
+    {id:'intel',icon:'🧠',label:'Inteligencia',subs:['intel-bm','intel-dropi','intel-dian','intel-tiktokshop','intel-scaling','intel-retention','intel-hiring','intel-legal','intel-sourcing','intel-discover']},
+    {id:'sec',icon:'🛡️',label:'Seguridad Meta',subs:['sec-protection','sec-recovery','sec-contingency','sec-identity','sec-payments','sec-agency','sec-cloaking','sec-discover']},
   ]},
   {label:'Vietnam Tactics',items:[
-    {id:'vn',icon:'🇻🇳',label:'Vietnam',subs:['vn-tactics','vn-youtube','vn-tools','vn-scale']},
+    {id:'vn',icon:'🇻🇳',label:'Vietnam',subs:['vn-tactics','vn-youtube','vn-tools','vn-scale','vn-accounts','vn-winners','vn-payments','vn-whitehat','vn-communities','vn-discover']},
   ]},
   {label:'Grandes Ligas',items:[
-    {id:'big',icon:'🏢',label:'Grandes Ligas',subs:['big-amazon','big-mercadolibre','big-shopee','big-alibaba']},
+    {id:'big',icon:'🏢',label:'Grandes Ligas',subs:['big-amazon','big-mercadolibre','big-shopee','big-alibaba','big-walmart','big-falabella','big-rappi','big-dtc','big-temu','big-discover']},
   ]},
   {label:'Logística',items:[
-    {id:'log',icon:'🚚',label:'Logística',subs:['log-carriers','log-coverage','log-metrics','log-alternatives']},
+    {id:'log',icon:'🚚',label:'Logística',subs:['log-carriers','log-coverage','log-metrics','log-alternatives','log-negotiation','log-returns','log-packaging','log-orders','log-wms','log-discover']},
+  ]},
+  {label:'Patrones Temporales',items:[
+    {id:'pat',icon:'📈',label:'Patrones',subs:['pat-30d','pat-60d','pat-90d','pat-momentum','pat-discover']},
   ]},
   {label:'Contenido',items:[
     {id:'youtube',icon:'🎥',label:'YouTube',sub:'youtube'},
@@ -405,12 +530,24 @@ async function fetchData(section,dateStr){
   else if(section.startsWith('sec-')){
     p='Search latest about: '+sec.query+'. '+dc+'\n\nReturn JSON array 5-7 items: {"id":"uid","title":"SPANISH","summary":"2-3 sentences SPANISH actionable","source":"source","url":"url","urgency":"critical|informative"}\n\nFocus on Facebook/Meta account security for advertisers.';
   }
+  // Patrones Temporales
+  else if(section.startsWith('pat-')){
+    const patPrompts={
+      'pat-30d':'Analyze TEMPORAL PATTERNS from the last 30 days across marketing, ecommerce, Meta Ads, TikTok Ads, WhatsApp Business, AI marketing. Identify what is GROWING FAST this month — emerging trends, new techniques going viral, features being heavily adopted, products taking off. For each pattern explain: WHY it is happening NOW, who is leading the trend, and what to do about it.',
+      'pat-60d':'Analyze 60-DAY PATTERNS forming across marketing, ecommerce, paid ads, AI tools. Identify patterns that took 1-2 months to form — not just news, but recurring themes. What concepts/techniques have been mentioned multiple times across different sources? What is moving from "edge" to "mainstream"? For each pattern explain the evolution.',
+      'pat-90d':'Analyze 90-DAY STRUCTURAL MOVEMENTS in marketing, ecommerce, Meta/Google/TikTok ecosystems. Focus on FUNDAMENTAL CHANGES — not news, but shifts in how things work. What has changed in the platforms\' philosophy? What strategies that worked 3 months ago no longer work? What new strategies have emerged?',
+      'pat-momentum':'Identify what is ACCELERATING vs DECAYING in ecommerce and paid advertising right now. List winners gaining momentum (techniques, tools, platforms, products) AND losers losing relevance (declining techniques, dying tools, fading trends). Be specific with examples and timeframes.',
+      'pat-discover':'Find NON-OBVIOUS PATTERNS that most marketers are missing. Look for: weak signals (small mentions of new concepts), cross-platform patterns (same idea appearing across different platforms), counterintuitive trends (things growing against expectations), early warning signs (problems forming before being widely recognized). Be the analyst who sees what others don\'t.'
+    };
+    p=patPrompts[section]+'\n\nContext: COD ecommerce in Colombia, supplements via Meta Ads + WhatsApp. '+dc+'\n\nReturn JSON array 6-10 items: {"id":"uid","title":"SPANISH","summary":"3-4 sentences SPANISH explaining the pattern with specific examples and implications","source":"source","url":"url","date":"YYYY-MM-DD","urgency":"critical|informative|opportunity|threat"}\n\nEach item must be a PATTERN or TREND, not just a news item. Be specific. Use real names, real numbers, real timeframes.';
+  }
   // Default: any other section with a query
   else if(sec&&sec.query){
     p='Search latest news: '+sec.query+'. '+dc+'\n\nReturn JSON array 5-8 items: {"id":"uid","title":"SPANISH","summary":"2 sentences SPANISH","source":"name","url":"url","date":"YYYY-MM-DD","urgency":"critical|informative|opportunity|threat"}\n\nFocus: updates, features, policy changes, strategies. Be specific.';
   }
 
-  const text=await callClaude(p,SYS);
+  const useDeep=section.startsWith('pat-');
+  const text=await callClaude(p,SYS,useDeep);
   try{const c=text.replace(/```json\s*/g,'').replace(/```\s*/g,'').trim(),s=c.indexOf('['),e=c.lastIndexOf(']');if(s===-1||e===-1)throw new Error('No JSON');return JSON.parse(c.substring(s,e+1))}catch(e){console.error('Parse:',e,'Raw:',text);throw new Error('Error procesando. Intenta de nuevo.')}
 }
 function showLoading(s){const sec=SECTIONS[s];document.getElementById('contentArea').innerHTML='<div class="loading-container"><div class="radar-spinner"></div><div class="loading-text">'+(sec?.loading||'Cargando...')+'</div><div class="loading-sub">15-30 segundos</div></div>'}
