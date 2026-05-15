@@ -50,6 +50,14 @@ body{background:var(--bg-base);color:var(--text);font-family:var(--font);min-hei
 .card-top{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
 .card-badge{font-size:10px;font-family:var(--mono);padding:2px 8px;border-radius:4px;font-weight:500}
 .badge-critical{background:var(--red-dim);color:var(--red)}.badge-informative{background:var(--blue-dim);color:var(--blue)}.badge-opportunity{background:var(--accent-dim);color:var(--accent)}.badge-threat{background:var(--amber-dim);color:var(--amber)}
+.origin-badge{font-size:10px;font-family:var(--mono);padding:2px 7px;border-radius:4px;font-weight:500;display:inline-flex;align-items:center;gap:3px}
+.origin-original{background:#00e87b22;color:#00e87b;border:1px solid #00e87b55}
+.origin-replica{background:#f59e0b22;color:#f59e0b;border:1px solid #f59e0b55}
+.origin-aggregator{background:#ef444422;color:#ef4444;border:1px solid #ef444455;opacity:.85}
+.news-card.is-aggregator{opacity:.6}
+.origin-link{font-size:10px;color:var(--text-muted);margin-top:6px;font-family:var(--mono)}
+.origin-link a{color:var(--accent);text-decoration:none}
+.origin-link a:hover{text-decoration:underline}
 .card-source{font-size:11px;color:var(--text-muted);font-family:var(--mono)}
 .card-date{font-size:11px;color:var(--text-muted);margin-left:auto;font-family:var(--mono)}
 .card-title{font-size:15px;font-weight:500;line-height:1.4;margin-bottom:6px;color:var(--text)}
@@ -73,6 +81,16 @@ body{background:var(--bg-base);color:var(--text);font-family:var(--font);min-hei
 .modal-subtitle{font-size:12px;color:var(--text-muted);margin-bottom:16px}
 .modal-content{font-size:13px;color:var(--text-secondary);line-height:1.7}
 .modal-close{margin-top:16px;padding:8px 20px;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;color:var(--text-secondary);cursor:pointer;font-family:var(--font);font-size:13px}
+.chat-area{display:flex;flex-direction:column;gap:10px;max-height:400px;overflow-y:auto;padding:8px 0;margin-bottom:12px}
+.chat-msg{padding:10px 14px;border-radius:10px;font-size:13px;line-height:1.6;max-width:90%;white-space:pre-wrap;word-wrap:break-word}
+.chat-msg-assistant{background:var(--bg-card);color:var(--text);align-self:flex-start;border:1px solid var(--border-light)}
+.chat-msg-user{background:var(--amber-dim);color:var(--text);align-self:flex-end;border:1px solid var(--amber);max-width:80%}
+.chat-input-row{display:flex;gap:6px;margin-top:6px}
+.chat-input{flex:1;padding:10px 12px;background:var(--bg-input);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;font-family:var(--font);outline:none;resize:none;min-height:38px;max-height:100px}
+.chat-input:focus{border-color:var(--amber)}
+.chat-send{padding:8px 16px;background:var(--amber);color:var(--bg-base);border:none;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;font-family:var(--font)}
+.chat-send:disabled{opacity:.5;cursor:not-allowed}
+.chat-loading{padding:8px 14px;color:var(--text-muted);font-size:12px;font-style:italic}
 .loading-container{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 0}
 .radar-spinner{width:60px;height:60px;border-radius:50%;border:2px solid var(--border);border-top-color:var(--accent);animation:spin 1s linear infinite;margin-bottom:16px}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -145,6 +163,7 @@ body{background:var(--bg-base);color:var(--text);font-family:var(--font);min-hei
         <button class="topbar-refresh" onclick="refreshCurrent()">↻ Actualizar</button>
         <button class="topbar-filter" id="criticalFilter" onclick="toggleCriticalFilter()">⚡ Solo crítico</button>
         <button class="topbar-filter" id="threatFilter" onclick="toggleThreatFilter()" style="border-color:var(--red);color:var(--red)">🚨 Amenaza</button>
+        <button class="topbar-filter" id="originFilter" onclick="toggleOriginFilter()" style="border-color:var(--accent);color:var(--accent)">🎯 Solo origen</button>
       </div>
     </div>
     <div class="content" id="contentArea"></div>
@@ -180,7 +199,7 @@ body{background:var(--bg-base);color:var(--text);font-family:var(--font);min-hei
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.min.js"></script>
 <script>
-let API_KEY='',currentSection='config',criticalOnly=false,threatOnly=false,cache={},itemStore={};
+let API_KEY='',currentSection='config',criticalOnly=false,threatOnly=false,originOnly=false,cache={},itemStore={};
 let favorites=JSON.parse(localStorage.getItem('radar_favs')||'{}');
 let readItems=JSON.parse(localStorage.getItem('radar_read')||'{}');
 let notes=JSON.parse(localStorage.getItem('radar_notes')||'{}');
@@ -373,6 +392,28 @@ const SECTIONS={
   'pat-90d':{title:'📈 Patrones · Movimientos 90 días',icon:'📈',query:'patrones',loading:'Detectando movimientos 90 días...'},
   'pat-momentum':{title:'📈 Patrones · Acelerando vs decayendo',icon:'📈',query:'patrones',loading:'Analizando momentum...'},
   'pat-discover':{title:'📈 Patrones · 🔍 Descubrir',icon:'📈',query:'patrones',loading:'Descubriendo patrones ocultos...'},
+  // RUSSIA TACTICS
+  'ru-arbitrage':{title:'🇷🇺 Russia · Arbitraje de tráfico',icon:'🇷🇺',query:'Russia traffic arbitrage arbitrazh affiliate marketing performance media buying CPA',loading:'Buscando arbitraje...'},
+  'ru-antidetect':{title:'🇷🇺 Russia · Anti-detect browsers',icon:'🇷🇺',query:'Dolphin Anty Multilogin GoLogin Russian antidetect browser ad accounts farming',loading:'Buscando anti-detect...'},
+  'ru-cpa':{title:'🇷🇺 Russia · CPA networks rusas',icon:'🇷🇺',query:'Russian CPA networks LeadBit Adsterra M1-Shop Everad affiliate offers nutra',loading:'Buscando CPA networks...'},
+  'ru-spy':{title:'🇷🇺 Russia · Spy tools rusos',icon:'🇷🇺',query:'Russian spy tools AdHeart Publer FB Ads spy creative intelligence',loading:'Buscando spy tools...'},
+  'ru-accounts':{title:'🇷🇺 Russia · Cuentas y tarjetas',icon:'🇷🇺',query:'Russian Facebook ad accounts cards virtual prepaid agency accounts marketplace',loading:'Buscando cuentas/tarjetas...'},
+  'ru-antifraud':{title:'🇷🇺 Russia · Anti-fraude',icon:'🇷🇺',query:'Russian Facebook Meta antifraud bypass techniques anti-detection ads compliance',loading:'Buscando anti-fraude...'},
+  'ru-pharma':{title:'🇷🇺 Russia · Pharma / Nutra',icon:'🇷🇺',query:'Russian pharma nutra affiliate offers health supplements weight loss male enhancement',loading:'Buscando pharma/nutra...'},
+  'ru-whitehat':{title:'🇷🇺 Russia · Whitehat',icon:'🇷🇺',query:'Russian whitehat affiliate marketing legitimate practices compliance Meta TikTok',loading:'Buscando whitehat...'},
+  'ru-greyhat':{title:'🇷🇺 Russia · Greyhat / Blackhat',icon:'🇷🇺',query:'Russian greyhat blackhat affiliate marketing aggressive techniques arbitrage',loading:'Buscando greyhat...'},
+  'ru-ai':{title:'🇷🇺 Russia · AI y herramientas',icon:'🇷🇺',query:'Russian AI tools Yandex GPT Sber AI marketing creative generation Russian',loading:'Buscando AI rusas...'},
+  'ru-youtube':{title:'🇷🇺 Russia · YouTube ruso',icon:'🇷🇺',query:'Russian YouTube affiliate marketing tutorials arbitrazh kursy media buying',loading:'Buscando YouTube ruso...'},
+  'ru-forums':{title:'🇷🇺 Russia · Foros y Telegram',icon:'🇷🇺',query:'Russian Telegram channels forums affiliate marketing CPA arbitrazh communities',loading:'Buscando comunidades...'},
+  'ru-winners':{title:'🇷🇺 Russia · Productos winners',icon:'🇷🇺',query:'Russian winning products ecommerce dropshipping CPA offers verticals',loading:'Buscando winners RU...'},
+  'ru-casinos':{title:'🇷🇺 Russia · Casinos y betting',icon:'🇷🇺',query:'Russian iGaming casino betting affiliate marketing techniques traffic',loading:'Buscando iGaming...'},
+  'ru-prelanders':{title:'🇷🇺 Russia · Prelanders / Lendings',icon:'🇷🇺',query:'Russian prelanders lendings quiz funnels advertorials conversion COD pharma',loading:'Buscando prelanders...'},
+  'ru-callcenters':{title:'🇷🇺 Russia · Call centers COD',icon:'🇷🇺',query:'Russian Ukrainian call centers COD cash on delivery outsourced sales closing Spanish Latin America',loading:'Buscando call centers...'},
+  'ru-trackers':{title:'🇷🇺 Russia · Trackers profesionales',icon:'🇷🇺',query:'Keitaro Voluum trackers Russian server-side tracking affiliate marketing setup',loading:'Buscando trackers...'},
+  'ru-teams':{title:'🇷🇺 Russia · Estructura de equipos (komandy)',icon:'🇷🇺',query:'Russian affiliate marketing teams komandy structure roles media buyer designer',loading:'Buscando estructura equipos...'},
+  'ru-events':{title:'🇷🇺 Russia · Conferencias y eventos',icon:'🇷🇺',query:'Affiliate World Moscow MAC Conversion Conf Russian affiliate events 2026',loading:'Buscando eventos...'},
+  'ru-vertical':{title:'🇷🇺 Russia · Especialización vertical',icon:'🇷🇺',query:'Russian affiliate vertical specialization nutra gambling dating dominate one niche',loading:'Buscando especialización...'},
+  'ru-discover':{title:'🇷🇺 Russia · 🔍 Descubrir',icon:'🇷🇺',query:'Russian affiliate marketing emerging techniques unknown tactics 2026 advanced',loading:'Descubriendo Russia...'},
   favoritos:{title:'⭐ Favoritos',icon:'⭐'},
   digest:{title:'📋 Digest semanal',icon:'📋',loading:'Generando digest semanal...'},
   config:{title:'⚙️ Configuración',icon:'⚙️'},
@@ -398,6 +439,9 @@ const NAV_GROUPS=[
   {label:'Vietnam Tactics',items:[
     {id:'vn',icon:'🇻🇳',label:'Vietnam',subs:['vn-tactics','vn-youtube','vn-tools','vn-scale','vn-accounts','vn-winners','vn-payments','vn-whitehat','vn-communities','vn-discover']},
   ]},
+  {label:'Russia Tactics',items:[
+    {id:'ru',icon:'🇷🇺',label:'Russia',subs:['ru-arbitrage','ru-antidetect','ru-cpa','ru-spy','ru-accounts','ru-antifraud','ru-pharma','ru-whitehat','ru-greyhat','ru-ai','ru-youtube','ru-forums','ru-winners','ru-casinos','ru-prelanders','ru-callcenters','ru-trackers','ru-teams','ru-events','ru-vertical','ru-discover']},
+  ]},
   {label:'Grandes Ligas',items:[
     {id:'big',icon:'🏢',label:'Grandes Ligas',subs:['big-amazon','big-mercadolibre','big-shopee','big-alibaba','big-walmart','big-falabella','big-rappi','big-dtc','big-temu','big-discover']},
   ]},
@@ -420,6 +464,7 @@ const NAV_GROUPS=[
   ]},
 ];
 const TR='CRITICAL: ALL titles and summaries MUST be in Spanish. Translate everything from any language to Spanish. Keep original URLs.';
+const ORIGIN_RULE='IMPORTANT: For EACH item, identify the SOURCE ORIGIN by analyzing publication dates. Add these JSON fields to each item: "origin" with value "original" if this source is the first to publish (oldest date), "replica" if it cites/references an earlier source, or "aggregator" if it is a summary/listicle without clear primary source. If "replica" or "aggregator", also include "origin_source" (name of original publisher) and "origin_url" (URL of original) when known. Use chronology — older date = closer to origin.';
 function handleLogin(){const k=document.getElementById('apiKeyInput').value.trim();if(!k)return;API_KEY=k;sessionStorage.setItem('radar_key',k);document.getElementById('loginScreen').style.display='none';document.getElementById('app').classList.add('active');document.getElementById('dateInput').valueAsDate=new Date();renderSidebar();renderConfig()}
 function handleLogout(){sessionStorage.removeItem('radar_key');API_KEY='';document.getElementById('app').classList.remove('active');document.getElementById('loginScreen').style.display='flex';document.getElementById('apiKeyInput').value=''}
 (function(){const s=sessionStorage.getItem('radar_key');if(s){API_KEY=s;document.getElementById('loginScreen').style.display='none';document.getElementById('app').classList.add('active');document.getElementById('dateInput').valueAsDate=new Date();setTimeout(()=>{renderSidebar();renderConfig()},100)}})();
@@ -478,6 +523,7 @@ function refreshCurrent(){const dk=document.getElementById('dateInput').value;de
 document.getElementById('dateInput').addEventListener('change',()=>{if(currentSection!=='config'&&currentSection!=='favoritos')loadSection(currentSection)});
 function toggleCriticalFilter(){criticalOnly=!criticalOnly;document.getElementById('criticalFilter').classList.toggle('active',criticalOnly);if(currentSection!=='config'&&currentSection!=='favoritos')loadSection(currentSection)}
 function toggleThreatFilter(){threatOnly=!threatOnly;document.getElementById('threatFilter').classList.toggle('active',threatOnly);if(currentSection!=='config'&&currentSection!=='favoritos')loadSection(currentSection);else if(currentSection==='favoritos')renderFavorites()}
+function toggleOriginFilter(){originOnly=!originOnly;document.getElementById('originFilter').classList.toggle('active',originOnly);if(currentSection!=='config'&&currentSection!=='favoritos')loadSection(currentSection);else if(currentSection==='favoritos')renderFavorites()}
 async function callClaude(p,sys,deep){
   const m=deep?'claude-sonnet-4-5':'claude-haiku-4-5-20251001';
   const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:m,max_tokens:4096,system:sys,tools:[{type:'web_search_20250305',name:'web_search',max_uses:3}],messages:[{role:'user',content:p}]})});
@@ -486,7 +532,7 @@ async function callClaude(p,sys,deep){
 }
 async function fetchData(section,dateStr){
   const dc=dateStr?'Focus on news from '+dateStr+'.':'Focus on most recent news.';
-  const SYS='Marketing intelligence analyst. '+TR+' Respond ONLY with valid JSON array. No markdown, no backticks.';
+  const SYS='Marketing intelligence analyst. '+TR+' '+ORIGIN_RULE+' Respond ONLY with valid JSON array. No markdown, no backticks.';
   let p='';
   const sec=SECTIONS[section];
 
@@ -507,8 +553,12 @@ async function fetchData(section,dateStr){
     const vnTopic={'vn-tactics':'Vietnam Facebook Ads tactics techniques cloaking account structure',
                   'vn-youtube':'Vietnam YouTube tutorials Facebook Ads Vietnamese advertising MMO',
                   'vn-tools':'Vietnam Facebook Ads tools spy creative rotator account managers',
-                  'vn-scale':'Vietnam Facebook Ads horizontal scaling Business Manager cascade'}[section];
+                  'vn-scale':'Vietnam Facebook Ads horizontal scaling Business Manager cascade'}[section]||sec.query;
     p='Search for information about: '+vnTopic+'. Include techniques shared in Vietnamese communities. Any language. '+dc+'\n\nReturn JSON array 5-7 items: {"id":"uid","title":"SPANISH","summary":"2-3 sentences SPANISH","source":"source","url":"url","urgency":"informative|opportunity"}\n\nFocus on actionable techniques Vietnamese advertisers use that LATAM advertisers don\'t know.';
+  }
+  // Russia Tactics
+  else if(section.startsWith('ru-')){
+    p='Search for information about: '+sec.query+'. Include techniques shared in Russian-speaking affiliate marketing communities (Telegram, forums like Affbank, conferences like Affiliate World Moscow, MAC). Any language including Russian. '+dc+'\n\nReturn JSON array 5-8 items: {"id":"uid","title":"SPANISH","summary":"3 sentences SPANISH explaining the technique with specific names, tools, methods, or numbers","source":"source","url":"url","urgency":"critical|informative|opportunity"}\n\nFocus on techniques the Russian affiliate marketing (arbitrazh) community uses that LATAM operators don\'t know exist. Be specific — name actual tools, CPA networks, methods, and conferences.';
   }
   // Grandes Ligas
   else if(section.startsWith('big-')){
@@ -555,6 +605,7 @@ function renderResults(items){
   const c=document.getElementById('contentArea');
   if(!items||!items.length){c.innerHTML='<div class="empty-state"><div class="empty-icon">📭</div><div class="empty-title">Sin resultados</div><div class="empty-sub">Intenta otra fecha o actualiza</div></div>';return}
   let f=items;
+  if(originOnly){f=f.filter(i=>i.origin==='original');if(!f.length){c.innerHTML='<div class="empty-state"><div class="empty-icon">🎯</div><div class="empty-title">Sin fuentes originales</div><div class="empty-sub">No se identificaron fuentes originales en estos resultados. Desactiva el filtro para ver todo.</div></div>';return}}
   if(threatOnly){f=f.filter(i=>i.urgency==='threat');if(!f.length){c.innerHTML='<div class="empty-state"><div class="empty-icon">✅</div><div class="empty-title">Sin amenazas detectadas</div><div class="empty-sub">No hay amenazas directas. Desactiva el filtro para ver todo.</div></div>';return}}
   if(criticalOnly){f=f.filter(i=>i.urgency==='critical'||i.urgency==='threat');if(!f.length){c.innerHTML='<div class="empty-state"><div class="empty-icon">✅</div><div class="empty-title">Sin alertas críticas</div><div class="empty-sub">Todo tranquilo. Desactiva el filtro para ver todo.</div></div>';return}}
   c.innerHTML='<div class="cards-grid">'+f.map(i=>renderCard(i)).join('')+'</div>';updateFavCount();
@@ -567,10 +618,16 @@ function renderCard(item){
   const uc={critical:'badge-critical',informative:'badge-informative',opportunity:'badge-opportunity',threat:'badge-threat'}[item.urgency]||'badge-informative';
   const ul={critical:'CRÍTICO',informative:'INFORMATIVO',opportunity:'OPORTUNIDAD',threat:'AMENAZA'}[item.urgency]||'INFO';
   const src=item.source||item.channel||item.author||'',url=item.url||'#';
-  return '<div class="news-card '+(isRead?'read':'')+'" id="card-'+id+'">'+
-    '<div class="card-top"><span class="card-badge '+uc+'">'+ul+'</span><span class="card-source">'+src+'</span>'+(item.duration?'<span class="card-source">⏱ '+item.duration+'</span>':'')+'<span class="card-date">'+(item.date||'')+'</span></div>'+
+  const oc={original:'origin-original',replica:'origin-replica',aggregator:'origin-aggregator'}[item.origin];
+  const ol={original:'🟢 ORIGEN',replica:'🟡 RÉPLICA',aggregator:'🔴 ECO'}[item.origin];
+  const originBadge=oc?'<span class="origin-badge '+oc+'">'+ol+'</span>':'';
+  const cardClass=item.origin==='aggregator'?'is-aggregator':'';
+  const originLink=(item.origin==='replica'&&item.origin_url)?'<div class="origin-link">↳ Original: <a href="'+item.origin_url+'" target="_blank">'+(item.origin_source||'fuente original')+'</a></div>':'';
+  return '<div class="news-card '+(isRead?'read':'')+' '+cardClass+'" id="card-'+id+'">'+
+    '<div class="card-top"><span class="card-badge '+uc+'">'+ul+'</span>'+originBadge+'<span class="card-source">'+src+'</span>'+(item.duration?'<span class="card-source">⏱ '+item.duration+'</span>':'')+'<span class="card-date">'+(item.date||'')+'</span></div>'+
     '<div class="card-title">'+(item.title||'')+'</div>'+
     '<div class="card-summary">'+(item.summary||'')+'</div>'+
+    originLink+
     '<div class="card-actions">'+
       (url!=='#'?'<a href="'+url+'" target="_blank" class="card-btn link-btn">🔗 Ver fuente</a>':'')+
       '<button class="card-btn '+(isFav?'favorited':'')+'" onclick="toggleFav(\''+id+'\',this)">'+(isFav?'★ Guardado':'☆ Guardar')+'</button>'+
@@ -613,6 +670,7 @@ async function extractKey(id){
     keyText.innerHTML='<div style="white-space:pre-wrap;line-height:1.6">'+r+'</div>';
   }catch(e){keyText.innerHTML='Error: '+e.message}
 }
+let actionChat={messages:[],context:''};
 async function takeAction(id){
   const item=itemStore[id]||favorites[id]||{};
   const title=item.title||'',summary=item.summary||'';
@@ -622,11 +680,74 @@ async function takeAction(id){
   document.getElementById('impactSubtitle').textContent=title;
   modal.classList.add('open');
   const c=document.getElementById('impactContent');
-  c.innerHTML='<div class="loading-container"><div class="radar-spinner"></div><div class="loading-text">Generando plan de acción...</div></div>';
+
+  // Reset chat
+  actionChat={messages:[],context:'NOTICIA: '+title+'\nRESUMEN: '+summary};
+
+  c.innerHTML='<div class="chat-area" id="chatArea"><div class="chat-loading">⏳ Generando plan inicial...</div></div>'+
+    '<div class="chat-input-row">'+
+      '<textarea class="chat-input" id="chatInput" placeholder="Pregúntame algo sobre el plan, pide detalles, o cómo hacer un paso..." onkeydown="if(event.key===\'Enter\'&&!event.shiftKey){event.preventDefault();sendActionChat()}"></textarea>'+
+      '<button class="chat-send" onclick="sendActionChat()">Enviar</button>'+
+    '</div>';
+
+  // Initial plan request
+  const initialPrompt='Dame un plan de acción concreto y ejecutable para esta noticia:\n\n'+actionChat.context+'\n\nMi negocio: Ecommerce COD Colombia, suplementos salud vía Meta Ads y WhatsApp, Dropi, ENVÍA/Interrapidísimo.\n\nResponde en español con pasos numerados:\n\n⚡ ACCIÓN INMEDIATA (24 horas)\n📋 ACCIÓN ESTA SEMANA (7 días)\n🎯 RESULTADO ESPERADO\n\nSé directo. Pasos concretos.';
+
   try{
-    const r=await callClaude('Dame un plan de acción concreto y ejecutable para esta noticia:\n\nNOTICIA: '+title+'\nRESUMEN: '+summary+'\n\nMi negocio: Ecommerce COD Colombia, suplementos salud vía Meta Ads y WhatsApp, Dropi, ENVÍA/Interrapidísimo.\n\nResponde en español con pasos numerados y específicos:\n\n⚡ ACCIÓN INMEDIATA (qué hacer en las próximas 24 horas)\n📋 ACCIÓN ESTA SEMANA (qué implementar antes de 7 días)\n🎯 RESULTADO ESPERADO (qué debe pasar si ejecutas bien)\n\nSé directo. Pasos concretos. Sin explicación larga. Listo para ejecutar.','Action-oriented strategic advisor. Spanish. Concrete steps only.',true);
-    c.innerHTML='<div style="white-space:pre-wrap;line-height:1.7;">'+r+'</div>';
-  }catch(e){c.innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">'+e.message+'</div></div>'}
+    const r=await callClaude(initialPrompt,'Action-oriented strategic advisor for COD ecommerce Colombia. Spanish. Concrete steps. When user asks follow-up questions, refer back to the original news and plan. Be conversational but stay actionable.',true);
+    actionChat.messages.push({role:'user',content:initialPrompt});
+    actionChat.messages.push({role:'assistant',content:r});
+    renderChat();
+  }catch(e){
+    document.getElementById('chatArea').innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">'+e.message+'</div></div>';
+  }
+}
+function renderChat(){
+  const area=document.getElementById('chatArea');
+  if(!area)return;
+  let html='';
+  // Skip first user message (the initial system prompt) — show only from assistant onwards
+  for(let i=0;i<actionChat.messages.length;i++){
+    const m=actionChat.messages[i];
+    if(i===0&&m.role==='user')continue; // hide initial system prompt
+    const cls=m.role==='user'?'chat-msg-user':'chat-msg-assistant';
+    html+='<div class="chat-msg '+cls+'">'+m.content+'</div>';
+  }
+  area.innerHTML=html;
+  area.scrollTop=area.scrollHeight;
+}
+async function sendActionChat(){
+  const input=document.getElementById('chatInput');
+  if(!input)return;
+  const text=input.value.trim();
+  if(!text)return;
+  input.value='';
+  actionChat.messages.push({role:'user',content:text});
+  renderChat();
+  const area=document.getElementById('chatArea');
+  area.innerHTML+='<div class="chat-loading" id="chatLoading">⏳ Pensando...</div>';
+  area.scrollTop=area.scrollHeight;
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-5',
+        max_tokens:2048,
+        system:'Action-oriented strategic advisor for COD ecommerce Colombia (supplements via Meta Ads + WhatsApp, Dropi, ENVÍA/Interrapidísimo). Spanish. Concrete and actionable. Context of the original news: '+actionChat.context,
+        messages:actionChat.messages
+      })
+    });
+    if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||'Error '+res.status)}
+    const data=await res.json();
+    let t='';for(const b of data.content){if(b.type==='text')t+=b.text}
+    actionChat.messages.push({role:'assistant',content:t});
+    renderChat();
+  }catch(e){
+    document.getElementById('chatLoading')?.remove();
+    actionChat.messages.push({role:'assistant',content:'⚠️ Error: '+e.message});
+    renderChat();
+  }
 }
 function closeImpactModal(){
   document.getElementById('impactModal').classList.remove('open');
@@ -670,7 +791,7 @@ async function globalSearch(){
   currentSection='search';
   document.getElementById('contentArea').innerHTML='<div class="loading-container"><div class="radar-spinner"></div><div class="loading-text">Buscando: '+q+'</div><div class="loading-sub">15-30 segundos</div></div>';
   try{
-    const text=await callClaude('Search for the most important, recent, and valuable information about: "'+q+'"\n\nFind PRIMARY sources — official announcements, original articles, documentation, expert analysis. Not summaries from third parties.\n\nReturn JSON array 5-10 items: {"id":"uid","title":"SPANISH","summary":"2-3 sentences SPANISH","source":"name","url":"url","date":"YYYY-MM-DD","urgency":"critical|informative|opportunity|threat"}\n\nPrioritize: official sources, recent dates, actionable information.','Intelligence analyst. '+TR+' Respond ONLY with valid JSON array. No markdown, no backticks.');
+    const text=await callClaude('Search for the most important, recent, and valuable information about: "'+q+'"\n\nFind PRIMARY sources — official announcements, original articles, documentation, expert analysis. Not summaries from third parties.\n\nReturn JSON array 5-10 items: {"id":"uid","title":"SPANISH","summary":"2-3 sentences SPANISH","source":"name","url":"url","date":"YYYY-MM-DD","urgency":"critical|informative|opportunity|threat"}\n\nPrioritize: official sources, recent dates, actionable information.','Intelligence analyst. '+TR+' '+ORIGIN_RULE+' Respond ONLY with valid JSON array. No markdown, no backticks.');
     const clean=text.replace(/```json\s*/g,'').replace(/```\s*/g,'').trim(),s=clean.indexOf('['),e=clean.lastIndexOf(']');
     if(s===-1||e===-1)throw new Error('No JSON');
     const data=JSON.parse(clean.substring(s,e+1));
