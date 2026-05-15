@@ -132,48 +132,11 @@ body{background:var(--bg-base);color:var(--text);font-family:var(--font);min-hei
 <div class="app" id="app">
   <div class="sidebar">
     <div class="sidebar-logo">RADAR</div>
-    <div class="sidebar-sub">v2.0 · inteligencia</div>
-    <div class="nav-group"><div class="nav-label">Plataformas</div>
-      <div class="nav-item" data-section="meta" onclick="switchSection('meta')"><span class="nav-icon">📘</span> Meta Ads</div>
-      <div class="nav-item" data-section="tiktok" onclick="switchSection('tiktok')"><span class="nav-icon">🎵</span> TikTok Ads</div>
-      <div class="nav-item" data-section="google" onclick="switchSection('google')"><span class="nav-icon">🔍</span> Google Ads</div>
-      <div class="nav-item" data-section="pinterest" onclick="switchSection('pinterest')"><span class="nav-icon">📌</span> Pinterest</div>
-      <div class="nav-item" data-section="shopify" onclick="switchSection('shopify')"><span class="nav-icon">🛒</span> Shopify</div>
-      <div class="nav-item" data-section="whatsapp" onclick="switchSection('whatsapp')"><span class="nav-icon">💬</span> WhatsApp</div>
-    </div>
-    <div class="nav-group"><div class="nav-label">Industria</div>
-      <div class="nav-item" data-section="ecommerce" onclick="switchSection('ecommerce')"><span class="nav-icon">📦</span> Ecommerce / COD</div>
-      <div class="nav-item" data-section="copy" onclick="switchSection('copy')"><span class="nav-icon">✍️</span> Copywriting</div>
-      <div class="nav-item" data-section="ai" onclick="switchSection('ai')"><span class="nav-icon">🤖</span> AI Marketing</div>
-    </div>
-    <div class="nav-group"><div class="nav-label">Estrategia</div>
-      <div class="nav-item" data-section="inteligencia" onclick="switchSection('inteligencia')"><span class="nav-icon">🧠</span> Inteligencia</div>
-      <div class="nav-item" data-section="seguridad" onclick="switchSection('seguridad')"><span class="nav-icon">🛡️</span> Seguridad Meta</div>
-    </div>
-    <div class="nav-group"><div class="nav-label">Contenido</div>
-      <div class="nav-item" data-section="youtube" onclick="switchSection('youtube')"><span class="nav-icon">🎥</span> YouTube</div>
-      <div class="nav-item" data-section="twitter" onclick="switchSection('twitter')"><span class="nav-icon">𝕏</span> X / Twitter</div>
-      <div class="nav-item" data-section="instagram" onclick="switchSection('instagram')"><span class="nav-icon">📸</span> Instagram</div>
-    </div>
-    <div class="nav-group"><div class="nav-label">Personal</div>
-      <div class="nav-item" data-section="favoritos" onclick="switchSection('favoritos')"><span class="nav-icon">⭐</span> Favoritos <span class="nav-badge" id="favCount">0</span></div>
-      <div class="nav-item" data-section="digest" onclick="switchSection('digest')"><span class="nav-icon">📋</span> Digest semanal</div>
-      <div class="nav-item active" data-section="config" onclick="switchSection('config')"><span class="nav-icon">⚙️</span> Configuración</div>
-    </div>
+    <div class="sidebar-sub">v3.0 · inteligencia</div>
+    <div id="sidebarNav"></div>
     <div class="sidebar-footer"><button onclick="handleLogout()">Cerrar sesión</button></div>
   </div>
-  <div class="mobile-nav" id="mobileNav">
-    <button class="mobile-nav-btn" data-section="meta" onclick="switchSection('meta')">📘 Meta</button>
-    <button class="mobile-nav-btn" data-section="tiktok" onclick="switchSection('tiktok')">🎵 TikTok</button>
-    <button class="mobile-nav-btn" data-section="google" onclick="switchSection('google')">🔍 Google</button>
-    <button class="mobile-nav-btn" data-section="shopify" onclick="switchSection('shopify')">🛒 Shopify</button>
-    <button class="mobile-nav-btn" data-section="whatsapp" onclick="switchSection('whatsapp')">💬 WhatsApp</button>
-    <button class="mobile-nav-btn" data-section="ecommerce" onclick="switchSection('ecommerce')">📦 Ecom</button>
-    <button class="mobile-nav-btn" data-section="youtube" onclick="switchSection('youtube')">🎥 YouTube</button>
-    <button class="mobile-nav-btn" data-section="twitter" onclick="switchSection('twitter')">𝕏 X</button>
-    <button class="mobile-nav-btn" data-section="favoritos" onclick="switchSection('favoritos')">⭐ Favs</button>
-    <button class="mobile-nav-btn active" data-section="config" onclick="switchSection('config')">⚙️ Config</button>
-  </div>
+  <div class="mobile-nav" id="mobileNav"></div>
   <div class="main">
     <div class="topbar">
       <div class="topbar-title" id="sectionTitle">⚙️ Configuración</div>
@@ -222,29 +185,169 @@ let favorites=JSON.parse(localStorage.getItem('radar_favs')||'{}');
 let readItems=JSON.parse(localStorage.getItem('radar_read')||'{}');
 let notes=JSON.parse(localStorage.getItem('radar_notes')||'{}');
 const SECTIONS={
-  meta:{title:'📘 Meta Ads',icon:'📘',query:'Meta Ads Facebook Instagram advertising platform updates changes new features',loading:'Escaneando Meta Ads...'},
-  tiktok:{title:'🎵 TikTok Ads',icon:'🎵',query:'TikTok Ads advertising platform updates features changes',loading:'Escaneando TikTok Ads...'},
-  google:{title:'🔍 Google Ads',icon:'🔍',query:'Google Ads PPC advertising platform updates changes',loading:'Escaneando Google Ads...'},
-  pinterest:{title:'📌 Pinterest',icon:'📌',query:'Pinterest advertising marketing updates features',loading:'Escaneando Pinterest...'},
-  shopify:{title:'🛒 Shopify',icon:'🛒',query:'Shopify ecommerce platform updates features apps',loading:'Escaneando Shopify...'},
-  whatsapp:{title:'💬 WhatsApp',icon:'💬',query:'WhatsApp Business API marketing sales automation remarketing click-to-WhatsApp ecommerce',loading:'Escaneando WhatsApp...'},
-  ecommerce:{title:'📦 Ecommerce / COD',icon:'📦',query:'ecommerce dropshipping COD cash on delivery Latin America trends',loading:'Escaneando Ecommerce...'},
-  copy:{title:'✍️ Copywriting',icon:'✍️',query:'direct response copywriting advertising conversion hooks',loading:'Escaneando Copywriting...'},
-  ai:{title:'🤖 AI Marketing',icon:'🤖',query:'AI artificial intelligence marketing advertising automation tools',loading:'Escaneando AI Marketing...'},
+  // META ADS
+  'meta-news':{title:'📘 Meta Ads · Noticias',icon:'📘',query:'Meta Ads Facebook Instagram advertising news platform updates 2026',loading:'Buscando noticias Meta Ads...'},
+  'meta-api':{title:'📘 Meta Ads · API y herramientas',icon:'📘',query:'Meta Marketing API Conversion API Facebook advertising tools developers 2026',loading:'Buscando API y herramientas...'},
+  'meta-policy':{title:'📘 Meta Ads · Políticas',icon:'📘',query:'Meta Facebook advertising policies restrictions health supplements approvals',loading:'Buscando políticas...'},
+  'meta-creative':{title:'📘 Meta Ads · Creativos',icon:'📘',query:'Meta Facebook ad creative formats video reels hooks best practices conversion',loading:'Buscando creativos y formatos...'},
+  // TIKTOK ADS
+  'tiktok-news':{title:'🎵 TikTok Ads · Noticias',icon:'🎵',query:'TikTok Ads advertising platform news updates 2026',loading:'Buscando noticias TikTok...'},
+  'tiktok-tools':{title:'🎵 TikTok Ads · Herramientas',icon:'🎵',query:'TikTok advertising tools analytics spy tools creative',loading:'Buscando herramientas TikTok...'},
+  'tiktok-strategy':{title:'🎵 TikTok Ads · Estrategias',icon:'🎵',query:'TikTok Ads strategy ecommerce performance scaling case studies',loading:'Buscando estrategias TikTok...'},
+  // GOOGLE ADS
+  'google-news':{title:'🔍 Google Ads · Noticias',icon:'🔍',query:'Google Ads PPC advertising platform news updates 2026',loading:'Buscando noticias Google Ads...'},
+  'google-tools':{title:'🔍 Google Ads · Herramientas',icon:'🔍',query:'Google Ads tools optimization automation Performance Max',loading:'Buscando herramientas Google...'},
+  // PINTEREST
+  'pinterest-news':{title:'📌 Pinterest · Noticias',icon:'📌',query:'Pinterest advertising marketing news updates 2026',loading:'Buscando noticias Pinterest...'},
+  // SHOPIFY
+  'shopify-news':{title:'🛒 Shopify · Noticias',icon:'🛒',query:'Shopify ecommerce platform news updates features 2026',loading:'Buscando noticias Shopify...'},
+  'shopify-apps':{title:'🛒 Shopify · Apps y herramientas',icon:'🛒',query:'Shopify apps best tools ecommerce conversion COD cash on delivery',loading:'Buscando apps Shopify...'},
+  // WHATSAPP
+  'whatsapp-news':{title:'💬 WhatsApp · Noticias',icon:'💬',query:'WhatsApp Business news updates features 2026',loading:'Buscando noticias WhatsApp...'},
+  'whatsapp-api':{title:'💬 WhatsApp · API y automatización',icon:'💬',query:'WhatsApp Business API automation chatbots Flows integrations 2026',loading:'Buscando API WhatsApp...'},
+  'whatsapp-sales':{title:'💬 WhatsApp · Ventas y cierres',icon:'💬',query:'WhatsApp sales closing techniques scripts conversion ecommerce',loading:'Buscando técnicas de venta...'},
+  'whatsapp-remarketing':{title:'💬 WhatsApp · Remarketing',icon:'💬',query:'WhatsApp remarketing post-sale retention reorder customer broadcast',loading:'Buscando remarketing...'},
+  // ECOMMERCE
+  'ecom-news':{title:'📦 Ecommerce · Noticias',icon:'📦',query:'ecommerce dropshipping COD cash on delivery news trends 2026',loading:'Buscando noticias ecommerce...'},
+  'ecom-latam':{title:'📦 Ecommerce · Estrategias LATAM',icon:'📦',query:'ecommerce COD Latin America Colombia Mexico Argentina strategies dropshipping',loading:'Buscando estrategias LATAM...'},
+  'ecom-models':{title:'📦 Ecommerce · Modelos de negocio',icon:'📦',query:'ecommerce business models DTC private label subscriptions COD',loading:'Buscando modelos...'},
+  // COPYWRITING
+  'copy-frameworks':{title:'✍️ Copy · Técnicas y frameworks',icon:'✍️',query:'direct response copywriting frameworks AIDA PAS techniques conversion',loading:'Buscando técnicas copy...'},
+  'copy-hooks':{title:'✍️ Copy · Hooks ganadores',icon:'✍️',query:'winning hooks Facebook ads direct response copy supplements health',loading:'Buscando hooks ganadores...'},
+  'copy-cases':{title:'✍️ Copy · Casos de estudio',icon:'✍️',query:'direct response copywriting case studies winning ads ecommerce real results',loading:'Buscando casos de estudio...'},
+  // AI
+  'ai-tools':{title:'🤖 AI · Nuevas herramientas',icon:'🤖',query:'AI tools marketing advertising new launches 2026 automation creative',loading:'Buscando herramientas AI...'},
+  'ai-strategy':{title:'🤖 AI · Estrategias',icon:'🤖',query:'AI strategy marketing automation advertising ChatGPT Claude workflows',loading:'Buscando estrategias AI...'},
+  // INTELIGENCIA
+  'intel-bm':{title:'🧠 Inteligencia · Estructura BM',icon:'🧠',query:'Facebook Business Manager structure best practices ban prevention multi-account',loading:'Investigando estructura BM...'},
+  'intel-dropi':{title:'🧠 Inteligencia · Dropi y alternativas',icon:'🧠',query:'Dropi Colombia dropshipping platform alternatives risks fulfillment',loading:'Investigando Dropi...'},
+  'intel-dian':{title:'🧠 Inteligencia · DIAN y legal',icon:'🧠',query:'DIAN Colombia ecommerce tax obligations 2026 legal regulations supplements INVIMA',loading:'Investigando DIAN...'},
+  'intel-tiktokshop':{title:'🧠 Inteligencia · TikTok Shop LATAM',icon:'🧠',query:'TikTok Shop Colombia Mexico Latin America launch availability ecommerce',loading:'Investigando TikTok Shop...'},
+  'intel-scaling':{title:'🧠 Inteligencia · Scaling suplementos',icon:'🧠',query:'large scale supplement advertisers Meta Ads Latin America scaling strategies',loading:'Investigando scaling...'},
+  'intel-retention':{title:'🧠 Inteligencia · Retención COD',icon:'🧠',query:'COD cash on delivery post-sale retention supplements reorder strategies',loading:'Investigando retención...'},
+  // SEGURIDAD
+  'sec-protection':{title:'🛡️ Seguridad · Protección',icon:'🛡️',query:'Facebook ad account protection security 2FA best practices advertising',loading:'Buscando protección...'},
+  'sec-recovery':{title:'🛡️ Seguridad · Recuperación',icon:'🛡️',query:'Facebook Meta ad account banned restricted appeal recovery unblock 2026',loading:'Buscando recuperación...'},
+  'sec-contingency':{title:'🛡️ Seguridad · Contingencia',icon:'🛡️',query:'Facebook Business Manager backup plan contingency multi-account redundancy',loading:'Buscando contingencia...'},
+  // VIETNAM
+  'vn-tactics':{title:'🇻🇳 Vietnam · Técnicas',icon:'🇻🇳',query:'Vietnam Facebook Ads tactics techniques tips Vietnamese advertisers MMO',loading:'Buscando técnicas Vietnam...'},
+  'vn-youtube':{title:'🇻🇳 Vietnam · YouTube',icon:'🇻🇳',query:'Vietnam YouTube Facebook Ads tutorial Vietnamese advertising MMO',loading:'Buscando videos Vietnam...'},
+  'vn-tools':{title:'🇻🇳 Vietnam · Herramientas',icon:'🇻🇳',query:'Vietnam Facebook Ads tools spy creative rotator account manager Vietnamese',loading:'Buscando herramientas Vietnam...'},
+  'vn-scale':{title:'🇻🇳 Vietnam · Escala masiva',icon:'🇻🇳',query:'Vietnam Facebook Ads horizontal scaling Business Manager cascade techniques',loading:'Buscando escala masiva...'},
+  // GRANDES LIGAS
+  'big-amazon':{title:'🏢 Amazon',icon:'🏢',query:'Amazon ecommerce strategies logistics conversion pricing retention 2026',loading:'Investigando Amazon...'},
+  'big-mercadolibre':{title:'🏢 Mercado Libre',icon:'🏢',query:'Mercado Libre strategies Colombia LATAM ecommerce logistics seller',loading:'Investigando ML...'},
+  'big-shopee':{title:'🏢 Shopee / Shein',icon:'🏢',query:'Shopee Shein ecommerce model COD product scaling fast fashion 2026',loading:'Investigando Shopee/Shein...'},
+  'big-alibaba':{title:'🏢 Alibaba',icon:'🏢',query:'Alibaba sourcing private label negotiation suppliers ecommerce',loading:'Investigando Alibaba...'},
+  // LOGÍSTICA
+  'log-carriers':{title:'🚚 Logística · Carriers',icon:'🚚',query:'ENVIA Interrapidisimo Colombia carriers ecommerce COD rates coverage 2026',loading:'Buscando carriers...'},
+  'log-coverage':{title:'🚚 Logística · Cobertura',icon:'🚚',query:'Colombia ecommerce COD coverage cities toxic zones delivery rates',loading:'Buscando cobertura...'},
+  'log-metrics':{title:'🚚 Logística · Métricas COD',icon:'🚚',query:'COD cash on delivery metrics benchmarks delivery rate return rate Colombia LATAM',loading:'Buscando métricas...'},
+  'log-alternatives':{title:'🚚 Logística · Alternativas Dropi',icon:'🚚',query:'Dropi alternatives Colombia LATAM dropshipping fulfillment platforms 2026',loading:'Buscando alternativas...'},
+  // CONTENIDO
   youtube:{title:'🎥 YouTube',icon:'🎥',query:'youtube',loading:'Buscando videos de alto valor...'},
   twitter:{title:'𝕏 X / Twitter',icon:'𝕏',query:'twitter',loading:'Rastreando hilos en X...'},
   instagram:{title:'📸 Instagram',icon:'📸',query:'instagram',loading:'Filtrando contenido real...'},
-  inteligencia:{title:'🧠 Inteligencia',icon:'🧠',query:'inteligencia',loading:'Investigando temas estratégicos...'},
-  seguridad:{title:'🛡️ Seguridad Meta',icon:'🛡️',query:'seguridad',loading:'Analizando seguridad de Meta...'},
+  // AMENAZAS (sidebar)
+  amenazas:{title:'🚨 Amenazas',icon:'🚨',query:'amenazas',loading:'Detectando amenazas activas...'},
+  // PERSONAL
   favoritos:{title:'⭐ Favoritos',icon:'⭐'},
   digest:{title:'📋 Digest semanal',icon:'📋',loading:'Generando digest semanal...'},
   config:{title:'⚙️ Configuración',icon:'⚙️'},
 };
+const NAV_GROUPS=[
+  {label:'Plataformas',items:[
+    {id:'meta',icon:'📘',label:'Meta Ads',subs:['meta-news','meta-api','meta-policy','meta-creative']},
+    {id:'tiktok',icon:'🎵',label:'TikTok Ads',subs:['tiktok-news','tiktok-tools','tiktok-strategy']},
+    {id:'google',icon:'🔍',label:'Google Ads',subs:['google-news','google-tools']},
+    {id:'whatsapp',icon:'💬',label:'WhatsApp',subs:['whatsapp-news','whatsapp-api','whatsapp-sales','whatsapp-remarketing']},
+    {id:'shopify',icon:'🛒',label:'Shopify',subs:['shopify-news','shopify-apps']},
+    {id:'pinterest',icon:'📌',label:'Pinterest',subs:['pinterest-news']},
+  ]},
+  {label:'Industria',items:[
+    {id:'ecom',icon:'📦',label:'Ecommerce / COD',subs:['ecom-news','ecom-latam','ecom-models']},
+    {id:'copy',icon:'✍️',label:'Copywriting',subs:['copy-frameworks','copy-hooks','copy-cases']},
+    {id:'ai',icon:'🤖',label:'AI Marketing',subs:['ai-tools','ai-strategy']},
+  ]},
+  {label:'Estrategia',items:[
+    {id:'intel',icon:'🧠',label:'Inteligencia',subs:['intel-bm','intel-dropi','intel-dian','intel-tiktokshop','intel-scaling','intel-retention']},
+    {id:'sec',icon:'🛡️',label:'Seguridad Meta',subs:['sec-protection','sec-recovery','sec-contingency']},
+  ]},
+  {label:'Vietnam Tactics',items:[
+    {id:'vn',icon:'🇻🇳',label:'Vietnam',subs:['vn-tactics','vn-youtube','vn-tools','vn-scale']},
+  ]},
+  {label:'Grandes Ligas',items:[
+    {id:'big',icon:'🏢',label:'Grandes Ligas',subs:['big-amazon','big-mercadolibre','big-shopee','big-alibaba']},
+  ]},
+  {label:'Logística',items:[
+    {id:'log',icon:'🚚',label:'Logística',subs:['log-carriers','log-coverage','log-metrics','log-alternatives']},
+  ]},
+  {label:'Contenido',items:[
+    {id:'youtube',icon:'🎥',label:'YouTube',sub:'youtube'},
+    {id:'twitter',icon:'𝕏',label:'X / Twitter',sub:'twitter'},
+    {id:'instagram',icon:'📸',label:'Instagram',sub:'instagram'},
+  ]},
+  {label:'Personal',items:[
+    {id:'amenazas',icon:'🚨',label:'Amenazas',sub:'amenazas'},
+    {id:'favoritos',icon:'⭐',label:'Favoritos',sub:'favoritos',badge:true},
+    {id:'digest',icon:'📋',label:'Digest semanal',sub:'digest'},
+    {id:'config',icon:'⚙️',label:'Configuración',sub:'config'},
+  ]},
+];
 const TR='CRITICAL: ALL titles and summaries MUST be in Spanish. Translate everything from any language to Spanish. Keep original URLs.';
-function handleLogin(){const k=document.getElementById('apiKeyInput').value.trim();if(!k)return;API_KEY=k;sessionStorage.setItem('radar_key',k);document.getElementById('loginScreen').style.display='none';document.getElementById('app').classList.add('active');document.getElementById('dateInput').valueAsDate=new Date();renderConfig()}
+function handleLogin(){const k=document.getElementById('apiKeyInput').value.trim();if(!k)return;API_KEY=k;sessionStorage.setItem('radar_key',k);document.getElementById('loginScreen').style.display='none';document.getElementById('app').classList.add('active');document.getElementById('dateInput').valueAsDate=new Date();renderSidebar();renderConfig()}
 function handleLogout(){sessionStorage.removeItem('radar_key');API_KEY='';document.getElementById('app').classList.remove('active');document.getElementById('loginScreen').style.display='flex';document.getElementById('apiKeyInput').value=''}
-(function(){const s=sessionStorage.getItem('radar_key');if(s){API_KEY=s;document.getElementById('loginScreen').style.display='none';document.getElementById('app').classList.add('active');document.getElementById('dateInput').valueAsDate=new Date();setTimeout(()=>renderConfig(),100)}})();
-function switchSection(s){currentSection=s;document.querySelectorAll('.nav-item').forEach(e=>e.classList.toggle('active',e.dataset.section===s));document.querySelectorAll('.mobile-nav-btn').forEach(e=>e.classList.toggle('active',e.dataset.section===s));const sec=SECTIONS[s];document.getElementById('sectionTitle').textContent=sec?sec.title:s;loadSection(s)}
+(function(){const s=sessionStorage.getItem('radar_key');if(s){API_KEY=s;document.getElementById('loginScreen').style.display='none';document.getElementById('app').classList.add('active');document.getElementById('dateInput').valueAsDate=new Date();setTimeout(()=>{renderSidebar();renderConfig()},100)}})();
+let expandedGroups=JSON.parse(localStorage.getItem('radar_expanded')||'[]');
+function toggleGroup(gid){
+  const idx=expandedGroups.indexOf(gid);
+  if(idx>=0)expandedGroups.splice(idx,1);
+  else expandedGroups.push(gid);
+  localStorage.setItem('radar_expanded',JSON.stringify(expandedGroups));
+  renderSidebar();
+}
+function renderSidebar(){
+  const sb=document.getElementById('sidebarNav');
+  if(!sb)return;
+  let html='';
+  for(const group of NAV_GROUPS){
+    html+='<div class="nav-group"><div class="nav-label">'+group.label+'</div>';
+    for(const item of group.items){
+      if(item.sub){
+        const sec=SECTIONS[item.sub];
+        const active=currentSection===item.sub?'active':'';
+        const badge=item.badge?'<span class="nav-badge" id="favCount">'+Object.keys(favorites).length+'</span>':'';
+        html+='<div class="nav-item '+active+'" data-section="'+item.sub+'" onclick="switchSection(\''+item.sub+'\')"><span class="nav-icon">'+item.icon+'</span> '+item.label+' '+badge+'</div>';
+      }else if(item.subs){
+        const expanded=expandedGroups.includes(item.id);
+        const anyActive=item.subs.includes(currentSection);
+        html+='<div class="nav-item '+(anyActive&&!expanded?'active':'')+'" onclick="toggleGroup(\''+item.id+'\')" style="justify-content:space-between"><span style="display:flex;align-items:center;gap:10px"><span class="nav-icon">'+item.icon+'</span>'+item.label+'</span><span style="font-size:10px;color:var(--text-muted)">'+(expanded?'▼':'▶')+'</span></div>';
+        if(expanded){
+          for(const subId of item.subs){
+            const sub=SECTIONS[subId];
+            if(!sub)continue;
+            const active=currentSection===subId?'active':'';
+            const subLabel=sub.title.split('·')[1]?sub.title.split('·')[1].trim():sub.title;
+            html+='<div class="nav-item '+active+'" data-section="'+subId+'" onclick="switchSection(\''+subId+'\')" style="padding-left:2.5rem;font-size:11.5px">'+subLabel+'</div>';
+          }
+        }
+      }
+    }
+    html+='</div>';
+  }
+  sb.innerHTML=html;
+  renderMobileNav();
+}
+function renderMobileNav(){
+  const mn=document.getElementById('mobileNav');
+  if(!mn)return;
+  let html='<button class="mobile-nav-btn '+(currentSection==='config'?'active':'')+'" onclick="switchSection(\'config\')">⚙️ Inicio</button>';
+  html+='<button class="mobile-nav-btn '+(currentSection==='favoritos'?'active':'')+'" onclick="switchSection(\'favoritos\')">⭐ Favs</button>';
+  html+='<button class="mobile-nav-btn '+(currentSection==='amenazas'?'active':'')+'" onclick="switchSection(\'amenazas\')">🚨 Amenazas</button>';
+  html+='<button class="mobile-nav-btn '+(currentSection==='digest'?'active':'')+'" onclick="switchSection(\'digest\')">📋 Digest</button>';
+  mn.innerHTML=html;
+}
+function switchSection(s){currentSection=s;const sec=SECTIONS[s];document.getElementById('sectionTitle').textContent=sec?sec.title:s;renderSidebar();loadSection(s)}
 function loadSection(s){if(s==='favoritos')return renderFavorites();if(s==='config')return renderConfig();if(s==='digest')return generateDigest();const dk=document.getElementById('dateInput').value,ck=s+'_'+dk;if(cache[ck]){renderResults(cache[ck]);return}showLoading(s);fetchData(s,dk).then(d=>{cache[ck]=d;renderResults(d)}).catch(e=>{document.getElementById('contentArea').innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error al cargar</div><div class="empty-sub">'+e.message+'</div></div>'})}
 function refreshCurrent(){const dk=document.getElementById('dateInput').value;delete cache[currentSection+'_'+dk];loadSection(currentSection)}
 document.getElementById('dateInput').addEventListener('change',()=>{if(currentSection!=='config'&&currentSection!=='favoritos')loadSection(currentSection)});
@@ -260,19 +363,53 @@ async function fetchData(section,dateStr){
   const dc=dateStr?'Focus on news from '+dateStr+'.':'Focus on most recent news.';
   const SYS='Marketing intelligence analyst. '+TR+' Respond ONLY with valid JSON array. No markdown, no backticks.';
   let p='';
-  if(['meta','tiktok','google','pinterest','shopify','whatsapp','ecommerce','copy','ai'].includes(section)){
-    p='Search latest news: '+SECTIONS[section].query+'. '+dc+'\n\nReturn JSON array 5-8 items: {"id":"uid","title":"SPANISH","summary":"2 sentences SPANISH","source":"name","url":"url","date":"YYYY-MM-DD","urgency":"critical|informative|opportunity|threat"}\n\nFocus: updates, features, policy changes, strategies.';
-  }else if(section==='youtube'){
+  const sec=SECTIONS[section];
+
+  // Content sections (YouTube, X, Instagram)
+  if(section==='youtube'){
     p='Search YouTube for best recent videos about Meta Ads, TikTok Ads, Google Ads, ecommerce, copywriting, AI marketing. Any language. '+dc+'\n\nReturn JSON array 5-8 items: {"id":"uid","title":"SPANISH","channel":"name","summary":"2 sentences SPANISH","url":"youtube url","duration":"duration"}\n\nReal value only — case studies, numbers, strategies.';
   }else if(section==='twitter'){
     p='Search valuable recent posts on X/Twitter about Meta Ads, TikTok Ads, ecommerce, marketing, AI tools. Any language. '+dc+'\n\nReturn JSON array 5-8 items: {"id":"uid","title":"SPANISH","author":"@handle","summary":"2 sentences SPANISH","url":"url","urgency":"critical|informative|opportunity"}\n\nPractitioners sharing real results only.';
   }else if(section==='instagram'){
     p='Search valuable recent Instagram posts/reels about Meta Ads, ecommerce, paid ads, copywriting, AI tools. Any language. '+dc+'\n\nReturn JSON array 5-8 items: {"id":"uid","title":"SPANISH","author":"@handle","summary":"2 sentences SPANISH","url":"url"}\n\nReal results only — ad screenshots, ROAS, strategies. No motivation.';
-  }else if(section==='inteligencia'){
-    p='Research strategic topics for COD ecommerce Colombia selling supplements via Meta Ads: Business Manager ban prevention, Dropi risks, DIAN taxes 2026, TikTok Shop LATAM, scaling supplements LATAM, WhatsApp API vs chatbots, post-sale retention COD. '+dc+'\n\nReturn JSON array 5-7 items: {"id":"uid","title":"SPANISH","summary":"3 sentences SPANISH actionable","source":"source","url":"url","urgency":"critical|informative|opportunity|threat"}';
-  }else if(section==='seguridad'){
-    p='Search latest about Facebook/Meta account security: fanpage hack recovery, ad account ban appeals, Business Manager backup, account security supplements advertisers. '+dc+'\n\nReturn JSON array 5-7 items: {"id":"uid","title":"SPANISH","summary":"2 sentences SPANISH actionable","source":"source","url":"url","urgency":"critical|informative"}';
   }
+  // Amenazas section
+  else if(section==='amenazas'){
+    p='Search for ACTIVE THREATS to a COD ecommerce business in Colombia: Meta policy changes affecting supplements, Dropi platform issues, carrier problems (ENVIA, Interrapidisimo), DIAN tax enforcement, INVIMA crackdowns, account bans patterns, payment issues. '+dc+'\n\nReturn JSON array 5-8 items: {"id":"uid","title":"SPANISH","summary":"2-3 sentences SPANISH explaining the threat and what to do","source":"source","url":"url","urgency":"threat"}\n\nALL items must have urgency:"threat". Focus on what can damage the business if no action is taken.';
+  }
+  // Vietnam Tactics
+  else if(section.startsWith('vn-')){
+    const vnTopic={'vn-tactics':'Vietnam Facebook Ads tactics techniques cloaking account structure',
+                  'vn-youtube':'Vietnam YouTube tutorials Facebook Ads Vietnamese advertising MMO',
+                  'vn-tools':'Vietnam Facebook Ads tools spy creative rotator account managers',
+                  'vn-scale':'Vietnam Facebook Ads horizontal scaling Business Manager cascade'}[section];
+    p='Search for information about: '+vnTopic+'. Include techniques shared in Vietnamese communities. Any language. '+dc+'\n\nReturn JSON array 5-7 items: {"id":"uid","title":"SPANISH","summary":"2-3 sentences SPANISH","source":"source","url":"url","urgency":"informative|opportunity"}\n\nFocus on actionable techniques Vietnamese advertisers use that LATAM advertisers don\'t know.';
+  }
+  // Grandes Ligas
+  else if(section.startsWith('big-')){
+    const bigTopic={'big-amazon':'Amazon ecommerce strategies logistics conversion retention 2026',
+                   'big-mercadolibre':'Mercado Libre Colombia LATAM strategies seller logistics',
+                   'big-shopee':'Shopee Shein ecommerce model COD product scaling 2026',
+                   'big-alibaba':'Alibaba sourcing private label supplier negotiation'}[section];
+    p='Research strategies from: '+bigTopic+'. Extract what they do that small operators ignore. '+dc+'\n\nReturn JSON array 5-7 items: {"id":"uid","title":"SPANISH","summary":"2-3 sentences SPANISH with actionable insight","source":"source","url":"url","urgency":"informative|opportunity"}\n\nFocus on what you can adapt to a COD ecommerce in Colombia.';
+  }
+  // Logística
+  else if(section.startsWith('log-')){
+    p='Search latest about: '+sec.query+'. '+dc+'\n\nReturn JSON array 5-7 items: {"id":"uid","title":"SPANISH","summary":"2-3 sentences SPANISH actionable","source":"source","url":"url","urgency":"critical|informative|opportunity|threat"}\n\nFocus on logistics, carriers, coverage, COD metrics for Colombian ecommerce.';
+  }
+  // Inteligencia
+  else if(section.startsWith('intel-')){
+    p='Research deeply: '+sec.query+'. Context: COD ecommerce Colombia, supplements, Meta Ads + WhatsApp. '+dc+'\n\nReturn JSON array 5-7 items: {"id":"uid","title":"SPANISH","summary":"3 sentences SPANISH with specific actionable insights","source":"source","url":"url","urgency":"critical|informative|opportunity|threat"}';
+  }
+  // Seguridad
+  else if(section.startsWith('sec-')){
+    p='Search latest about: '+sec.query+'. '+dc+'\n\nReturn JSON array 5-7 items: {"id":"uid","title":"SPANISH","summary":"2-3 sentences SPANISH actionable","source":"source","url":"url","urgency":"critical|informative"}\n\nFocus on Facebook/Meta account security for advertisers.';
+  }
+  // Default: any other section with a query
+  else if(sec&&sec.query){
+    p='Search latest news: '+sec.query+'. '+dc+'\n\nReturn JSON array 5-8 items: {"id":"uid","title":"SPANISH","summary":"2 sentences SPANISH","source":"name","url":"url","date":"YYYY-MM-DD","urgency":"critical|informative|opportunity|threat"}\n\nFocus: updates, features, policy changes, strategies. Be specific.';
+  }
+
   const text=await callClaude(p,SYS);
   try{const c=text.replace(/```json\s*/g,'').replace(/```\s*/g,'').trim(),s=c.indexOf('['),e=c.lastIndexOf(']');if(s===-1||e===-1)throw new Error('No JSON');return JSON.parse(c.substring(s,e+1))}catch(e){console.error('Parse:',e,'Raw:',text);throw new Error('Error procesando. Intenta de nuevo.')}
 }
@@ -313,12 +450,12 @@ function renderCard(item){
 function toggleFav(id,btn){
   if(favorites[id]){delete favorites[id];btn.classList.remove('favorited');btn.innerHTML='☆ Guardar'}
   else{const item=itemStore[id]||{id};favorites[id]=item;btn.classList.add('favorited');btn.innerHTML='★ Guardado'}
-  localStorage.setItem('radar_favs',JSON.stringify(favorites));updateFavCount();
+  localStorage.setItem('radar_favs',JSON.stringify(favorites));updateFavCount();renderSidebar();
 }
 function toggleRead(id,btn){const c=document.getElementById('card-'+id);if(readItems[id]){delete readItems[id];c?.classList.remove('read');btn.textContent='◎ Leído'}else{readItems[id]=true;c?.classList.add('read');btn.textContent='◉ No leído'}localStorage.setItem('radar_read',JSON.stringify(readItems))}
 function toggleNote(id){document.getElementById('note-'+id)?.classList.toggle('open')}
 function saveNote(id){notes[id]=document.getElementById('notetext-'+id)?.value||'';localStorage.setItem('radar_notes',JSON.stringify(notes));toggleNote(id)}
-function updateFavCount(){document.getElementById('favCount').textContent=Object.keys(favorites).length}
+function updateFavCount(){const el=document.getElementById('favCount');if(el)el.textContent=Object.keys(favorites).length}
 async function analyzeImpact(id){
   const item=itemStore[id]||favorites[id]||{};
   const title=item.title||'',summary=item.summary||'';
@@ -372,9 +509,20 @@ async function generateDigest(){
 }
 function copyDigest(){const t=document.querySelector('.digest-content')?.textContent||'';navigator.clipboard.writeText(t).then(()=>{const b=document.querySelector('.digest-copy');b.textContent='✅ Copiado';setTimeout(()=>b.textContent='📋 Copiar para enviar al trafficker',2000)})}
 function renderConfig(){
-  const secs=Object.entries(SECTIONS).filter(([k])=>!['favoritos','digest','config'].includes(k));
-  const cards=secs.map(([k,v])=>'<div class="welcome-card" onclick="switchSection(\''+k+'\')"><div class="welcome-card-icon">'+v.icon+'</div><div class="welcome-card-title">'+v.title.replace(/^[^\s]+\s/,'')+'</div><div class="welcome-card-sub">Clic para buscar</div></div>').join('');
-  document.getElementById('contentArea').innerHTML='<div style="margin-bottom:28px"><div style="font-size:20px;font-weight:600;margin-bottom:4px">Bienvenido a RADAR</div><div style="font-size:13px;color:var(--text-secondary);margin-bottom:16px">Busca cualquier tema o selecciona una sección.</div><div style="display:flex;gap:8px;margin-bottom:24px"><input type="text" id="globalSearchInput" placeholder="Busca lo que quieras... (ej: Meta Marketing API, colágeno tendencias, WhatsApp Flows)" style="flex:1;padding:12px 16px;background:var(--bg-input);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;font-family:var(--font);outline:none" onkeydown="if(event.key===\'Enter\')globalSearch()"><button onclick="globalSearch()" style="padding:12px 24px;background:var(--accent);color:var(--bg-base);border:none;border-radius:8px;font-family:var(--font);font-weight:600;font-size:14px;cursor:pointer;white-space:nowrap">🔍 Buscar</button></div><div class="welcome-grid">'+cards+'</div></div><div class="settings-section"><div class="settings-title">Alertas de palabras clave</div><div style="font-size:12px;color:var(--text-muted);margin-bottom:8px">Noticias con estas palabras se resaltan</div><div class="settings-row"><input type="text" id="keywordsInput" value="'+(localStorage.getItem('radar_keywords')||'API de conversiones, Meta policy, ban, restricción, INVIMA, COD Colombia')+'" placeholder="Separadas por coma"></div><button class="card-btn" style="margin-top:8px" onclick="saveKeywords()">Guardar keywords</button></div><div class="settings-section"><div class="settings-title">Datos</div><button class="card-btn" style="border-color:var(--red);color:var(--red)" onclick="clearAllData()">🗑 Borrar datos locales</button><div style="font-size:11px;color:var(--text-muted);margin-top:6px">Borra favoritos, notas y lecturas. Tu API key se mantiene.</div></div><div class="settings-section"><div class="settings-title">Acerca de</div><div style="font-size:13px;color:var(--text-secondary);line-height:1.6">RADAR v2.0 — Centro de inteligencia de marketing digital<br>Haiku para búsqueda rápida · Sonnet para análisis profundo<br>Favoritos no gastan tokens · Tus datos solo en este navegador.</div></div>';
+  let groupsHTML='';
+  for(const group of NAV_GROUPS){
+    if(group.label==='Personal')continue;
+    groupsHTML+='<div style="margin-bottom:20px"><div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);margin-bottom:8px">'+group.label+'</div><div class="welcome-grid">';
+    for(const item of group.items){
+      if(item.sub){
+        groupsHTML+='<div class="welcome-card" onclick="switchSection(\''+item.sub+'\')"><div class="welcome-card-icon">'+item.icon+'</div><div class="welcome-card-title">'+item.label+'</div><div class="welcome-card-sub">Clic para abrir</div></div>';
+      }else if(item.subs){
+        groupsHTML+='<div class="welcome-card" onclick="toggleGroup(\''+item.id+'\');switchSection(\''+item.subs[0]+'\')"><div class="welcome-card-icon">'+item.icon+'</div><div class="welcome-card-title">'+item.label+'</div><div class="welcome-card-sub">'+item.subs.length+' subsecciones</div></div>';
+      }
+    }
+    groupsHTML+='</div></div>';
+  }
+  document.getElementById('contentArea').innerHTML='<div style="margin-bottom:28px"><div style="font-size:20px;font-weight:600;margin-bottom:4px">Bienvenido a RADAR</div><div style="font-size:13px;color:var(--text-secondary);margin-bottom:16px">Busca cualquier tema o selecciona una sección.</div><div style="display:flex;gap:8px;margin-bottom:24px"><input type="text" id="globalSearchInput" placeholder="Busca lo que quieras... (ej: Meta Marketing API, colágeno tendencias, WhatsApp Flows)" style="flex:1;padding:12px 16px;background:var(--bg-input);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;font-family:var(--font);outline:none" onkeydown="if(event.key===\'Enter\')globalSearch()"><button onclick="globalSearch()" style="padding:12px 24px;background:var(--accent);color:var(--bg-base);border:none;border-radius:8px;font-family:var(--font);font-weight:600;font-size:14px;cursor:pointer;white-space:nowrap">🔍 Buscar</button></div></div>'+groupsHTML+'<div class="settings-section"><div class="settings-title">Alertas de palabras clave</div><div style="font-size:12px;color:var(--text-muted);margin-bottom:8px">Noticias con estas palabras se resaltan</div><div class="settings-row"><input type="text" id="keywordsInput" value="'+(localStorage.getItem('radar_keywords')||'API de conversiones, Meta policy, ban, restricción, INVIMA, COD Colombia')+'" placeholder="Separadas por coma"></div><button class="card-btn" style="margin-top:8px" onclick="saveKeywords()">Guardar keywords</button></div><div class="settings-section"><div class="settings-title">Datos</div><button class="card-btn" style="border-color:var(--red);color:var(--red)" onclick="clearAllData()">🗑 Borrar datos locales</button><div style="font-size:11px;color:var(--text-muted);margin-top:6px">Borra favoritos, notas y lecturas. Tu API key se mantiene.</div></div><div class="settings-section"><div class="settings-title">Acerca de</div><div style="font-size:13px;color:var(--text-secondary);line-height:1.6">RADAR v3.0 — Centro de inteligencia de marketing digital<br>Haiku para búsqueda rápida · Sonnet para análisis profundo<br>Favoritos no gastan tokens · Tus datos solo en este navegador.</div></div>';
 }
 async function globalSearch(){
   const q=document.getElementById('globalSearchInput')?.value?.trim();
