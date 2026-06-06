@@ -10,7 +10,6 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg-base);color:var(--text);font-family:var(--font);min-height:100vh}
 ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg-base)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
-/* LOGIN */
 .login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:radial-gradient(ellipse at 50% 30%,#0a1a12 0%,var(--bg-base) 70%)}
 .login-box{text-align:center;max-width:420px;width:90%;padding:2.5rem;background:var(--bg-surface);border:1px solid var(--border);border-radius:16px}
 .login-logo{font-size:2.5rem;font-weight:700;letter-spacing:6px;color:var(--accent);margin-bottom:4px}
@@ -21,7 +20,6 @@ body{background:var(--bg-base);color:var(--text);font-family:var(--font);min-hei
 .login-btn:hover{opacity:.9}
 .login-hint{font-size:11px;color:var(--text-muted);margin-top:12px;line-height:1.5}
 .login-hint a{color:var(--accent);text-decoration:none}
-/* APP SHELL */
 .app{display:none;flex-direction:column;height:100vh}.app.active{display:flex}
 .topbar{display:flex;align-items:center;gap:10px;padding:12px 20px;border-bottom:1px solid var(--border);background:var(--bg-surface);flex-wrap:wrap}
 .tb-logo{font-size:1.2rem;font-weight:700;letter-spacing:3px;color:var(--accent);cursor:pointer}
@@ -34,7 +32,6 @@ body{background:var(--bg-base);color:var(--text);font-family:var(--font);min-hei
 .tb-btn:hover{border-color:var(--accent);color:var(--accent)}
 .tb-filter.active{border-color:var(--red);color:var(--red);background:var(--red-dim)}
 .content{flex:1;overflow-y:auto;padding:24px 20px;max-width:1100px;width:100%;margin:0 auto}
-/* HOME */
 .home-hero{text-align:center;margin:10px 0 26px}
 .home-hero .hl{font-size:2.2rem;font-weight:700;letter-spacing:6px;color:var(--accent)}
 .home-hero .hs{font-size:13px;color:var(--text-muted);font-family:var(--mono);margin-top:2px}
@@ -55,16 +52,15 @@ body{background:var(--bg-base);color:var(--text);font-family:var(--font);min-hei
 .utilbtn{display:flex;align-items:center;gap:10px;background:var(--bg-surface);border:1px solid var(--border-light);border-radius:10px;padding:12px 14px;cursor:pointer;transition:all .15s;font-size:13px;color:var(--text-secondary)}
 .utilbtn:hover{border-color:var(--accent);color:var(--text)}
 .utilbtn .ic{font-size:18px}
-/* CHIP PANEL */
 .panel-head{margin-bottom:16px}
 .panel-head .pt{font-size:20px;font-weight:600;color:var(--text)}
-.panel-head .pd{font-size:13px;color:var(--text-secondary);margin-top:4px}
+.panel-head .pd{font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.5}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chip{padding:10px 16px;background:var(--bg-card);border:1px solid var(--border);border-radius:24px;color:var(--text-secondary);font-size:13px;cursor:pointer;transition:all .15s;font-family:var(--font)}
 .chip:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim)}
 .chip.discover{border-color:var(--purple);color:var(--purple)}
 .chip.discover:hover{background:var(--purple-dim)}
-/* CARDS */
+.level-label{margin:20px 0 10px;font-size:13px;font-weight:600}
 .cards-grid{display:flex;flex-direction:column;gap:12px}
 .news-card{background:var(--bg-card);border:1px solid var(--border-light);border-radius:10px;padding:16px 20px;transition:all .2s;position:relative}
 .news-card:hover{border-color:var(--border);background:var(--bg-card-hover)}
@@ -93,7 +89,6 @@ body{background:var(--bg-base);color:var(--text);font-family:var(--font);min-hei
 .card-note.open{display:block}
 .card-note textarea{width:100%;background:transparent;border:none;color:var(--text);font-size:12px;font-family:var(--font);resize:vertical;min-height:50px;outline:none}
 .card-note .note-save{margin-top:6px;padding:4px 10px;background:var(--accent);color:var(--bg-base);border:none;border-radius:4px;font-size:11px;cursor:pointer;font-family:var(--font);font-weight:500}
-/* MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;align-items:center;justify-content:center}
 .modal-overlay.open{display:flex}
 .modal-box{background:var(--bg-surface);border:1px solid var(--border);border-radius:12px;max-width:600px;width:90%;max-height:82vh;overflow-y:auto;padding:24px}
@@ -110,7 +105,6 @@ body{background:var(--bg-base);color:var(--text);font-family:var(--font);min-hei
 .chat-input:focus{border-color:var(--amber)}
 .chat-send{padding:8px 16px;background:var(--amber);color:var(--bg-base);border:none;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;font-family:var(--font)}
 .chat-loading{padding:8px 14px;color:var(--text-muted);font-size:12px;font-style:italic}
-/* LOADING / EMPTY */
 .loading-container{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 0}
 .radar-spinner{width:54px;height:54px;border-radius:50%;border:2px solid var(--border);border-top-color:var(--accent);animation:spin 1s linear infinite;margin-bottom:16px}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -124,7 +118,6 @@ body{background:var(--bg-base);color:var(--text);font-family:var(--font);min-hei
 .digest-title{font-size:14px;font-weight:600;color:var(--accent);margin-bottom:8px}
 .digest-content{font-size:13px;color:var(--text-secondary);line-height:1.7;white-space:pre-wrap}
 .digest-copy{margin-top:12px;padding:6px 14px;background:var(--accent-dim);border:1px solid var(--accent-mid);border-radius:6px;color:var(--accent);font-size:12px;cursor:pointer;font-family:var(--mono)}
-/* FAB */
 .fab{position:fixed;bottom:24px;right:24px;width:54px;height:54px;border-radius:50%;background:var(--accent);color:var(--bg-base);border:none;font-size:22px;cursor:pointer;box-shadow:0 4px 16px rgba(0,232,123,0.4);z-index:90;transition:transform .2s}
 .fab:hover{transform:scale(1.05)}
 .fab-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;align-items:center;justify-content:center}
@@ -147,7 +140,6 @@ body{background:var(--bg-base);color:var(--text);font-family:var(--font);min-hei
 </style>
 </head>
 <body>
-<!-- LOGIN -->
 <div class="login-screen" id="loginScreen">
   <div class="login-box">
     <div class="login-logo">RADAR</div>
@@ -157,7 +149,6 @@ body{background:var(--bg-base);color:var(--text);font-family:var(--font);min-hei
     <div class="login-hint">Consigue tu key en <a href="https://console.anthropic.com/settings/keys" target="_blank">console.anthropic.com</a><br>Tu key se guarda solo en tu navegador.</div>
   </div>
 </div>
-<!-- APP -->
 <div class="app" id="app">
   <div class="topbar">
     <div class="tb-logo" onclick="goHome()">RADAR</div>
@@ -173,7 +164,6 @@ body{background:var(--bg-base);color:var(--text);font-family:var(--font);min-hei
   </div>
   <div class="content" id="contentArea"></div>
 </div>
-<!-- IMPACT / ACTION MODAL -->
 <div class="modal-overlay" id="impactModal">
   <div class="modal-box">
     <div class="modal-title" id="impactTitle">¿Cómo me afecta esto?</div>
@@ -182,7 +172,6 @@ body{background:var(--bg-base);color:var(--text);font-family:var(--font);min-hei
     <button class="modal-close" onclick="closeImpactModal()">Cerrar</button>
   </div>
 </div>
-<!-- FAB -->
 <button class="fab" onclick="openFab()" title="Analizar PDF o texto">📄</button>
 <div class="fab-modal" id="fabModal">
   <div class="fab-box">
@@ -213,7 +202,7 @@ let currentView={type:'home'};
 let favorites=JSON.parse(localStorage.getItem('radar_favs')||'{}');
 let readItems=JSON.parse(localStorage.getItem('radar_read')||'{}');
 let notes=JSON.parse(localStorage.getItem('radar_notes')||'{}');
-const BIZ='Mi negocio: Ecommerce COD en Colombia/LATAM, suplementos de salud vendidos por Meta Ads y WhatsApp (Dropi, ENVÍA/Interrapidísimo).';
+const BIZ='Mi negocio: Ecommerce COD en Colombia/LATAM, suplementos de salud y otros productos vendidos por Meta Ads y WhatsApp (Dropi, ENVÍA/Interrapidísimo).';
 const TR='CRITICAL: ALL titles and summaries MUST be in Spanish. Translate everything from any language to Spanish. Keep original URLs.';
 const ORIGIN_RULE='For EACH item add JSON fields: "origin" = "original" if this source is the first to publish, "replica" if it cites an earlier source, or "aggregator" if it is a summary/listicle. If replica/aggregator, add "origin_source" and "origin_url" when known. Older date = closer to origin.';
 const SYS='Marketing intelligence analyst. '+TR+' '+ORIGIN_RULE+' Respond ONLY with a valid JSON array. No markdown, no backticks.';
@@ -303,6 +292,46 @@ const PANELS={
   ]}
 };
 
+/* ============ ACADEMIA · semáforo de cero a millones ============ */
+const ROLES=[['todos','Todos'],['trafficker','Trafficker'],['gestor','Gestor ecommerce'],['editor','Editor video'],['logistica','Logística'],['marca','Marca']];
+let academiaRole='todos';
+const TEACH_SYS='Eres el profesor y coach de RADAR. Tu alumna tiene un negocio de ecommerce COD en Colombia/LATAM (productos y suplementos vendidos por Meta Ads + WhatsApp; ella hace de logística, gestora de ecommerce, editora de video, trafficker y marca). Explica SÚPER simple, como para alguien que empieza de cero ("que lo entienda un bebé"): sin jerga sin explicar, con pasos cortos y ejemplos de su negocio. Si el tema tiene datos que cambian (benchmarks, herramientas, políticas, precios), usa búsqueda web para dar info actualizada de 2026 y acláralo. Responde en español.';
+const ACADEMY=[
+  {dot:'🔴',color:'var(--red)',label:'NIVEL 1 · Básico — empieza aquí',lessons:[
+    {t:'Cómo funciona el ecommerce COD (pago contra entrega)',r:['todos']},
+    {t:'Configurar tu tienda + API de WhatsApp',r:['gestor']},
+    {t:'Método de búsqueda de productos ganadores',r:['gestor','trafficker']},
+    {t:'Características de un producto y un anuncio ganador',r:['gestor','trafficker','editor']},
+    {t:'Entender Facebook Ads (estructura básica)',r:['trafficker']},
+    {t:'Primeros pasos de testeo (CBO / ABO)',r:['trafficker']}
+  ]},
+  {dot:'🟡',color:'var(--amber)',label:'NIVEL 2 · Intermedio — ya vendes, ahora optimiza',lessons:[
+    {t:'Construir tu oferta con CRO',r:['gestor','marca']},
+    {t:'Crear landing / plantillas (SellerChat)',r:['gestor']},
+    {t:'Crear un anuncio ganador (ángulos, UGC)',r:['trafficker','editor']},
+    {t:'Edición de video que vende',r:['editor']},
+    {t:'Leer campañas: CPM, CTR e impresiones',r:['trafficker']},
+    {t:'WhatsApp: flujos de venta y cierre',r:['gestor']},
+    {t:'Remarketing + Email marketing',r:['trafficker','gestor']}
+  ]},
+  {dot:'🟢',color:'var(--accent)',label:'NIVEL 3 · Avanzado — escala a millones',lessons:[
+    {t:'Escalar en Meta (CBO, Cost Cap, Bid Cap, DPA)',r:['trafficker']},
+    {t:'Anti-baneo y seguridad de cuentas (Incogniton, proxys)',r:['trafficker']},
+    {t:'Dropi LATAM + logística a escala',r:['logistica']},
+    {t:'Marketing de influencers',r:['marca']},
+    {t:'Construir marca (branding y recompra)',r:['marca']},
+    {t:'Fechas especiales Colombia (Black Friday, día sin IVA...)',r:['gestor','marca']},
+    {t:'Contabilidad y números del negocio',r:['todos']},
+    {t:'Estructurar equipo y delegar para crecer',r:['todos']}
+  ]}
+];
+
+/* ============ FICHAS · chuletas que abren sin gastar tokens ============ */
+const FICHAS=[
+  {id:'testeo-fb',title:'📊 Testeo en Facebook · benchmarks y estructura',body:
+'COLOMBIA / LATAM\n• CPM: menos de 2 = muy bueno · 2–4 = óptimo · más de 4 = caro\n• CTR: menos de 1.5% = malo · más de 1.5% = óptimo · más de 2.5% = muy bueno\n• Impresiones para testear: llegar a ~6.000 y comparar con los que ya te funcionaron\n\nCAMPAÑAS DE TEST (LATAM)\n• CBO 10–20€ · 1 conjunto BROAD (abierto) · 2–3 anuncios\n• ABO 3–5€ por conjunto (BROAD) · 1 video o imagen por conjunto (un conjunto por cada creativo)\n   Ej: 5 videos de un producto = 5 adsets de 5€, un video por adset\n• ABO 5€ por adset: 2 generales + 2 de nicho + 1 de compradores\n• Con ABO puedes usar EXCLUIR COMPRAS\n\nLOS 4 BLOQUES DE PRESUPUESTO DEL DÍA\n00:00–6am · 6am–12pm · 12pm–18pm · 18pm–24:00\n\nESPAÑA (referencia)\n• CPM: <3 muy bueno · 3–6 óptimo · >6 caro · llegar a ~4.000 impresiones\n• CBO 20–30€ · ABO 5–10€ por conjunto\n\nEUROPA (Alemania / UK / Holanda)\n• CPM: <10 muy bueno · 10–20 óptimo · >20 caro · llegar a ~1.000 impresiones\n• Excluir AliExpress, Dropshipping y Shopify · idioma del país (Alemania → alemán)\n\nINTERESES DE MODA QUE FUNCIONAN\nClothing · Online shopping · Shopping · Zalando · Zara · H&M · Fashion · Engagement · Men’s Clothing · Women’s Clothing\n\n(Fuente: tus apuntes de mentoría. Toca "Actualizar con datos de hoy" para ver si algo cambió.)'}
+];
+
 /* ============ LOGIN ============ */
 function handleLogin(){const k=document.getElementById('apiKeyInput').value.trim();if(!k)return;API_KEY=k;sessionStorage.setItem('radar_key',k);showApp()}
 function showApp(){document.getElementById('loginScreen').style.display='none';document.getElementById('app').classList.add('active');const d=document.getElementById('dateInput');if(d&&!d.value)d.valueAsDate=new Date();goHome()}
@@ -335,10 +364,12 @@ function renderHome(){
     '<div class="home-hero"><div class="hl">RADAR</div><div class="hs">tu radar de marketing e IA</div></div>'+
     '<div class="home-search"><input type="text" id="homeSearch" placeholder="Escribe lo que quieras saber... (ej: nuevo modelo de video de Gemini)" onkeydown="if(event.key===\'Enter\')runFreeSearch()"><button onclick="runFreeSearch()">🔍 Buscar</button></div>'+
     '<div class="home-tip">💡 Solo gasta cuando <b>tú</b> buscas o tocas un botón. Nada corre solo.</div>'+
+    '<div class="bigbtn" style="border:1px solid var(--accent);background:linear-gradient(135deg,#00e87b1f,#161622);margin-bottom:14px" onclick="openAcademia()"><div class="ic">🎓</div><div><div class="tt">Academia · de cero a millones</div><div class="ds">aprende TODO paso a paso, como tus mentorías · 🔴 → 🟡 → 🟢</div></div></div>'+
     '<div class="grid">'+big+'</div>'+
     '<div class="section-label">Tus herramientas</div>'+
     '<div class="util-grid">'+
       '<div class="utilbtn" onclick="switchView(\'favoritos\')"><span class="ic">⭐</span> Mis guardados ('+Object.keys(favorites).length+')</div>'+
+      '<div class="utilbtn" onclick="switchView(\'fichas\')"><span class="ic">📒</span> Fichas (chuletas)</div>'+
       '<div class="utilbtn" onclick="switchView(\'digest\')"><span class="ic">📋</span> Digest semanal</div>'+
       '<div class="utilbtn" onclick="switchView(\'aprende\')"><span class="ic">🎓</span> Aprende algo</div>'+
       '<div class="utilbtn" onclick="switchView(\'config\')"><span class="ic">⚙️</span> Ajustes</div>'+
@@ -409,7 +440,7 @@ async function callClaude(p,sys,deep){
 }
 
 /* ============ RENDER RESULTADOS / TARJETAS ============ */
-function showLoading(title){document.getElementById('contentArea').innerHTML='<div class="loading-container"><div class="radar-spinner"></div><div class="loading-text">Buscando: '+title+'</div><div class="loading-sub">15-30 segundos · gasta 1 búsqueda</div></div>'}
+function showLoading(title){document.getElementById('contentArea').innerHTML='<div class="loading-container"><div class="radar-spinner"></div><div class="loading-text">Cargando: '+title+'</div><div class="loading-sub">15-30 segundos · gasta 1 búsqueda</div></div>'}
 function renderResults(items){
   const c=document.getElementById('contentArea');
   if(!items||!items.length){c.innerHTML='<div class="empty-state"><div class="empty-icon">📭</div><div class="empty-title">Sin resultados</div><div class="empty-sub">Prueba otra fecha o toca Actualizar.</div></div>';return}
@@ -508,9 +539,41 @@ async function callClaudeChat(messages,sys){
 }
 function closeImpactModal(){document.getElementById('impactModal').classList.remove('open')}
 
-/* ============ VISTAS: FAVORITOS / DIGEST / APRENDE / CONFIG ============ */
+/* ============ ACADEMIA (semáforo + roles) ============ */
+function openAcademia(){currentView={type:'academia'};setTopbar('academia','🎓 Academia');renderAcademia()}
+function setAcademiaRole(r){academiaRole=r;renderAcademia()}
+function renderAcademia(){
+  let roles='';
+  ROLES.forEach(([k,l])=>{const on=academiaRole===k;roles+='<div class="chip" style="'+(on?'border-color:var(--accent);color:var(--accent);background:var(--accent-dim)':'')+'" onclick="setAcademiaRole(\''+k+'\')">'+l+'</div>';});
+  let html='<div class="panel-head"><div class="pt">🎓 Academia · de cero a millones</div><div class="pd">Todo lo de tus mentorías, explicado fácil. Sigue el semáforo: empieza en 🔴 y avanza hasta 🟢. Toca una lección y el profe te la enseña con tus números y datos de hoy.</div></div>';
+  html+='<div style="font-size:13px;color:var(--text-secondary);margin-bottom:8px">¿Qué eres hoy?</div><div class="chips" style="margin-bottom:6px">'+roles+'</div>';
+  ACADEMY.forEach((lvl,li)=>{
+    const list=lvl.lessons.map((les,i)=>({les,i})).filter(x=>academiaRole==='todos'||x.les.r.includes(academiaRole)||x.les.r.includes('todos'));
+    if(!list.length)return;
+    html+='<div class="level-label" style="color:'+lvl.color+'">'+lvl.dot+' '+lvl.label+'</div>';
+    html+='<div class="grid">';
+    list.forEach(({les,i})=>{html+='<div class="bigbtn" onclick="openLesson('+li+','+i+')"><div class="ic" style="font-size:18px">'+lvl.dot+'</div><div><div class="tt" style="font-size:14px">'+les.t+'</div><div class="ds">tocar para aprender</div></div></div>';});
+    html+='</div>';
+  });
+  document.getElementById('contentArea').innerHTML=html;
+}
+let learnChat={messages:[],topic:''};
+function openLesson(li,i){
+  const les=ACADEMY[li].lessons[i];
+  currentView={type:'lesson',li,i};setTopbar('lesson',les.t);
+  document.getElementById('contentArea').innerHTML=
+    '<div class="panel-head"><div class="pt">'+ACADEMY[li].dot+' '+les.t+'</div><div class="pd">Te lo explico fácil y con datos actuales. Pregúntame lo que no entiendas.</div></div>'+
+    '<div class="chat-area" id="learnArea" style="max-height:560px"><div class="chat-loading">⏳ Preparando tu lección...</div></div>'+
+    '<div class="chat-input-row"><textarea class="chat-input" id="learnInput" placeholder="Pregunta o pide más detalle..." onkeydown="if(event.key===\'Enter\'&&!event.shiftKey){event.preventDefault();sendLearn()}"></textarea><button class="chat-send" onclick="sendLearn()">Enviar</button></div>';
+  const prompt='Enséñame este tema: "'+les.t+'".\n\n'+BIZ+'\n\nExplícalo como a una persona que empieza de cero. Estructura:\n1. ¿QUÉ ES? (simple)\n2. ¿POR QUÉ ME IMPORTA?\n3. PASO A PASO\n4. EJEMPLO con mi negocio (con números si aplica)\n5. ERRORES COMUNES\n6. QUÉ HAGO HOY\n\nSi hay datos recientes (herramientas, benchmarks, políticas 2026), búscalos y dámelos actualizados. Español claro.';
+  learnChat={messages:[{role:'user',content:prompt}],topic:les.t};
+  callClaude(prompt,TEACH_SYS,true).then(r=>{learnChat.messages.push({role:'assistant',content:r});renderLearn()}).catch(e=>{const a=document.getElementById('learnArea');if(a)a.innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">'+e.message+'</div></div>'});
+}
+
+/* ============ VISTAS: FAVORITOS / FICHAS / DIGEST / APRENDE / CONFIG ============ */
 function switchView(v){
   if(v==='favoritos'){currentView={type:'favoritos'};setTopbar('favoritos','⭐ Mis guardados');return renderFavorites()}
+  if(v==='fichas'){currentView={type:'fichas'};setTopbar('fichas','📒 Fichas');return renderFichas()}
   if(v==='digest'){currentView={type:'digest'};setTopbar('digest','📋 Digest semanal');return generateDigest()}
   if(v==='aprende'){currentView={type:'aprende'};setTopbar('aprende','🎓 Aprende algo');return renderAprende()}
   if(v==='config'){currentView={type:'config'};setTopbar('config','⚙️ Ajustes');return renderConfig()}
@@ -521,6 +584,33 @@ function renderFavorites(){
   fl.forEach(item=>{if(item.id)itemStore[item.id]=item});
   c.innerHTML='<div class="cards-grid">'+fl.map(renderCard).join('')+'</div>';
 }
+/* --- FICHAS --- */
+function renderFichas(){
+  let html='<div class="panel-head"><div class="pt">📒 Fichas · tus chuletas</div><div class="pd">Resúmenes listos para mirar al instante. Abrirlos NO gasta tokens. Cuando quieras, actualízalos con datos de hoy.</div></div><div class="grid">';
+  FICHAS.forEach((f,i)=>{html+='<div class="bigbtn" onclick="openFicha('+i+')"><div class="ic">📄</div><div><div class="tt" style="font-size:14px">'+f.title+'</div><div class="ds">tocar para ver</div></div></div>';});
+  html+='</div><div style="margin-top:16px;font-size:12px;color:var(--text-muted)">💡 ¿Quieres agregar otra chuleta? Pásamela y la dejo fija aquí.</div>';
+  document.getElementById('contentArea').innerHTML=html;
+}
+function openFicha(i){
+  const f=FICHAS[i];currentView={type:'ficha',i};setTopbar('ficha',f.title);
+  const upd=(JSON.parse(localStorage.getItem('radar_ficha_upd')||'{}'))[f.id];
+  document.getElementById('contentArea').innerHTML=
+    '<div class="panel-head"><div class="pt">'+f.title+'</div></div>'+
+    '<div class="digest-box"><div class="digest-title">Tu chuleta</div><div class="digest-content">'+f.body+'</div></div>'+
+    (upd?'<div class="digest-box" style="border-color:var(--accent)"><div class="digest-title">🔄 Datos de hoy ('+upd.date+')</div><div class="digest-content">'+upd.text+'</div></div>':'')+
+    '<button class="tb-btn" style="border-color:var(--accent);color:var(--accent)" onclick="refreshFicha('+i+')">🔄 Actualizar con datos de hoy</button>'+
+    '<div id="fichaUpd"></div>';
+}
+async function refreshFicha(i){
+  const f=FICHAS[i];const u=document.getElementById('fichaUpd');
+  if(u)u.innerHTML='<div class="loading-container" style="padding:24px 0"><div class="radar-spinner" style="width:34px;height:34px"></div><div class="loading-text">Buscando datos de hoy...</div></div>';
+  try{
+    const r=await callClaude('Dame los datos más actualizados (2026) sobre: '+f.title+'. Específico para ecommerce COD Colombia/LATAM. Dime qué sigue vigente y qué cambió: benchmarks, rangos, herramientas o reglas actuales. Español, conciso, en lista.','Analista de marketing. Español. Conciso, datos vigentes.',false);
+    const store=JSON.parse(localStorage.getItem('radar_ficha_upd')||'{}');store[f.id]={date:new Date().toLocaleDateString('es-CO'),text:r};localStorage.setItem('radar_ficha_upd',JSON.stringify(store));
+    openFicha(i);
+  }catch(e){if(u)u.innerHTML='<div style="color:var(--red);margin-top:10px">Error: '+e.message+'</div>'}
+}
+/* --- DIGEST --- */
 async function generateDigest(){
   showLoading('Digest semanal');
   try{const r=await callClaude('Weekly marketing digest of the past 7 days: Meta Ads, TikTok Ads, Google Ads, Shopify, ecommerce, copywriting, AI tools, Meta account security, WhatsApp Business.\n\nIn Spanish:\n🔴 ALERTAS CRÍTICAS\n🟡 ACTUALIZACIONES IMPORTANTES\n🟢 OPORTUNIDADES\n🎯 ACCIÓN DE LA SEMANA\n📊 TERMÓMETRO DEL ECOSISTEMA\n\n'+BIZ+' Specific.','Marketing analyst. Spanish. Actionable.',true);
@@ -528,10 +618,9 @@ async function generateDigest(){
   catch(e){document.getElementById('contentArea').innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">'+e.message+'</div></div>'}
 }
 function copyDigest(){const t=document.querySelector('.digest-content');if(!t)return;navigator.clipboard.writeText(t.textContent||'').then(()=>{const b=document.querySelector('.digest-copy');b.textContent='✅ Copiado';setTimeout(()=>b.textContent='📋 Copiar',2000)})}
-
-let learnChat={messages:[],topic:''};
+/* --- APRENDE (tema libre) --- */
 function renderAprende(){
-  document.getElementById('contentArea').innerHTML='<div class="panel-head"><div class="pt">🎓 Aprende algo nuevo</div><div class="pd">Dime qué quieres entender y te lo explico paso a paso, fácil, con ejemplos de tu negocio.</div></div>'+
+  document.getElementById('contentArea').innerHTML='<div class="panel-head"><div class="pt">🎓 Aprende algo nuevo</div><div class="pd">Dime cualquier tema y te lo explico paso a paso, fácil, con ejemplos de tu negocio.</div></div>'+
     '<div class="home-search" style="margin-bottom:14px"><input type="text" id="learnTopic" placeholder="¿Qué quieres aprender? (ej: CBO, CAPI, Performance Max, VSL)" onkeydown="if(event.key===\'Enter\')startLearn()"><button onclick="startLearn()">Empezar</button></div>'+
     '<div class="chat-area" id="learnArea" style="max-height:520px"></div>'+
     '<div class="chat-input-row" id="learnRow" style="display:none"><textarea class="chat-input" id="learnInput" placeholder="Pregunta o pide más detalle..." onkeydown="if(event.key===\'Enter\'&&!event.shiftKey){event.preventDefault();sendLearn()}"></textarea><button class="chat-send" onclick="sendLearn()">Enviar</button></div>';
@@ -542,25 +631,25 @@ async function startLearn(){
   document.getElementById('learnArea').innerHTML='<div class="chat-loading">⏳ Preparando tu lección...</div>';
   const prompt='Quiero aprender: "'+topic+'"\n\n'+BIZ+'\n\nEnséñame paso a paso, asumiendo que sé poco. Estructura:\n1. ¿QUÉ ES? (simple)\n2. ¿POR QUÉ ME IMPORTA?\n3. PASO A PASO\n4. EJEMPLO con mi negocio\n5. ERRORES COMUNES\n6. PRÓXIMO PASO HOY\n\nEspañol claro, sin jerga.';
   learnChat.messages.push({role:'user',content:prompt});
-  try{const r=await callClaudeChat(learnChat.messages,'Expert teacher of digital marketing and ecommerce. Student: COD entrepreneur in Colombia (supplements via Meta + WhatsApp). Pedagogical, concrete examples, no jargon. Spanish. Topic: '+topic);learnChat.messages.push({role:'assistant',content:r});renderLearn()}
+  try{const r=await callClaude(prompt,TEACH_SYS,true);learnChat.messages.push({role:'assistant',content:r});renderLearn()}
   catch(e){document.getElementById('learnArea').innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">'+e.message+'</div></div>'}
 }
 async function sendLearn(){
   const input=document.getElementById('learnInput');const t=input?.value?.trim();if(!t)return;input.value='';
   learnChat.messages.push({role:'user',content:t});renderLearn();
   const area=document.getElementById('learnArea');area.innerHTML+='<div class="chat-loading" id="learnLoading">⏳ Pensando...</div>';area.scrollTop=area.scrollHeight;
-  try{const r=await callClaudeChat(learnChat.messages,'Expert teacher of digital marketing and ecommerce. Student: COD entrepreneur in Colombia. Pedagogical, concrete, no jargon. Spanish. Topic: '+learnChat.topic);learnChat.messages.push({role:'assistant',content:r});renderLearn()}
+  try{const r=await callClaudeChat(learnChat.messages,TEACH_SYS+' Tema actual: '+learnChat.topic);learnChat.messages.push({role:'assistant',content:r});renderLearn()}
   catch(e){const l=document.getElementById('learnLoading');if(l)l.remove();learnChat.messages.push({role:'assistant',content:'⚠️ Error: '+e.message});renderLearn()}
 }
 function renderLearn(){const area=document.getElementById('learnArea');if(!area)return;let html='';for(let i=0;i<learnChat.messages.length;i++){const m=learnChat.messages[i];if(i===0&&m.role==='user')continue;html+='<div class="chat-msg '+(m.role==='user'?'chat-msg-user':'chat-msg-assistant')+'">'+m.content+'</div>'}area.innerHTML=html;area.scrollTop=area.scrollHeight}
-
+/* --- CONFIG --- */
 function renderConfig(){
   document.getElementById('contentArea').innerHTML=
     '<div class="panel-head"><div class="pt">⚙️ Ajustes</div><div class="pd">Tu llave y tus datos. Todo vive solo en este navegador.</div></div>'+
-    '<div class="settings-section"><div class="settings-title">Cómo ahorras tokens</div><div style="font-size:13px;color:var(--text-secondary);line-height:1.7">• Nada se busca solo: solo gasta cuando tú tocas un botón o buscas.<br>• Cada búsqueda se guarda en memoria: si la repites el mismo día, no vuelve a gastar.<br>• Tus guardados, notas y lecturas no gastan nada.<br>• Búsqueda rápida usa Haiku (barato). Análisis profundo usa Sonnet.</div></div>'+
+    '<div class="settings-section"><div class="settings-title">Cómo ahorras tokens</div><div style="font-size:13px;color:var(--text-secondary);line-height:1.7">• Nada se busca solo: solo gasta cuando tú tocas un botón o buscas.<br>• Cada búsqueda se guarda en memoria: si la repites el mismo día, no vuelve a gastar.<br>• Tus guardados, notas, lecturas y fichas no gastan nada al abrirlos.<br>• Búsqueda rápida usa Haiku (barato). Análisis profundo y lecciones usan Sonnet.</div></div>'+
     '<div class="settings-section"><div class="settings-title">Datos locales</div><button class="card-btn" style="border-color:var(--red);color:var(--red)" onclick="clearAllData()">🗑 Borrar guardados, notas y caché</button><div style="font-size:11px;color:var(--text-muted);margin-top:6px">Tu API key NO se borra con esto.</div></div>'+
     '<div class="settings-section"><div class="settings-title">Sesión</div><button class="card-btn" onclick="handleLogout()">Cerrar sesión (olvidar API key)</button></div>'+
-    '<div class="settings-section"><div class="settings-title">Acerca de</div><div style="font-size:13px;color:var(--text-secondary);line-height:1.6">RADAR · versión simple<br>Tu radar de marketing e IA. Sin menús eternos.</div></div>';
+    '<div class="settings-section"><div class="settings-title">Acerca de</div><div style="font-size:13px;color:var(--text-secondary);line-height:1.6">RADAR · versión simple + Academia<br>Tu radar y tu coach de marketing e IA. De cero a millones.</div></div>';
 }
 function clearAllData(){if(!confirm('¿Borrar guardados, notas y caché?'))return;favorites={};readItems={};notes={};cache={};localStorage.removeItem('radar_favs');localStorage.removeItem('radar_read');localStorage.removeItem('radar_notes');alert('Datos borrados');goHome()}
 
