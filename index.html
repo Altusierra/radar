@@ -98,6 +98,7 @@ body{background:var(--bg-base);color:var(--text);font-family:var(--font);min-hei
 .modal-close{margin-top:16px;padding:8px 20px;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;color:var(--text-secondary);cursor:pointer;font-family:var(--font);font-size:13px}
 .chat-area{display:flex;flex-direction:column;gap:10px;max-height:400px;overflow-y:auto;padding:8px 0;margin-bottom:12px}
 .chat-msg{padding:10px 14px;border-radius:10px;font-size:13px;line-height:1.6;max-width:90%;white-space:pre-wrap;word-wrap:break-word}
+.chat-msg b{color:var(--accent);font-weight:600}
 .chat-msg-assistant{background:var(--bg-card);color:var(--text);align-self:flex-start;border:1px solid var(--border-light)}
 .chat-msg-user{background:var(--amber-dim);color:var(--text);align-self:flex-end;border:1px solid var(--amber);max-width:80%}
 .chat-input-row{display:flex;gap:6px;margin-top:6px}
@@ -117,6 +118,7 @@ body{background:var(--bg-base);color:var(--text);font-family:var(--font);min-hei
 .digest-box{background:var(--bg-card);border:1px solid var(--border-light);border-radius:10px;padding:20px;margin-bottom:16px}
 .digest-title{font-size:14px;font-weight:600;color:var(--accent);margin-bottom:8px}
 .digest-content{font-size:13px;color:var(--text-secondary);line-height:1.7;white-space:pre-wrap}
+.digest-content b{color:var(--text);font-weight:600}
 .digest-copy{margin-top:12px;padding:6px 14px;background:var(--accent-dim);border:1px solid var(--accent-mid);border-radius:6px;color:var(--accent);font-size:12px;cursor:pointer;font-family:var(--mono)}
 .fab{position:fixed;bottom:24px;right:24px;width:54px;height:54px;border-radius:50%;background:var(--accent);color:var(--bg-base);border:none;font-size:22px;cursor:pointer;box-shadow:0 4px 16px rgba(0,232,123,0.4);z-index:90;transition:transform .2s}
 .fab:hover{transform:scale(1.05)}
@@ -133,6 +135,7 @@ body{background:var(--bg-base);color:var(--text);font-family:var(--font);min-hei
 .fab-action-btn.active{border-color:var(--accent);color:var(--accent);background:var(--accent-dim)}
 .fab-submit{padding:10px 20px;background:var(--accent);color:var(--bg-base);border:none;border-radius:6px;font-weight:600;font-size:13px;cursor:pointer;font-family:var(--font)}
 .fab-result{margin-top:16px;padding:16px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;font-size:13px;color:var(--text-secondary);line-height:1.7;white-space:pre-wrap}
+.fab-result b{color:var(--text);font-weight:600}
 .fab-close{margin-top:12px;padding:8px 16px;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;color:var(--text-secondary);cursor:pointer;font-family:var(--font);font-size:12px}
 .settings-section{margin-bottom:24px}
 .settings-title{font-size:14px;font-weight:600;margin-bottom:12px;color:var(--accent)}
@@ -202,6 +205,8 @@ let currentView={type:'home'};
 let favorites=JSON.parse(localStorage.getItem('radar_favs')||'{}');
 let readItems=JSON.parse(localStorage.getItem('radar_read')||'{}');
 let notes=JSON.parse(localStorage.getItem('radar_notes')||'{}');
+let history=JSON.parse(localStorage.getItem('radar_history')||'[]');
+let currentChatId=null,currentChatMeta=null;
 const BIZ='Mi negocio: Ecommerce COD en Colombia/LATAM, suplementos de salud y otros productos vendidos por Meta Ads y WhatsApp (Dropi, ENVÍA/Interrapidísimo).';
 const TR='CRITICAL: ALL titles and summaries MUST be in Spanish. Translate everything from any language to Spanish. Keep original URLs.';
 const ORIGIN_RULE='For EACH item add JSON fields: "origin" = "original" if this source is the first to publish, "replica" if it cites an earlier source, or "aggregator" if it is a summary/listicle. If replica/aggregator, add "origin_source" and "origin_url" when known. Older date = closer to origin.';
@@ -332,6 +337,18 @@ const FICHAS=[
 'COLOMBIA / LATAM\n• CPM: menos de 2 = muy bueno · 2–4 = óptimo · más de 4 = caro\n• CTR: menos de 1.5% = malo · más de 1.5% = óptimo · más de 2.5% = muy bueno\n• Impresiones para testear: llegar a ~6.000 y comparar con los que ya te funcionaron\n\nCAMPAÑAS DE TEST (LATAM)\n• CBO 10–20€ · 1 conjunto BROAD (abierto) · 2–3 anuncios\n• ABO 3–5€ por conjunto (BROAD) · 1 video o imagen por conjunto (un conjunto por cada creativo)\n   Ej: 5 videos de un producto = 5 adsets de 5€, un video por adset\n• ABO 5€ por adset: 2 generales + 2 de nicho + 1 de compradores\n• Con ABO puedes usar EXCLUIR COMPRAS\n\nLOS 4 BLOQUES DE PRESUPUESTO DEL DÍA\n00:00–6am · 6am–12pm · 12pm–18pm · 18pm–24:00\n\nESPAÑA (referencia)\n• CPM: <3 muy bueno · 3–6 óptimo · >6 caro · llegar a ~4.000 impresiones\n• CBO 20–30€ · ABO 5–10€ por conjunto\n\nEUROPA (Alemania / UK / Holanda)\n• CPM: <10 muy bueno · 10–20 óptimo · >20 caro · llegar a ~1.000 impresiones\n• Excluir AliExpress, Dropshipping y Shopify · idioma del país (Alemania → alemán)\n\nINTERESES DE MODA QUE FUNCIONAN\nClothing · Online shopping · Shopping · Zalando · Zara · H&M · Fashion · Engagement · Men’s Clothing · Women’s Clothing\n\n(Fuente: tus apuntes de mentoría. Toca "Actualizar con datos de hoy" para ver si algo cambió.)'}
 ];
 
+/* ============ FORMATO DE TEXTO (markdown ligero) ============ */
+function mdLite(s){
+  s=(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  s=s.replace(/```([\s\S]*?)```/g,function(m,p){return p.replace(/`/g,'')});
+  s=s.replace(/^\s{0,3}#{1,6}\s*(.+)$/gm,'<b>$1</b>');
+  s=s.replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
+  s=s.replace(/`([^`]+)`/g,'<span style="font-family:var(--mono);color:var(--accent)">$1</span>');
+  s=s.replace(/^\s*[-*]\s+/gm,'• ');
+  s=s.replace(/^\s*---+\s*$/gm,'<hr style="border:none;border-top:1px solid var(--border);margin:10px 0">');
+  return s;
+}
+
 /* ============ LOGIN ============ */
 function handleLogin(){const k=document.getElementById('apiKeyInput').value.trim();if(!k)return;API_KEY=k;sessionStorage.setItem('radar_key',k);showApp()}
 function showApp(){document.getElementById('loginScreen').style.display='none';document.getElementById('app').classList.add('active');const d=document.getElementById('dateInput');if(d&&!d.value)d.valueAsDate=new Date();goHome()}
@@ -363,12 +380,13 @@ function renderHome(){
   c.innerHTML=
     '<div class="home-hero"><div class="hl">RADAR</div><div class="hs">tu radar de marketing e IA</div></div>'+
     '<div class="home-search"><input type="text" id="homeSearch" placeholder="Escribe lo que quieras saber... (ej: nuevo modelo de video de Gemini)" onkeydown="if(event.key===\'Enter\')runFreeSearch()"><button onclick="runFreeSearch()">🔍 Buscar</button></div>'+
-    '<div class="home-tip">💡 Solo gasta cuando <b>tú</b> buscas o tocas un botón. Nada corre solo.</div>'+
+    '<div class="home-tip">💡 Solo gasta cuando <b>tú</b> buscas o tocas un botón. Todo se guarda en tu Historial.</div>'+
     '<div class="bigbtn" style="border:1px solid var(--accent);background:linear-gradient(135deg,#00e87b1f,#161622);margin-bottom:14px" onclick="openAcademia()"><div class="ic">🎓</div><div><div class="tt">Academia · de cero a millones</div><div class="ds">aprende TODO paso a paso, como tus mentorías · 🔴 → 🟡 → 🟢</div></div></div>'+
     '<div class="grid">'+big+'</div>'+
     '<div class="section-label">Tus herramientas</div>'+
     '<div class="util-grid">'+
       '<div class="utilbtn" onclick="switchView(\'favoritos\')"><span class="ic">⭐</span> Mis guardados ('+Object.keys(favorites).length+')</div>'+
+      '<div class="utilbtn" onclick="switchView(\'historial\')"><span class="ic">🕘</span> Historial ('+history.length+')</div>'+
       '<div class="utilbtn" onclick="switchView(\'fichas\')"><span class="ic">📒</span> Fichas (chuletas)</div>'+
       '<div class="utilbtn" onclick="switchView(\'digest\')"><span class="ic">📋</span> Digest semanal</div>'+
       '<div class="utilbtn" onclick="switchView(\'aprende\')"><span class="ic">🎓</span> Aprende algo</div>'+
@@ -421,6 +439,7 @@ async function runSearch(query,title,opts){
     const text=await callClaude(buildPrompt(query,opts),SYS,!!opts.deep);
     const data=parseItems(text);
     cache[ck]=data;
+    saveHistoryEntry({id:'s_'+ck,kind:'busqueda',title,date:new Date().toISOString(),preview:((data[0]&&data[0].title)||'')+(data.length>1?' (+'+(data.length-1)+' más)':''),data:{query,title,opts,items:data}});
     renderResults(data);
   }catch(e){
     document.getElementById('contentArea').innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error al cargar</div><div class="empty-sub">'+e.message+'</div></div>';
@@ -498,7 +517,7 @@ async function analyzeImpact(id){
   document.getElementById('impactModal').classList.add('open');
   const c=document.getElementById('impactContent');
   c.innerHTML='<div class="loading-container"><div class="radar-spinner"></div><div class="loading-text">Analizando impacto...</div></div>';
-  try{const r=await callClaude('Analiza cómo esta noticia afecta mi negocio:\n\nNOTICIA: '+(item.title||'')+'\nRESUMEN: '+(item.summary||'')+'\n\n'+BIZ+'\n\nEn español:\n1. IMPACTO DIRECTO\n2. ACCIONES INMEDIATAS\n3. OPORTUNIDADES\n4. RIESGOS\n\nEspecífico, sin relleno.','Strategic advisor for COD ecommerce in Colombia. Spanish. Direct.',true);c.innerHTML='<div style="white-space:pre-wrap;line-height:1.7">'+r+'</div>'}
+  try{const r=await callClaude('Analiza cómo esta noticia afecta mi negocio:\n\nNOTICIA: '+(item.title||'')+'\nRESUMEN: '+(item.summary||'')+'\n\n'+BIZ+'\n\nEn español:\n1. IMPACTO DIRECTO\n2. ACCIONES INMEDIATAS\n3. OPORTUNIDADES\n4. RIESGOS\n\nEspecífico, sin relleno.','Strategic advisor for COD ecommerce in Colombia. Spanish. Direct.',true);c.innerHTML='<div style="line-height:1.7">'+mdLite(r)+'</div>'}
   catch(e){c.innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">'+e.message+'</div></div>'}
 }
 async function extractKey(id){
@@ -507,7 +526,7 @@ async function extractKey(id){
   keyDiv.style.display='block';
   const item=itemStore[id]||favorites[id]||{};
   keyText.innerHTML='<div class="loading-container" style="padding:20px 0"><div class="radar-spinner" style="width:30px;height:30px"></div><div class="loading-text">Extrayendo lo clave...</div></div>';
-  try{const r=await callClaude('Busca más sobre esto y extrae lo esencial:\n\nTÍTULO: '+(item.title||'')+'\nRESUMEN: '+(item.summary||'')+'\nURL: '+(item.url||'')+'\n\nEn español: 3-5 puntos clave, el dato más importante, y la fuente original. Conciso.','Intelligence analyst. Spanish. Key facts only. Concise.');keyText.innerHTML='<div style="white-space:pre-wrap;line-height:1.6">'+r+'</div>'}
+  try{const r=await callClaude('Busca más sobre esto y extrae lo esencial:\n\nTÍTULO: '+(item.title||'')+'\nRESUMEN: '+(item.summary||'')+'\nURL: '+(item.url||'')+'\n\nEn español: 3-5 puntos clave, el dato más importante, y la fuente original. Conciso.','Intelligence analyst. Spanish. Key facts only. Concise.');keyText.innerHTML='<div style="line-height:1.6">'+mdLite(r)+'</div>'}
   catch(e){keyText.innerHTML='Error: '+e.message}
 }
 let actionChat={messages:[],context:''};
@@ -518,18 +537,18 @@ async function takeAction(id){
   document.getElementById('impactSubtitle').textContent=item.title||'';
   document.getElementById('impactModal').classList.add('open');
   const c=document.getElementById('impactContent');
-  actionChat={messages:[],context:'NOTICIA: '+(item.title||'')+'\nRESUMEN: '+(item.summary||'')};
+  actionChat={messages:[],context:'NOTICIA: '+(item.title||'')+'\nRESUMEN: '+(item.summary||''),histId:'c'+Date.now(),title:(item.title||'Plan de acción')};
   c.innerHTML='<div class="chat-area" id="chatArea"><div class="chat-loading">⏳ Generando plan inicial...</div></div><div class="chat-input-row"><textarea class="chat-input" id="chatInput" placeholder="Pregunta sobre el plan o cómo hacer un paso..." onkeydown="if(event.key===\'Enter\'&&!event.shiftKey){event.preventDefault();sendActionChat()}"></textarea><button class="chat-send" onclick="sendActionChat()">Enviar</button></div>';
   const initial='Dame un plan de acción concreto para esta noticia:\n\n'+actionChat.context+'\n\n'+BIZ+'\n\nEn español con pasos numerados:\n⚡ ACCIÓN INMEDIATA (24h)\n📋 ESTA SEMANA (7 días)\n🎯 RESULTADO ESPERADO\n\nDirecto, pasos concretos.';
-  try{const r=await callClaudeChat([{role:'user',content:initial}],'Action-oriented strategic advisor for COD ecommerce Colombia. Spanish. Concrete steps. Stay actionable. News context: '+actionChat.context);actionChat.messages.push({role:'user',content:initial});actionChat.messages.push({role:'assistant',content:r});renderChat()}
+  try{const r=await callClaudeChat([{role:'user',content:initial}],'Action-oriented strategic advisor for COD ecommerce Colombia. Spanish. Concrete steps. Stay actionable. News context: '+actionChat.context);actionChat.messages.push({role:'user',content:initial});actionChat.messages.push({role:'assistant',content:r});renderChat();persistAction()}
   catch(e){const a=document.getElementById('chatArea');if(a)a.innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">'+e.message+'</div></div>'}
 }
-function renderChat(){const area=document.getElementById('chatArea');if(!area)return;let html='';for(let i=0;i<actionChat.messages.length;i++){const m=actionChat.messages[i];if(i===0&&m.role==='user')continue;html+='<div class="chat-msg '+(m.role==='user'?'chat-msg-user':'chat-msg-assistant')+'">'+m.content+'</div>'}area.innerHTML=html;area.scrollTop=area.scrollHeight}
+function renderChat(){const area=document.getElementById('chatArea');if(!area)return;let html='';for(let i=0;i<actionChat.messages.length;i++){const m=actionChat.messages[i];if(i===0&&m.role==='user')continue;html+='<div class="chat-msg '+(m.role==='user'?'chat-msg-user':'chat-msg-assistant')+'">'+mdLite(m.content)+'</div>'}area.innerHTML=html;area.scrollTop=area.scrollHeight}
 async function sendActionChat(){
   const input=document.getElementById('chatInput');if(!input)return;const text=input.value.trim();if(!text)return;input.value='';
   actionChat.messages.push({role:'user',content:text});renderChat();
   const area=document.getElementById('chatArea');area.innerHTML+='<div class="chat-loading" id="chatLoading">⏳ Pensando...</div>';area.scrollTop=area.scrollHeight;
-  try{const r=await callClaudeChat(actionChat.messages,'Action-oriented strategic advisor for COD ecommerce Colombia (supplements via Meta Ads + WhatsApp). Spanish. Concrete and actionable. News context: '+actionChat.context);actionChat.messages.push({role:'assistant',content:r});renderChat()}
+  try{const r=await callClaudeChat(actionChat.messages,'Action-oriented strategic advisor for COD ecommerce Colombia (supplements via Meta Ads + WhatsApp). Spanish. Concrete and actionable. News context: '+actionChat.context);actionChat.messages.push({role:'assistant',content:r});renderChat();persistAction()}
   catch(e){const l=document.getElementById('chatLoading');if(l)l.remove();actionChat.messages.push({role:'assistant',content:'⚠️ Error: '+e.message});renderChat()}
 }
 async function callClaudeChat(messages,sys){
@@ -562,17 +581,60 @@ function openLesson(li,i){
   const les=ACADEMY[li].lessons[i];
   currentView={type:'lesson',li,i};setTopbar('lesson',les.t);
   document.getElementById('contentArea').innerHTML=
-    '<div class="panel-head"><div class="pt">'+ACADEMY[li].dot+' '+les.t+'</div><div class="pd">Te lo explico fácil y con datos actuales. Pregúntame lo que no entiendas.</div></div>'+
+    '<div class="panel-head"><div class="pt">'+ACADEMY[li].dot+' '+les.t+'</div><div class="pd">Te lo explico fácil y con datos actuales. Pregúntame lo que no entiendas. Se guarda solo en tu Historial.</div></div>'+
     '<div class="chat-area" id="learnArea" style="max-height:560px"><div class="chat-loading">⏳ Preparando tu lección...</div></div>'+
     '<div class="chat-input-row"><textarea class="chat-input" id="learnInput" placeholder="Pregunta o pide más detalle..." onkeydown="if(event.key===\'Enter\'&&!event.shiftKey){event.preventDefault();sendLearn()}"></textarea><button class="chat-send" onclick="sendLearn()">Enviar</button></div>';
   const prompt='Enséñame este tema: "'+les.t+'".\n\n'+BIZ+'\n\nExplícalo como a una persona que empieza de cero. Estructura:\n1. ¿QUÉ ES? (simple)\n2. ¿POR QUÉ ME IMPORTA?\n3. PASO A PASO\n4. EJEMPLO con mi negocio (con números si aplica)\n5. ERRORES COMUNES\n6. QUÉ HAGO HOY\n\nSi hay datos recientes (herramientas, benchmarks, políticas 2026), búscalos y dámelos actualizados. Español claro.';
   learnChat={messages:[{role:'user',content:prompt}],topic:les.t};
-  callClaude(prompt,TEACH_SYS,true).then(r=>{learnChat.messages.push({role:'assistant',content:r});renderLearn()}).catch(e=>{const a=document.getElementById('learnArea');if(a)a.innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">'+e.message+'</div></div>'});
+  currentChatId='c'+Date.now();currentChatMeta={kind:'lesson',title:les.t,sys:TEACH_SYS+' Tema actual: '+les.t};
+  callClaude(prompt,TEACH_SYS,true).then(r=>{learnChat.messages.push({role:'assistant',content:r});renderLearn();persistChat()}).catch(e=>{const a=document.getElementById('learnArea');if(a)a.innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">'+e.message+'</div></div>'});
+}
+
+/* ============ HISTORIAL (auto-guardado de chats y búsquedas) ============ */
+function saveHistoryEntry(e){const i=history.findIndex(x=>x.id===e.id);if(i>=0)history[i]=e;else history.unshift(e);if(history.length>200)history=history.slice(0,200);localStorage.setItem('radar_history',JSON.stringify(history))}
+function delHistory(id){if(!confirm('¿Borrar este elemento del historial?'))return;history=history.filter(x=>x.id!==id);localStorage.setItem('radar_history',JSON.stringify(history));renderHistory()}
+function chatPreview(msgs){const a=(msgs||[]).filter(m=>m.role==='assistant').slice(-1)[0];return a?a.content.replace(/[#*`>_]/g,'').replace(/\s+/g,' ').trim().slice(0,140):''}
+function persistChat(){if(!currentChatId||!currentChatMeta)return;saveHistoryEntry({id:currentChatId,kind:currentChatMeta.kind,title:currentChatMeta.title,date:new Date().toISOString(),preview:chatPreview(learnChat.messages),data:{messages:learnChat.messages,topic:learnChat.topic||'',context:learnChat.context||''}})}
+function persistAction(){saveHistoryEntry({id:actionChat.histId,kind:'accion',title:actionChat.title||'Plan de acción',date:new Date().toISOString(),preview:chatPreview(actionChat.messages),data:{messages:actionChat.messages,topic:'',context:actionChat.context||''}})}
+function renderHistory(){
+  const c=document.getElementById('contentArea');
+  if(!history.length){c.innerHTML='<div class="panel-head"><div class="pt">🕘 Historial</div></div><div class="empty-state"><div class="empty-icon">🕘</div><div class="empty-title">Aún no hay nada guardado</div><div class="empty-sub">Cuando busques o abras una lección, se guardará aquí solo, con fecha y hora. Volver a leerlo NO gasta tokens.</div></div>';return}
+  c.innerHTML='<div class="panel-head"><div class="pt">🕘 Historial</div><div class="pd">Todo lo que has buscado o abierto, con fecha y hora. Abrir y leer NO gasta tokens. Continuar un chat solo cobra tu pregunta nueva.</div></div>'+
+    '<div class="home-search" style="margin-bottom:16px"><input type="text" id="histSearch" placeholder="Buscar en tu historial..." oninput="renderHistoryList(this.value)"><button onclick="renderHistoryList(document.getElementById(\'histSearch\').value)">🔍 Buscar</button></div>'+
+    '<div id="histList"></div>';
+  renderHistoryList('');
+}
+function renderHistoryList(q){
+  const list=document.getElementById('histList');if(!list)return;q=(q||'').toLowerCase();
+  const items=history.filter(e=>!q||((e.title||'')+' '+(e.preview||'')).toLowerCase().includes(q));
+  if(!items.length){list.innerHTML='<div class="empty-sub" style="padding:20px 0;text-align:center">Nada encontrado.</div>';return}
+  list.innerHTML='<div class="cards-grid">'+items.map(e=>{
+    const d=new Date(e.date);const fecha=d.toLocaleDateString('es-CO')+' · '+d.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
+    const k={busqueda:'🔍',lesson:'🎓',aprende:'🎓',accion:'⚡'}[e.kind]||'💬';
+    const kl={busqueda:'Búsqueda',lesson:'Lección',aprende:'Aprende',accion:'Plan'}[e.kind]||'Chat';
+    return '<div class="news-card" style="cursor:pointer" onclick="openHistory(\''+e.id+'\')"><div class="card-top"><span class="card-badge badge-informative">'+k+' '+kl+'</span><span class="card-date">'+fecha+'</span></div><div class="card-title">'+(e.title||'')+'</div><div class="card-summary">'+(e.preview||'')+'</div><div class="card-actions"><button class="card-btn" onclick="event.stopPropagation();openHistory(\''+e.id+'\')">↩ Abrir / continuar</button><button class="card-btn" style="border-color:var(--red);color:var(--red)" onclick="event.stopPropagation();delHistory(\''+e.id+'\')">🗑 Borrar</button></div></div>';
+  }).join('')+'</div>';
+}
+function openHistory(id){
+  const e=history.find(x=>x.id===id);if(!e)return;
+  if(e.kind==='busqueda'){const items=(e.data&&e.data.items)||[];const ck=e.id.slice(2);cache[ck]=items;currentView={type:'results',query:(e.data&&e.data.query)||'',title:(e.data&&e.data.title)||e.title,opts:(e.data&&e.data.opts)||{},ck};setTopbar('results',(e.data&&e.data.title)||e.title);renderResults(items);return}
+  resumeChat(e);
+}
+function resumeChat(e){
+  currentView={type:'chat'};currentChatId=e.id;
+  const sys=e.kind==='accion'?('Action-oriented strategic advisor for COD ecommerce Colombia (supplements via Meta Ads + WhatsApp). Spanish. Concrete and actionable. Contexto: '+((e.data&&e.data.context)||'')):(TEACH_SYS+' Tema actual: '+((e.data&&e.data.topic)||e.title));
+  currentChatMeta={kind:e.kind,title:e.title,sys:sys};
+  learnChat={messages:(e.data&&e.data.messages)||[],topic:(e.data&&e.data.topic)||e.title,context:(e.data&&e.data.context)||''};
+  const k={lesson:'🎓',aprende:'🎓',accion:'⚡'}[e.kind]||'💬';
+  setTopbar('chat',e.title);
+  document.getElementById('contentArea').innerHTML='<div class="panel-head"><div class="pt">'+k+' '+e.title+'</div><div class="pd">Conversación guardada — sigue donde quedaste. Leer es gratis; solo pagas tus preguntas nuevas.</div></div><div class="chat-area" id="learnArea" style="max-height:560px"></div><div class="chat-input-row"><textarea class="chat-input" id="learnInput" placeholder="Continúa la conversación..." onkeydown="if(event.key===\'Enter\'&&!event.shiftKey){event.preventDefault();sendLearn()}"></textarea><button class="chat-send" onclick="sendLearn()">Enviar</button></div>';
+  renderLearn();
 }
 
 /* ============ VISTAS: FAVORITOS / FICHAS / DIGEST / APRENDE / CONFIG ============ */
 function switchView(v){
   if(v==='favoritos'){currentView={type:'favoritos'};setTopbar('favoritos','⭐ Mis guardados');return renderFavorites()}
+  if(v==='historial'){currentView={type:'historial'};setTopbar('historial','🕘 Historial');return renderHistory()}
   if(v==='fichas'){currentView={type:'fichas'};setTopbar('fichas','📒 Fichas');return renderFichas()}
   if(v==='digest'){currentView={type:'digest'};setTopbar('digest','📋 Digest semanal');return generateDigest()}
   if(v==='aprende'){currentView={type:'aprende'};setTopbar('aprende','🎓 Aprende algo');return renderAprende()}
@@ -597,7 +659,7 @@ function openFicha(i){
   document.getElementById('contentArea').innerHTML=
     '<div class="panel-head"><div class="pt">'+f.title+'</div></div>'+
     '<div class="digest-box"><div class="digest-title">Tu chuleta</div><div class="digest-content">'+f.body+'</div></div>'+
-    (upd?'<div class="digest-box" style="border-color:var(--accent)"><div class="digest-title">🔄 Datos de hoy ('+upd.date+')</div><div class="digest-content">'+upd.text+'</div></div>':'')+
+    (upd?'<div class="digest-box" style="border-color:var(--accent)"><div class="digest-title">🔄 Datos de hoy ('+upd.date+')</div><div class="digest-content">'+mdLite(upd.text)+'</div></div>':'')+
     '<button class="tb-btn" style="border-color:var(--accent);color:var(--accent)" onclick="refreshFicha('+i+')">🔄 Actualizar con datos de hoy</button>'+
     '<div id="fichaUpd"></div>';
 }
@@ -614,13 +676,13 @@ async function refreshFicha(i){
 async function generateDigest(){
   showLoading('Digest semanal');
   try{const r=await callClaude('Weekly marketing digest of the past 7 days: Meta Ads, TikTok Ads, Google Ads, Shopify, ecommerce, copywriting, AI tools, Meta account security, WhatsApp Business.\n\nIn Spanish:\n🔴 ALERTAS CRÍTICAS\n🟡 ACTUALIZACIONES IMPORTANTES\n🟢 OPORTUNIDADES\n🎯 ACCIÓN DE LA SEMANA\n📊 TERMÓMETRO DEL ECOSISTEMA\n\n'+BIZ+' Specific.','Marketing analyst. Spanish. Actionable.',true);
-  document.getElementById('contentArea').innerHTML='<div class="digest-box"><div class="digest-title">Digest semanal — '+new Date().toLocaleDateString('es-CO',{day:'numeric',month:'long',year:'numeric'})+'</div><div class="digest-content">'+r+'</div><button class="digest-copy" onclick="copyDigest()">📋 Copiar</button></div>'}
+  document.getElementById('contentArea').innerHTML='<div class="digest-box"><div class="digest-title">Digest semanal — '+new Date().toLocaleDateString('es-CO',{day:'numeric',month:'long',year:'numeric'})+'</div><div class="digest-content">'+mdLite(r)+'</div><button class="digest-copy" onclick="copyDigest()">📋 Copiar</button></div>'}
   catch(e){document.getElementById('contentArea').innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">'+e.message+'</div></div>'}
 }
 function copyDigest(){const t=document.querySelector('.digest-content');if(!t)return;navigator.clipboard.writeText(t.textContent||'').then(()=>{const b=document.querySelector('.digest-copy');b.textContent='✅ Copiado';setTimeout(()=>b.textContent='📋 Copiar',2000)})}
 /* --- APRENDE (tema libre) --- */
 function renderAprende(){
-  document.getElementById('contentArea').innerHTML='<div class="panel-head"><div class="pt">🎓 Aprende algo nuevo</div><div class="pd">Dime cualquier tema y te lo explico paso a paso, fácil, con ejemplos de tu negocio.</div></div>'+
+  document.getElementById('contentArea').innerHTML='<div class="panel-head"><div class="pt">🎓 Aprende algo nuevo</div><div class="pd">Dime cualquier tema y te lo explico paso a paso, fácil, con ejemplos de tu negocio. Se guarda en tu Historial.</div></div>'+
     '<div class="home-search" style="margin-bottom:14px"><input type="text" id="learnTopic" placeholder="¿Qué quieres aprender? (ej: CBO, CAPI, Performance Max, VSL)" onkeydown="if(event.key===\'Enter\')startLearn()"><button onclick="startLearn()">Empezar</button></div>'+
     '<div class="chat-area" id="learnArea" style="max-height:520px"></div>'+
     '<div class="chat-input-row" id="learnRow" style="display:none"><textarea class="chat-input" id="learnInput" placeholder="Pregunta o pide más detalle..." onkeydown="if(event.key===\'Enter\'&&!event.shiftKey){event.preventDefault();sendLearn()}"></textarea><button class="chat-send" onclick="sendLearn()">Enviar</button></div>';
@@ -631,27 +693,29 @@ async function startLearn(){
   document.getElementById('learnArea').innerHTML='<div class="chat-loading">⏳ Preparando tu lección...</div>';
   const prompt='Quiero aprender: "'+topic+'"\n\n'+BIZ+'\n\nEnséñame paso a paso, asumiendo que sé poco. Estructura:\n1. ¿QUÉ ES? (simple)\n2. ¿POR QUÉ ME IMPORTA?\n3. PASO A PASO\n4. EJEMPLO con mi negocio\n5. ERRORES COMUNES\n6. PRÓXIMO PASO HOY\n\nEspañol claro, sin jerga.';
   learnChat.messages.push({role:'user',content:prompt});
-  try{const r=await callClaude(prompt,TEACH_SYS,true);learnChat.messages.push({role:'assistant',content:r});renderLearn()}
+  currentChatId='c'+Date.now();currentChatMeta={kind:'aprende',title:topic,sys:TEACH_SYS+' Tema actual: '+topic};
+  try{const r=await callClaude(prompt,TEACH_SYS,true);learnChat.messages.push({role:'assistant',content:r});renderLearn();persistChat()}
   catch(e){document.getElementById('learnArea').innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">'+e.message+'</div></div>'}
 }
 async function sendLearn(){
   const input=document.getElementById('learnInput');const t=input?.value?.trim();if(!t)return;input.value='';
   learnChat.messages.push({role:'user',content:t});renderLearn();
   const area=document.getElementById('learnArea');area.innerHTML+='<div class="chat-loading" id="learnLoading">⏳ Pensando...</div>';area.scrollTop=area.scrollHeight;
-  try{const r=await callClaudeChat(learnChat.messages,TEACH_SYS+' Tema actual: '+learnChat.topic);learnChat.messages.push({role:'assistant',content:r});renderLearn()}
+  try{const r=await callClaudeChat(learnChat.messages,(currentChatMeta&&currentChatMeta.sys)||(TEACH_SYS+' Tema actual: '+learnChat.topic));learnChat.messages.push({role:'assistant',content:r});renderLearn();persistChat()}
   catch(e){const l=document.getElementById('learnLoading');if(l)l.remove();learnChat.messages.push({role:'assistant',content:'⚠️ Error: '+e.message});renderLearn()}
 }
-function renderLearn(){const area=document.getElementById('learnArea');if(!area)return;let html='';for(let i=0;i<learnChat.messages.length;i++){const m=learnChat.messages[i];if(i===0&&m.role==='user')continue;html+='<div class="chat-msg '+(m.role==='user'?'chat-msg-user':'chat-msg-assistant')+'">'+m.content+'</div>'}area.innerHTML=html;area.scrollTop=area.scrollHeight}
+function renderLearn(){const area=document.getElementById('learnArea');if(!area)return;let html='';for(let i=0;i<learnChat.messages.length;i++){const m=learnChat.messages[i];if(i===0&&m.role==='user')continue;html+='<div class="chat-msg '+(m.role==='user'?'chat-msg-user':'chat-msg-assistant')+'">'+mdLite(m.content)+'</div>'}area.innerHTML=html;area.scrollTop=area.scrollHeight}
 /* --- CONFIG --- */
 function renderConfig(){
   document.getElementById('contentArea').innerHTML=
     '<div class="panel-head"><div class="pt">⚙️ Ajustes</div><div class="pd">Tu llave y tus datos. Todo vive solo en este navegador.</div></div>'+
-    '<div class="settings-section"><div class="settings-title">Cómo ahorras tokens</div><div style="font-size:13px;color:var(--text-secondary);line-height:1.7">• Nada se busca solo: solo gasta cuando tú tocas un botón o buscas.<br>• Cada búsqueda se guarda en memoria: si la repites el mismo día, no vuelve a gastar.<br>• Tus guardados, notas, lecturas y fichas no gastan nada al abrirlos.<br>• Búsqueda rápida usa Haiku (barato). Análisis profundo y lecciones usan Sonnet.</div></div>'+
-    '<div class="settings-section"><div class="settings-title">Datos locales</div><button class="card-btn" style="border-color:var(--red);color:var(--red)" onclick="clearAllData()">🗑 Borrar guardados, notas y caché</button><div style="font-size:11px;color:var(--text-muted);margin-top:6px">Tu API key NO se borra con esto.</div></div>'+
+    '<div class="settings-section"><div class="settings-title">Cómo ahorras tokens</div><div style="font-size:13px;color:var(--text-secondary);line-height:1.7">• Nada se busca solo: solo gasta cuando tú tocas un botón o buscas.<br>• Todo se guarda en el Historial: volver a leerlo NO gasta tokens.<br>• Continuar un chat guardado solo cobra tu pregunta nueva (mucho más barato que empezar de cero).<br>• Tus guardados, notas, fichas y lecturas no gastan al abrirlos.<br>• Búsqueda rápida usa Haiku (barato). Lecciones y análisis usan Sonnet.</div></div>'+
+    '<div class="settings-section"><div class="settings-title">Datos locales</div><button class="card-btn" style="border-color:var(--red);color:var(--red)" onclick="clearAllData()">🗑 Borrar guardados, notas y caché</button> <button class="card-btn" style="border-color:var(--red);color:var(--red)" onclick="clearHistory()">🗑 Borrar todo el Historial</button><div style="font-size:11px;color:var(--text-muted);margin-top:6px">Tu API key NO se borra con esto.</div></div>'+
     '<div class="settings-section"><div class="settings-title">Sesión</div><button class="card-btn" onclick="handleLogout()">Cerrar sesión (olvidar API key)</button></div>'+
-    '<div class="settings-section"><div class="settings-title">Acerca de</div><div style="font-size:13px;color:var(--text-secondary);line-height:1.6">RADAR · versión simple + Academia<br>Tu radar y tu coach de marketing e IA. De cero a millones.</div></div>';
+    '<div class="settings-section"><div class="settings-title">Acerca de</div><div style="font-size:13px;color:var(--text-secondary);line-height:1.6">RADAR · versión simple + Academia + Historial<br>Tu radar y tu coach de marketing e IA. De cero a millones.</div></div>';
 }
 function clearAllData(){if(!confirm('¿Borrar guardados, notas y caché?'))return;favorites={};readItems={};notes={};cache={};localStorage.removeItem('radar_favs');localStorage.removeItem('radar_read');localStorage.removeItem('radar_notes');alert('Datos borrados');goHome()}
+function clearHistory(){if(!confirm('¿Borrar TODO el historial de chats y búsquedas?'))return;history=[];localStorage.removeItem('radar_history');alert('Historial borrado');goHome()}
 
 /* ============ FAB (analizar PDF / texto) ============ */
 let fabMode='resumen';
@@ -685,7 +749,7 @@ async function analyzeFab(){
     accion:'Dame un plan de acción concreto en español basado en este contenido. '+BIZ+' Responde: ACCIÓN INMEDIATA (24h), ESTA SEMANA (7 días), RESULTADO ESPERADO. Pasos listos para ejecutar.'
   };
   const deepModes=['afecta','accion'];
-  try{const r=await callClaude(prompts[fabMode]+'\n\nCONTENIDO:\n'+text,'Intelligence analyst. Spanish. Direct and specific.',deepModes.includes(fabMode));resultDiv.innerHTML='<div style="white-space:pre-wrap">'+r+'</div>'}
+  try{const r=await callClaude(prompts[fabMode]+'\n\nCONTENIDO:\n'+text,'Intelligence analyst. Spanish. Direct and specific.',deepModes.includes(fabMode));resultDiv.innerHTML='<div>'+mdLite(r)+'</div>'}
   catch(e){resultDiv.innerHTML='<div style="color:var(--red)">Error: '+e.message+'</div>'}
 }
 </script>
