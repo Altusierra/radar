@@ -6,10 +6,11 @@
 <title>RADAR — Inteligencia de Marketing</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg-base:#07070d;--bg-surface:#0f0f18;--bg-card:#161622;--bg-card-hover:#1c1c2e;--bg-input:#12121e;--accent:#00e87b;--accent-dim:#00e87b22;--accent-mid:#00e87b55;--blue:#3b82f6;--blue-dim:#3b82f622;--amber:#f59e0b;--amber-dim:#f59e0b22;--red:#ef4444;--red-dim:#ef444422;--purple:#a855f7;--purple-dim:#a855f722;--pink:#ec4899;--pink-dim:#ec489922;--cyan:#06b6d4;--cyan-dim:#06b6d422;--text:#e4e4e7;--text-secondary:#a1a1aa;--text-muted:#52525b;--border:#27273a;--border-light:#1e1e2e;--font:'Outfit',sans-serif;--mono:'JetBrains Mono',monospace}
+:root{--bg-base:#07070d;--bg-surface:#0f0f18;--bg-card:#161622;--bg-card-hover:#1c1c2e;--bg-input:#12121e;--accent:#00e87b;--accent-dim:#00e87b22;--accent-mid:#00e87b55;--blue:#3b82f6;--blue-dim:#3b82f622;--amber:#f59e0b;--amber-dim:#f59e0b22;--red:#ef4444;--red-dim:#ef444422;--purple:#a855f7;--purple-dim:#a855f722;--pink:#ec4899;--cyan:#06b6d4;--text:#e4e4e7;--text-secondary:#a1a1aa;--text-muted:#52525b;--border:#27273a;--border-light:#1e1e2e;--font:'Outfit',sans-serif;--mono:'JetBrains Mono',monospace}
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg-base);color:var(--text);font-family:var(--font);min-height:100vh}
 ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg-base)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+/* LOGIN */
 .login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:radial-gradient(ellipse at 50% 30%,#0a1a12 0%,var(--bg-base) 70%)}
 .login-box{text-align:center;max-width:420px;width:90%;padding:2.5rem;background:var(--bg-surface);border:1px solid var(--border);border-radius:16px}
 .login-logo{font-size:2.5rem;font-weight:700;letter-spacing:6px;color:var(--accent);margin-bottom:4px}
@@ -20,63 +21,82 @@ body{background:var(--bg-base);color:var(--text);font-family:var(--font);min-hei
 .login-btn:hover{opacity:.9}
 .login-hint{font-size:11px;color:var(--text-muted);margin-top:12px;line-height:1.5}
 .login-hint a{color:var(--accent);text-decoration:none}
-.app{display:none;height:100vh}.app.active{display:flex}
-.sidebar{width:230px;min-width:230px;background:var(--bg-surface);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:1rem 0;overflow-y:auto}
-.sidebar-logo{font-size:1.3rem;font-weight:700;letter-spacing:4px;color:var(--accent);padding:0 1.25rem;margin-bottom:4px}
-.sidebar-sub{font-size:10px;color:var(--text-muted);font-family:var(--mono);padding:0 1.25rem;margin-bottom:1.5rem}
-.nav-group{margin-bottom:.8rem}.nav-label{font-size:9px;text-transform:uppercase;letter-spacing:2px;color:var(--text-muted);padding:0 1.25rem;margin-bottom:4px}
-.nav-item{display:flex;align-items:center;gap:10px;padding:6px 1.25rem;cursor:pointer;font-size:12.5px;color:var(--text-secondary);transition:all .15s;border-left:2px solid transparent}
-.nav-item:hover{background:var(--bg-card);color:var(--text)}
-.nav-item.active{color:var(--accent);border-left-color:var(--accent);background:var(--accent-dim)}
-.nav-icon{font-size:14px;width:18px;text-align:center}
-.nav-badge{margin-left:auto;font-size:10px;font-family:var(--mono);padding:1px 6px;border-radius:10px;background:var(--accent-dim);color:var(--accent)}
-.sidebar-footer{margin-top:auto;padding:.8rem 1.25rem;border-top:1px solid var(--border)}
-.sidebar-footer button{width:100%;padding:7px;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;color:var(--text-secondary);font-size:11px;cursor:pointer;font-family:var(--font);transition:all .15s}
-.sidebar-footer button:hover{border-color:var(--red);color:var(--red)}
-.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
-.topbar{display:flex;align-items:center;gap:12px;padding:12px 24px;border-bottom:1px solid var(--border);background:var(--bg-surface)}
-.topbar-title{font-size:16px;font-weight:600}
-.topbar-date{margin-left:auto;display:flex;align-items:center;gap:8px}
-.topbar-date input{padding:6px 10px;background:var(--bg-input);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--mono);font-size:12px;outline:none;color-scheme:dark}
-.topbar-refresh{padding:6px 14px;background:var(--accent-dim);border:1px solid var(--accent-mid);border-radius:6px;color:var(--accent);font-size:12px;cursor:pointer;font-family:var(--mono);font-weight:500;transition:all .15s}
-.topbar-refresh:hover{background:var(--accent);color:var(--bg-base)}
-.topbar-filter{padding:6px 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;color:var(--text-secondary);font-size:12px;cursor:pointer;font-family:var(--font);transition:all .15s}
-.topbar-filter.active{border-color:var(--red);color:var(--red);background:var(--red-dim)}
-.content{flex:1;overflow-y:auto;padding:20px 24px}
+/* APP SHELL */
+.app{display:none;flex-direction:column;height:100vh}.app.active{display:flex}
+.topbar{display:flex;align-items:center;gap:10px;padding:12px 20px;border-bottom:1px solid var(--border);background:var(--bg-surface);flex-wrap:wrap}
+.tb-logo{font-size:1.2rem;font-weight:700;letter-spacing:3px;color:var(--accent);cursor:pointer}
+.tb-back{padding:6px 12px;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;color:var(--text-secondary);font-size:12px;cursor:pointer;font-family:var(--font)}
+.tb-back:hover{border-color:var(--accent);color:var(--accent)}
+.tb-title{font-size:14px;font-weight:500;color:var(--text-secondary)}
+.tb-right{margin-left:auto;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.tb-right input[type=date]{padding:6px 10px;background:var(--bg-input);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--mono);font-size:12px;outline:none;color-scheme:dark}
+.tb-btn{padding:6px 12px;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;color:var(--text-secondary);font-size:12px;cursor:pointer;font-family:var(--font);transition:all .15s}
+.tb-btn:hover{border-color:var(--accent);color:var(--accent)}
+.tb-filter.active{border-color:var(--red);color:var(--red);background:var(--red-dim)}
+.content{flex:1;overflow-y:auto;padding:24px 20px;max-width:1100px;width:100%;margin:0 auto}
+/* HOME */
+.home-hero{text-align:center;margin:10px 0 26px}
+.home-hero .hl{font-size:2.2rem;font-weight:700;letter-spacing:6px;color:var(--accent)}
+.home-hero .hs{font-size:13px;color:var(--text-muted);font-family:var(--mono);margin-top:2px}
+.home-search{display:flex;gap:8px;max-width:680px;margin:0 auto 8px}
+.home-search input{flex:1;padding:14px 18px;background:var(--bg-input);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:15px;font-family:var(--font);outline:none}
+.home-search input:focus{border-color:var(--accent)}
+.home-search button{padding:14px 22px;background:var(--accent);color:var(--bg-base);border:none;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;font-family:var(--font);white-space:nowrap}
+.home-tip{text-align:center;font-size:12px;color:var(--text-muted);margin-bottom:24px;font-family:var(--mono)}
+.home-tip b{color:var(--accent);font-weight:500}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.bigbtn{display:flex;align-items:center;gap:14px;background:var(--bg-card);border:1px solid var(--border-light);border-radius:12px;padding:16px 18px;cursor:pointer;transition:all .18s;text-align:left}
+.bigbtn:hover{border-color:var(--accent);background:var(--bg-card-hover);transform:translateY(-1px)}
+.bigbtn .ic{font-size:26px;width:34px;text-align:center;flex-shrink:0}
+.bigbtn .tt{font-size:15px;font-weight:600;color:var(--text)}
+.bigbtn .ds{font-size:12px;color:var(--text-muted);margin-top:2px}
+.section-label{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--text-muted);margin:26px 0 10px}
+.util-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.utilbtn{display:flex;align-items:center;gap:10px;background:var(--bg-surface);border:1px solid var(--border-light);border-radius:10px;padding:12px 14px;cursor:pointer;transition:all .15s;font-size:13px;color:var(--text-secondary)}
+.utilbtn:hover{border-color:var(--accent);color:var(--text)}
+.utilbtn .ic{font-size:18px}
+/* CHIP PANEL */
+.panel-head{margin-bottom:16px}
+.panel-head .pt{font-size:20px;font-weight:600;color:var(--text)}
+.panel-head .pd{font-size:13px;color:var(--text-secondary);margin-top:4px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:10px 16px;background:var(--bg-card);border:1px solid var(--border);border-radius:24px;color:var(--text-secondary);font-size:13px;cursor:pointer;transition:all .15s;font-family:var(--font)}
+.chip:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim)}
+.chip.discover{border-color:var(--purple);color:var(--purple)}
+.chip.discover:hover{background:var(--purple-dim)}
+/* CARDS */
 .cards-grid{display:flex;flex-direction:column;gap:12px}
-.news-card{background:var(--bg-card);border:1px solid var(--border-light);border-radius:10px;padding:16px 20px;transition:all .2s;cursor:default;position:relative}
+.news-card{background:var(--bg-card);border:1px solid var(--border-light);border-radius:10px;padding:16px 20px;transition:all .2s;position:relative}
 .news-card:hover{border-color:var(--border);background:var(--bg-card-hover)}
 .news-card.read{opacity:.55}
 .card-top{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
 .card-badge{font-size:10px;font-family:var(--mono);padding:2px 8px;border-radius:4px;font-weight:500}
 .badge-critical{background:var(--red-dim);color:var(--red)}.badge-informative{background:var(--blue-dim);color:var(--blue)}.badge-opportunity{background:var(--accent-dim);color:var(--accent)}.badge-threat{background:var(--amber-dim);color:var(--amber)}
-.origin-badge{font-size:10px;font-family:var(--mono);padding:2px 7px;border-radius:4px;font-weight:500;display:inline-flex;align-items:center;gap:3px}
+.origin-badge{font-size:10px;font-family:var(--mono);padding:2px 7px;border-radius:4px;font-weight:500}
 .origin-original{background:#00e87b22;color:#00e87b;border:1px solid #00e87b55}
 .origin-replica{background:#f59e0b22;color:#f59e0b;border:1px solid #f59e0b55}
 .origin-aggregator{background:#ef444422;color:#ef4444;border:1px solid #ef444455;opacity:.85}
 .news-card.is-aggregator{opacity:.6}
 .origin-link{font-size:10px;color:var(--text-muted);margin-top:6px;font-family:var(--mono)}
 .origin-link a{color:var(--accent);text-decoration:none}
-.origin-link a:hover{text-decoration:underline}
 .card-source{font-size:11px;color:var(--text-muted);font-family:var(--mono)}
 .card-date{font-size:11px;color:var(--text-muted);margin-left:auto;font-family:var(--mono)}
 .card-title{font-size:15px;font-weight:500;line-height:1.4;margin-bottom:6px;color:var(--text)}
 .card-summary{font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:12px}
 .card-actions{display:flex;gap:6px;flex-wrap:wrap}
-.card-btn{padding:5px 12px;font-size:11px;border-radius:5px;cursor:pointer;border:1px solid var(--border);background:var(--bg-surface);color:var(--text-secondary);font-family:var(--font);transition:all .15s}
+.card-btn{padding:5px 12px;font-size:11px;border-radius:5px;cursor:pointer;border:1px solid var(--border);background:var(--bg-surface);color:var(--text-secondary);font-family:var(--font);transition:all .15s;text-decoration:none;display:inline-flex;align-items:center}
 .card-btn:hover{border-color:var(--accent);color:var(--accent)}
 .card-btn.favorited{border-color:var(--amber);color:var(--amber);background:var(--amber-dim)}
-.card-btn.link-btn{border-color:var(--blue);color:var(--blue);text-decoration:none;display:inline-flex}
-.card-btn.link-btn:hover{background:var(--blue-dim)}
+.card-btn.link-btn{border-color:var(--blue);color:var(--blue)}
 .card-btn.impact-btn{border-color:var(--purple);color:var(--purple)}
-.card-btn.impact-btn:hover{background:var(--purple-dim)}
 .card-note{margin-top:10px;padding:10px;background:var(--bg-input);border:1px solid var(--border);border-radius:6px;display:none}
 .card-note.open{display:block}
 .card-note textarea{width:100%;background:transparent;border:none;color:var(--text);font-size:12px;font-family:var(--font);resize:vertical;min-height:50px;outline:none}
 .card-note .note-save{margin-top:6px;padding:4px 10px;background:var(--accent);color:var(--bg-base);border:none;border-radius:4px;font-size:11px;cursor:pointer;font-family:var(--font);font-weight:500}
-.modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);z-index:100;align-items:center;justify-content:center}
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;align-items:center;justify-content:center}
 .modal-overlay.open{display:flex}
-.modal-box{background:var(--bg-surface);border:1px solid var(--border);border-radius:12px;max-width:600px;width:90%;max-height:80vh;overflow-y:auto;padding:24px}
+.modal-box{background:var(--bg-surface);border:1px solid var(--border);border-radius:12px;max-width:600px;width:90%;max-height:82vh;overflow-y:auto;padding:24px}
 .modal-title{font-size:16px;font-weight:600;color:var(--purple);margin-bottom:4px}
 .modal-subtitle{font-size:12px;color:var(--text-muted);margin-bottom:16px}
 .modal-content{font-size:13px;color:var(--text-secondary);line-height:1.7}
@@ -89,99 +109,85 @@ body{background:var(--bg-base);color:var(--text);font-family:var(--font);min-hei
 .chat-input{flex:1;padding:10px 12px;background:var(--bg-input);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;font-family:var(--font);outline:none;resize:none;min-height:38px;max-height:100px}
 .chat-input:focus{border-color:var(--amber)}
 .chat-send{padding:8px 16px;background:var(--amber);color:var(--bg-base);border:none;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;font-family:var(--font)}
-.chat-send:disabled{opacity:.5;cursor:not-allowed}
 .chat-loading{padding:8px 14px;color:var(--text-muted);font-size:12px;font-style:italic}
+/* LOADING / EMPTY */
 .loading-container{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 0}
-.radar-spinner{width:60px;height:60px;border-radius:50%;border:2px solid var(--border);border-top-color:var(--accent);animation:spin 1s linear infinite;margin-bottom:16px}
+.radar-spinner{width:54px;height:54px;border-radius:50%;border:2px solid var(--border);border-top-color:var(--accent);animation:spin 1s linear infinite;margin-bottom:16px}
 @keyframes spin{to{transform:rotate(360deg)}}
 .loading-text{font-size:13px;color:var(--text-muted);font-family:var(--mono)}
 .loading-sub{font-size:11px;color:var(--text-muted);margin-top:4px}
-.digest-box{background:var(--bg-card);border:1px solid var(--border-light);border-radius:10px;padding:20px;margin-bottom:16px}
-.digest-title{font-size:14px;font-weight:600;color:var(--accent);margin-bottom:4px}
-.digest-content{font-size:13px;color:var(--text-secondary);line-height:1.7;white-space:pre-wrap}
-.digest-copy{margin-top:12px;padding:6px 14px;background:var(--accent-dim);border:1px solid var(--accent-mid);border-radius:6px;color:var(--accent);font-size:12px;cursor:pointer;font-family:var(--mono)}
 .empty-state{text-align:center;padding:60px 20px}
 .empty-icon{font-size:40px;margin-bottom:12px}
 .empty-title{font-size:16px;font-weight:500;margin-bottom:6px}
 .empty-sub{font-size:13px;color:var(--text-muted);max-width:400px;margin:0 auto;line-height:1.6}
-.settings-section{margin-bottom:24px}
-.settings-title{font-size:14px;font-weight:600;margin-bottom:12px;color:var(--accent)}
-.settings-row{display:flex;align-items:center;gap:12px;margin-bottom:8px}
-.settings-row input[type="text"]{flex:1;padding:8px 12px;background:var(--bg-input);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:13px;font-family:var(--font);outline:none}
-.welcome-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:16px}
-.welcome-card{background:var(--bg-card);border:1px solid var(--border-light);border-radius:10px;padding:16px;cursor:pointer;transition:all .2s;text-align:center}
-.welcome-card:hover{border-color:var(--accent);background:var(--bg-card-hover)}
-.welcome-card-icon{font-size:28px;margin-bottom:8px}
-.welcome-card-title{font-size:13px;font-weight:500;color:var(--text)}
-.welcome-card-sub{font-size:11px;color:var(--text-muted);margin-top:4px}
-@media(max-width:768px){.sidebar{display:none}.app{flex-direction:column}.mobile-nav{display:flex !important;overflow-x:auto;background:var(--bg-surface);border-bottom:1px solid var(--border);padding:8px 12px;gap:6px}.mobile-nav-btn{white-space:nowrap;padding:6px 12px;background:var(--bg-card);border:1px solid var(--border);border-radius:20px;color:var(--text-secondary);font-size:11px;cursor:pointer;font-family:var(--font)}.mobile-nav-btn.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent)}.topbar{flex-wrap:wrap;padding:10px 16px}.content{padding:12px 16px}}
-.mobile-nav{display:none}
-.fab{position:fixed;bottom:24px;right:24px;width:56px;height:56px;border-radius:50%;background:var(--accent);color:var(--bg-base);border:none;font-size:24px;cursor:pointer;box-shadow:0 4px 16px rgba(0,232,123,0.4);z-index:90;transition:transform .2s}
+.digest-box{background:var(--bg-card);border:1px solid var(--border-light);border-radius:10px;padding:20px;margin-bottom:16px}
+.digest-title{font-size:14px;font-weight:600;color:var(--accent);margin-bottom:8px}
+.digest-content{font-size:13px;color:var(--text-secondary);line-height:1.7;white-space:pre-wrap}
+.digest-copy{margin-top:12px;padding:6px 14px;background:var(--accent-dim);border:1px solid var(--accent-mid);border-radius:6px;color:var(--accent);font-size:12px;cursor:pointer;font-family:var(--mono)}
+/* FAB */
+.fab{position:fixed;bottom:24px;right:24px;width:54px;height:54px;border-radius:50%;background:var(--accent);color:var(--bg-base);border:none;font-size:22px;cursor:pointer;box-shadow:0 4px 16px rgba(0,232,123,0.4);z-index:90;transition:transform .2s}
 .fab:hover{transform:scale(1.05)}
-.fab-modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);z-index:100;align-items:center;justify-content:center}
+.fab-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;align-items:center;justify-content:center}
 .fab-modal.open{display:flex}
 .fab-box{background:var(--bg-surface);border:1px solid var(--border);border-radius:12px;max-width:700px;width:90%;max-height:85vh;overflow-y:auto;padding:24px}
 .fab-title{font-size:18px;font-weight:600;color:var(--accent);margin-bottom:4px}
 .fab-sub{font-size:12px;color:var(--text-muted);margin-bottom:16px}
-.fab-textarea{width:100%;min-height:140px;padding:12px;background:var(--bg-input);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font);font-size:13px;outline:none;resize:vertical;margin-bottom:12px}
-.fab-textarea:focus{border-color:var(--accent)}
+.fab-textarea{width:100%;min-height:130px;padding:12px;background:var(--bg-input);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font);font-size:13px;outline:none;resize:vertical;margin-bottom:12px}
 .fab-file{display:block;padding:10px;background:var(--bg-input);border:1px dashed var(--border);border-radius:8px;color:var(--text-secondary);font-size:12px;margin-bottom:12px;cursor:pointer;text-align:center}
 .fab-file:hover{border-color:var(--accent);color:var(--accent)}
 .fab-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-.fab-action-btn{padding:8px 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;color:var(--text-secondary);font-size:12px;cursor:pointer;font-family:var(--font);transition:all .15s}
-.fab-action-btn:hover{border-color:var(--accent);color:var(--accent)}
+.fab-action-btn{padding:8px 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;color:var(--text-secondary);font-size:12px;cursor:pointer;font-family:var(--font)}
 .fab-action-btn.active{border-color:var(--accent);color:var(--accent);background:var(--accent-dim)}
 .fab-submit{padding:10px 20px;background:var(--accent);color:var(--bg-base);border:none;border-radius:6px;font-weight:600;font-size:13px;cursor:pointer;font-family:var(--font)}
-.fab-submit:disabled{opacity:.5;cursor:not-allowed}
 .fab-result{margin-top:16px;padding:16px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;font-size:13px;color:var(--text-secondary);line-height:1.7;white-space:pre-wrap}
 .fab-close{margin-top:12px;padding:8px 16px;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;color:var(--text-secondary);cursor:pointer;font-family:var(--font);font-size:12px}
+.settings-section{margin-bottom:24px}
+.settings-title{font-size:14px;font-weight:600;margin-bottom:12px;color:var(--accent)}
+@media(max-width:600px){.content{padding:16px 14px}.home-hero .hl{font-size:1.8rem}}
 </style>
 </head>
 <body>
+<!-- LOGIN -->
 <div class="login-screen" id="loginScreen">
   <div class="login-box">
     <div class="login-logo">RADAR</div>
-    <div class="login-sub">inteligencia de marketing</div>
-    <input type="password" class="login-input" id="apiKeyInput" placeholder="Ingresa tu API Key de Anthropic (sk-ant-...)">
+    <div class="login-sub">inteligencia de marketing · simple</div>
+    <input type="password" class="login-input" id="apiKeyInput" placeholder="Ingresa tu API Key de Anthropic (sk-ant-...)" onkeydown="if(event.key==='Enter')handleLogin()">
     <button class="login-btn" onclick="handleLogin()">Entrar</button>
     <div class="login-hint">Consigue tu key en <a href="https://console.anthropic.com/settings/keys" target="_blank">console.anthropic.com</a><br>Tu key se guarda solo en tu navegador.</div>
   </div>
 </div>
+<!-- APP -->
 <div class="app" id="app">
-  <div class="sidebar">
-    <div class="sidebar-logo">RADAR</div>
-    <div class="sidebar-sub">v6.0 · inteligencia</div>
-    <div id="sidebarNav"></div>
-    <div class="sidebar-footer"><button onclick="handleLogout()">Cerrar sesión</button></div>
-  </div>
-  <div class="mobile-nav" id="mobileNav"></div>
-  <div class="main">
-    <div class="topbar">
-      <div class="topbar-title" id="sectionTitle">⚙️ Configuración</div>
-      <div class="topbar-date">
-        <input type="date" id="dateInput" title="Buscar noticias de esta fecha">
-        <button class="topbar-refresh" onclick="refreshCurrent()">↻ Actualizar</button>
-        <button class="topbar-filter" id="criticalFilter" onclick="toggleCriticalFilter()">⚡ Solo crítico</button>
-        <button class="topbar-filter" id="threatFilter" onclick="toggleThreatFilter()" style="border-color:var(--red);color:var(--red)">🚨 Amenaza</button>
-        <button class="topbar-filter" id="originFilter" onclick="toggleOriginFilter()" style="border-color:var(--accent);color:var(--accent)">🎯 Solo origen</button>
-      </div>
+  <div class="topbar">
+    <div class="tb-logo" onclick="goHome()">RADAR</div>
+    <button class="tb-back" id="backBtn" onclick="goHome()" style="display:none">← Inicio</button>
+    <span class="tb-title" id="tbTitle"></span>
+    <div class="tb-right" id="tbRight" style="display:none">
+      <input type="date" id="dateInput" title="Buscar contenido de esta fecha">
+      <button class="tb-btn" id="refreshBtn" onclick="refreshCurrent()">↻ Actualizar</button>
+      <button class="tb-btn tb-filter" id="criticalFilter" onclick="toggleFilter('critical')">⚡ Crítico</button>
+      <button class="tb-btn tb-filter" id="threatFilter" onclick="toggleFilter('threat')">🚨 Amenaza</button>
+      <button class="tb-btn tb-filter" id="originFilter" onclick="toggleFilter('origin')">🎯 Origen</button>
     </div>
-    <div class="content" id="contentArea"></div>
   </div>
+  <div class="content" id="contentArea"></div>
 </div>
+<!-- IMPACT / ACTION MODAL -->
 <div class="modal-overlay" id="impactModal">
   <div class="modal-box">
-    <div class="modal-title">¿Cómo me afecta esto?</div>
+    <div class="modal-title" id="impactTitle">¿Cómo me afecta esto?</div>
     <div class="modal-subtitle" id="impactSubtitle"></div>
     <div class="modal-content" id="impactContent"></div>
     <button class="modal-close" onclick="closeImpactModal()">Cerrar</button>
   </div>
 </div>
+<!-- FAB -->
 <button class="fab" onclick="openFab()" title="Analizar PDF o texto">📄</button>
 <div class="fab-modal" id="fabModal">
   <div class="fab-box">
     <div class="fab-title">📄 Analizar documento o texto</div>
-    <div class="fab-sub">Sube un PDF, pega texto o ingresa una URL para que RADAR lo analice</div>
+    <div class="fab-sub">Sube un PDF, pega texto o la página de un competidor para que RADAR lo analice</div>
     <input type="file" id="fabFile" accept=".pdf,.txt" style="display:none" onchange="handleFabFile(event)">
     <label for="fabFile" class="fab-file">📎 Click para subir archivo PDF o TXT</label>
     <textarea class="fab-textarea" id="fabText" placeholder="O pega aquí el texto que quieres analizar..."></textarea>
@@ -199,435 +205,226 @@ body{background:var(--bg-base);color:var(--text);font-family:var(--font);min-hei
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.min.js"></script>
 <script>
-let API_KEY='',currentSection='config',criticalOnly=false,threatOnly=false,originOnly=false,cache={},itemStore={};
+/* ============ ESTADO ============ */
+let API_KEY='';
+let cache={},itemStore={};
+let filters={critical:false,threat:false,origin:false};
+let currentView={type:'home'};
 let favorites=JSON.parse(localStorage.getItem('radar_favs')||'{}');
 let readItems=JSON.parse(localStorage.getItem('radar_read')||'{}');
 let notes=JSON.parse(localStorage.getItem('radar_notes')||'{}');
-const SECTIONS={
-  // META ADS
-  'meta-news':{title:'📘 Meta Ads · Noticias',icon:'📘',query:'Meta Ads Facebook Instagram advertising news platform updates 2026',loading:'Buscando noticias Meta Ads...'},
-  'meta-api':{title:'📘 Meta Ads · API y herramientas',icon:'📘',query:'Meta Marketing API Conversion API Facebook advertising tools developers 2026',loading:'Buscando API y herramientas...'},
-  'meta-policy':{title:'📘 Meta Ads · Políticas',icon:'📘',query:'Meta Facebook advertising policies restrictions health supplements approvals',loading:'Buscando políticas...'},
-  'meta-creative':{title:'📘 Meta Ads · Creativos',icon:'📘',query:'Meta Facebook ad creative formats video reels hooks best practices conversion',loading:'Buscando creativos y formatos...'},
-  // TIKTOK ADS
-  'tiktok-news':{title:'🎵 TikTok Ads · Noticias',icon:'🎵',query:'TikTok Ads advertising platform news updates 2026',loading:'Buscando noticias TikTok...'},
-  'tiktok-tools':{title:'🎵 TikTok Ads · Herramientas',icon:'🎵',query:'TikTok advertising tools analytics spy tools creative',loading:'Buscando herramientas TikTok...'},
-  'tiktok-strategy':{title:'🎵 TikTok Ads · Estrategias',icon:'🎵',query:'TikTok Ads strategy ecommerce performance scaling case studies',loading:'Buscando estrategias TikTok...'},
-  // GOOGLE ADS
-  'google-news':{title:'🔍 Google Ads · Noticias',icon:'🔍',query:'Google Ads PPC advertising platform news updates 2026',loading:'Buscando noticias Google Ads...'},
-  'google-tools':{title:'🔍 Google Ads · Herramientas',icon:'🔍',query:'Google Ads tools optimization automation Performance Max',loading:'Buscando herramientas Google...'},
-  // PINTEREST
-  'pinterest-news':{title:'📌 Pinterest · Noticias',icon:'📌',query:'Pinterest advertising marketing news updates 2026',loading:'Buscando noticias Pinterest...'},
-  // SHOPIFY
-  'shopify-news':{title:'🛒 Shopify · Noticias',icon:'🛒',query:'Shopify ecommerce platform news updates features 2026',loading:'Buscando noticias Shopify...'},
-  'shopify-apps':{title:'🛒 Shopify · Apps y herramientas',icon:'🛒',query:'Shopify apps best tools ecommerce conversion COD cash on delivery',loading:'Buscando apps Shopify...'},
-  // WHATSAPP
-  'whatsapp-news':{title:'💬 WhatsApp · Noticias',icon:'💬',query:'WhatsApp Business news updates features 2026',loading:'Buscando noticias WhatsApp...'},
-  'whatsapp-api':{title:'💬 WhatsApp · API y automatización',icon:'💬',query:'WhatsApp Business API automation chatbots Flows integrations 2026',loading:'Buscando API WhatsApp...'},
-  'whatsapp-sales':{title:'💬 WhatsApp · Ventas y cierres',icon:'💬',query:'WhatsApp sales closing techniques scripts conversion ecommerce',loading:'Buscando técnicas de venta...'},
-  'whatsapp-remarketing':{title:'💬 WhatsApp · Remarketing',icon:'💬',query:'WhatsApp remarketing post-sale retention reorder customer broadcast',loading:'Buscando remarketing...'},
-  // ECOMMERCE
-  'ecom-news':{title:'📦 Ecommerce · Noticias',icon:'📦',query:'ecommerce dropshipping COD cash on delivery news trends 2026',loading:'Buscando noticias ecommerce...'},
-  'ecom-latam':{title:'📦 Ecommerce · Estrategias LATAM',icon:'📦',query:'ecommerce COD Latin America Colombia Mexico Argentina strategies dropshipping',loading:'Buscando estrategias LATAM...'},
-  'ecom-models':{title:'📦 Ecommerce · Modelos de negocio',icon:'📦',query:'ecommerce business models DTC private label subscriptions COD',loading:'Buscando modelos...'},
-  // COPYWRITING
-  'copy-frameworks':{title:'✍️ Copy · Técnicas y frameworks',icon:'✍️',query:'direct response copywriting frameworks AIDA PAS techniques conversion',loading:'Buscando técnicas copy...'},
-  'copy-hooks':{title:'✍️ Copy · Hooks ganadores',icon:'✍️',query:'winning hooks Facebook ads direct response copy supplements health',loading:'Buscando hooks ganadores...'},
-  'copy-cases':{title:'✍️ Copy · Casos de estudio',icon:'✍️',query:'direct response copywriting case studies winning ads ecommerce real results',loading:'Buscando casos de estudio...'},
-  // AI
-  'ai-tools':{title:'🤖 AI · Nuevas herramientas',icon:'🤖',query:'AI tools marketing advertising new launches 2026 automation creative',loading:'Buscando herramientas AI...'},
-  'ai-strategy':{title:'🤖 AI · Estrategias',icon:'🤖',query:'AI strategy marketing automation advertising ChatGPT Claude workflows',loading:'Buscando estrategias AI...'},
-  // INTELIGENCIA
-  'intel-bm':{title:'🧠 Inteligencia · Estructura BM',icon:'🧠',query:'Facebook Business Manager structure best practices ban prevention multi-account',loading:'Investigando estructura BM...'},
-  'intel-dropi':{title:'🧠 Inteligencia · Dropi y alternativas',icon:'🧠',query:'Dropi Colombia dropshipping platform alternatives risks fulfillment',loading:'Investigando Dropi...'},
-  'intel-dian':{title:'🧠 Inteligencia · DIAN y legal',icon:'🧠',query:'DIAN Colombia ecommerce tax obligations 2026 legal regulations supplements INVIMA',loading:'Investigando DIAN...'},
-  'intel-tiktokshop':{title:'🧠 Inteligencia · TikTok Shop LATAM',icon:'🧠',query:'TikTok Shop Colombia Mexico Latin America launch availability ecommerce',loading:'Investigando TikTok Shop...'},
-  'intel-scaling':{title:'🧠 Inteligencia · Scaling suplementos',icon:'🧠',query:'large scale supplement advertisers Meta Ads Latin America scaling strategies',loading:'Investigando scaling...'},
-  'intel-retention':{title:'🧠 Inteligencia · Retención COD',icon:'🧠',query:'COD cash on delivery post-sale retention supplements reorder strategies',loading:'Investigando retención...'},
-  // SEGURIDAD
-  'sec-protection':{title:'🛡️ Seguridad · Protección',icon:'🛡️',query:'Facebook ad account protection security 2FA best practices advertising',loading:'Buscando protección...'},
-  'sec-recovery':{title:'🛡️ Seguridad · Recuperación',icon:'🛡️',query:'Facebook Meta ad account banned restricted appeal recovery unblock 2026',loading:'Buscando recuperación...'},
-  'sec-contingency':{title:'🛡️ Seguridad · Contingencia',icon:'🛡️',query:'Facebook Business Manager backup plan contingency multi-account redundancy',loading:'Buscando contingencia...'},
-  // VIETNAM
-  'vn-tactics':{title:'🇻🇳 Vietnam · Técnicas',icon:'🇻🇳',query:'Vietnam Facebook Ads tactics techniques tips Vietnamese advertisers MMO',loading:'Buscando técnicas Vietnam...'},
-  'vn-youtube':{title:'🇻🇳 Vietnam · YouTube',icon:'🇻🇳',query:'Vietnam YouTube Facebook Ads tutorial Vietnamese advertising MMO',loading:'Buscando videos Vietnam...'},
-  'vn-tools':{title:'🇻🇳 Vietnam · Herramientas',icon:'🇻🇳',query:'Vietnam Facebook Ads tools spy creative rotator account manager Vietnamese',loading:'Buscando herramientas Vietnam...'},
-  'vn-scale':{title:'🇻🇳 Vietnam · Escala masiva',icon:'🇻🇳',query:'Vietnam Facebook Ads horizontal scaling Business Manager cascade techniques',loading:'Buscando escala masiva...'},
-  // GRANDES LIGAS
-  'big-amazon':{title:'🏢 Amazon',icon:'🏢',query:'Amazon ecommerce strategies logistics conversion pricing retention 2026',loading:'Investigando Amazon...'},
-  'big-mercadolibre':{title:'🏢 Mercado Libre',icon:'🏢',query:'Mercado Libre strategies Colombia LATAM ecommerce logistics seller',loading:'Investigando ML...'},
-  'big-shopee':{title:'🏢 Shopee / Shein',icon:'🏢',query:'Shopee Shein ecommerce model COD product scaling fast fashion 2026',loading:'Investigando Shopee/Shein...'},
-  'big-alibaba':{title:'🏢 Alibaba',icon:'🏢',query:'Alibaba sourcing private label negotiation suppliers ecommerce',loading:'Investigando Alibaba...'},
-  // LOGÍSTICA
-  'log-carriers':{title:'🚚 Logística · Carriers',icon:'🚚',query:'ENVIA Interrapidisimo Colombia carriers ecommerce COD rates coverage 2026',loading:'Buscando carriers...'},
-  'log-coverage':{title:'🚚 Logística · Cobertura',icon:'🚚',query:'Colombia ecommerce COD coverage cities toxic zones delivery rates',loading:'Buscando cobertura...'},
-  'log-metrics':{title:'🚚 Logística · Métricas COD',icon:'🚚',query:'COD cash on delivery metrics benchmarks delivery rate return rate Colombia LATAM',loading:'Buscando métricas...'},
-  'log-alternatives':{title:'🚚 Logística · Alternativas Dropi',icon:'🚚',query:'Dropi alternatives Colombia LATAM dropshipping fulfillment platforms 2026',loading:'Buscando alternativas...'},
-  // CONTENIDO
-  youtube:{title:'🎥 YouTube',icon:'🎥',query:'youtube',loading:'Buscando videos de alto valor...'},
-  twitter:{title:'𝕏 X / Twitter',icon:'𝕏',query:'twitter',loading:'Rastreando hilos en X...'},
-  instagram:{title:'📸 Instagram',icon:'📸',query:'instagram',loading:'Filtrando contenido real...'},
-  // PERSONAL TOOLS
-  acciones:{title:'📋 Acciones pendientes',icon:'📋'},
-  brainstorm:{title:'🧠 Brainstorming',icon:'🧠'},
-  diario:{title:'📔 Diario',icon:'📔'},
-  coach:{title:'🤝 Coach diario',icon:'🤝'},
-  aprende:{title:'🎓 Aprende algo nuevo',icon:'🎓'},
-  // AMENAZAS (sidebar)
-  amenazas:{title:'🚨 Amenazas',icon:'🚨',query:'amenazas',loading:'Detectando amenazas activas...'},
-  // PERSONAL
-  // META ADS - NEW
-  'meta-scaling':{title:'📘 Meta Ads · Escalado (CBO/ABO)',icon:'📘',query:'Meta Facebook Ads scaling CBO Campaign Budget Optimization ABO ad set budget Surescale horizontal vertical',loading:'Buscando escalado Meta...'},
-  'meta-audiences':{title:'📘 Meta Ads · Audiencias y Lookalikes',icon:'📘',query:'Meta Facebook Ads audiences Lookalike Custom Saved targeting strategies 2026',loading:'Buscando audiencias...'},
-  'meta-pixel':{title:'📘 Meta Ads · Pixel y CAPI',icon:'📘',query:'Meta Pixel Conversions API CAPI events tracking iOS 14.5 attribution',loading:'Buscando Pixel y CAPI...'},
-  'meta-bidding':{title:'📘 Meta Ads · Pujas y presupuesto',icon:'📘',query:'Meta Facebook Ads bid strategies budget rules cost cap minimum ROAS lowest cost',loading:'Buscando pujas y presupuesto...'},
-  'meta-abtesting':{title:'📘 Meta Ads · A/B Testing',icon:'📘',query:'Meta Facebook Ads A/B testing split testing multivariate creative testing best practices',loading:'Buscando A/B testing...'},
-  'meta-catalog':{title:'📘 Meta Ads · Catálogos y DPA',icon:'📘',query:'Meta Facebook Dynamic Product Ads DPA catalog feed advantage shopping',loading:'Buscando catálogos y DPA...'},
-  'meta-learning':{title:'📘 Meta Ads · Optimización aprendizaje',icon:'📘',query:'Meta Facebook Ads learning phase optimization algorithm reset 50 conversions',loading:'Buscando optimización...'},
-  'meta-advantage':{title:'📘 Meta Ads · Advantage+ campaigns',icon:'📘',query:'Meta Advantage Plus Shopping Campaigns ASC advantage audience automated',loading:'Buscando Advantage+...'},
-  'meta-placements':{title:'📘 Meta Ads · Placements',icon:'📘',query:'Meta Facebook Ads placements Reels Stories Feed Marketplace audience network',loading:'Buscando placements...'},
-  'meta-attribution':{title:'📘 Meta Ads · Atribución y métricas',icon:'📘',query:'Meta Facebook Ads attribution window aggregated event measurement ROAS CPM CTR',loading:'Buscando atribución...'},
-  'meta-discover':{title:'📘 Meta Ads · 🔍 Descubrir',icon:'📘',query:'Meta Facebook Ads emerging techniques new features 2026 unknown tactics advanced',loading:'Descubriendo Meta Ads...'},
-  // TIKTOK NEW
-  'tiktok-algorithm':{title:'🎵 TikTok Ads · Algoritmo',icon:'🎵',query:'TikTok algorithm For You Page FYP ranking signals 2026',loading:'Buscando algoritmo TikTok...'},
-  'tiktok-spark':{title:'🎵 TikTok Ads · Spark Ads',icon:'🎵',query:'TikTok Spark Ads organic boost authentic content advertising',loading:'Buscando Spark Ads...'},
-  'tiktok-smart':{title:'🎵 TikTok Ads · Smart Performance',icon:'🎵',query:'TikTok Smart Performance Campaigns SPC automation AI driven',loading:'Buscando Smart Performance...'},
-  'tiktok-pixel':{title:'🎵 TikTok Ads · Pixel y eventos',icon:'🎵',query:'TikTok Pixel Events API EAPI conversion tracking ecommerce',loading:'Buscando Pixel TikTok...'},
-  'tiktok-creators':{title:'🎵 TikTok Ads · Creator Marketplace',icon:'🎵',query:'TikTok Creator Marketplace influencer partnership UGC ecommerce',loading:'Buscando creators...'},
-  'tiktok-vbo':{title:'🎵 TikTok Ads · VBO y bidding',icon:'🎵',query:'TikTok Value-Based Optimization VBO bidding strategies cost cap',loading:'Buscando VBO...'},
-  'tiktok-ugc':{title:'🎵 TikTok Ads · UGC y creators',icon:'🎵',query:'TikTok UGC user generated content native ads creator collaborations ecommerce',loading:'Buscando UGC...'},
-  'tiktok-discover':{title:'🎵 TikTok Ads · 🔍 Descubrir',icon:'🎵',query:'TikTok Ads emerging techniques new features unknown tactics 2026',loading:'Descubriendo TikTok...'},
-  // GOOGLE NEW
-  'google-pmax':{title:'🔍 Google Ads · Performance Max',icon:'🔍',query:'Google Performance Max PMax campaigns automation asset groups',loading:'Buscando Performance Max...'},
-  'google-search':{title:'🔍 Google Ads · Search Ads',icon:'🔍',query:'Google Search Ads keywords match types Responsive Search Ads',loading:'Buscando Search Ads...'},
-  'google-shopping':{title:'🔍 Google Ads · Shopping Ads',icon:'🔍',query:'Google Shopping Ads Merchant Center product feed optimization',loading:'Buscando Shopping...'},
-  'google-display':{title:'🔍 Google Ads · Display y YouTube',icon:'🔍',query:'Google Display Network YouTube Ads video advertising targeting',loading:'Buscando Display/YouTube...'},
-  'google-bidding':{title:'🔍 Google Ads · Smart Bidding',icon:'🔍',query:'Google Smart Bidding tCPA tROAS Maximize Conversions strategies',loading:'Buscando Smart Bidding...'},
-  'google-quality':{title:'🔍 Google Ads · Quality Score',icon:'🔍',query:'Google Ads Quality Score ad relevance landing page experience CTR optimization',loading:'Buscando Quality Score...'},
-  'google-keywords':{title:'🔍 Google Ads · Keywords y match',icon:'🔍',query:'Google Ads keyword research match types broad phrase exact negative',loading:'Buscando keywords...'},
-  'google-attribution':{title:'🔍 Google Ads · Atribución',icon:'🔍',query:'Google Ads attribution model data driven last click conversion paths',loading:'Buscando atribución...'},
-  'google-discover':{title:'🔍 Google Ads · 🔍 Descubrir',icon:'🔍',query:'Google Ads emerging features new tools unknown tactics 2026',loading:'Descubriendo Google Ads...'},
-  // WHATSAPP NEW
-  'whatsapp-flows':{title:'💬 WhatsApp · Flows',icon:'💬',query:'WhatsApp Flows forms interactive forms in-chat experiences API',loading:'Buscando WhatsApp Flows...'},
-  'whatsapp-ctw':{title:'💬 WhatsApp · Click-to-WhatsApp',icon:'💬',query:'Click to WhatsApp Ads CTW Meta integration conversion tracking',loading:'Buscando CTW Ads...'},
-  'whatsapp-catalog':{title:'💬 WhatsApp · Catálogos',icon:'💬',query:'WhatsApp Business catalog products commerce shopping experience',loading:'Buscando catálogos...'},
-  'whatsapp-templates':{title:'💬 WhatsApp · Plantillas y aprobaciones',icon:'💬',query:'WhatsApp template messages approvals categories marketing utility authentication',loading:'Buscando plantillas...'},
-  'whatsapp-bots':{title:'💬 WhatsApp · Chatbots con IA',icon:'💬',query:'WhatsApp chatbots AI ChatGPT GPT-4 sales automation conversational',loading:'Buscando chatbots IA...'},
-  'whatsapp-tracking':{title:'💬 WhatsApp · Pixel y tracking',icon:'💬',query:'WhatsApp tracking conversion attribution click-to-chat analytics',loading:'Buscando tracking...'},
-  'whatsapp-broadcast':{title:'💬 WhatsApp · Listas de difusión',icon:'💬',query:'WhatsApp broadcast lists groups marketing campaigns segmentation',loading:'Buscando difusión...'},
-  'whatsapp-discover':{title:'💬 WhatsApp · 🔍 Descubrir',icon:'💬',query:'WhatsApp Business emerging features new tools unknown tactics 2026',loading:'Descubriendo WhatsApp...'},
-  // SHOPIFY NEW
-  'shopify-checkout':{title:'🛒 Shopify · Conversión y checkout',icon:'🛒',query:'Shopify checkout optimization conversion rate apps best practices',loading:'Buscando checkout...'},
-  'shopify-email':{title:'🛒 Shopify · Email marketing',icon:'🛒',query:'Shopify email marketing Klaviyo Mailchimp flows automation abandoned cart',loading:'Buscando email marketing...'},
-  'shopify-reviews':{title:'🛒 Shopify · Reviews y prueba social',icon:'🛒',query:'Shopify reviews apps Loox Judge me Yotpo social proof user generated',loading:'Buscando reviews...'},
-  'shopify-cod':{title:'🛒 Shopify · Integraciones COD',icon:'🛒',query:'Shopify cash on delivery COD apps Latin America Colombia integrations',loading:'Buscando integraciones COD...'},
-  'shopify-theme':{title:'🛒 Shopify · Theme y diseño',icon:'🛒',query:'Shopify themes design conversion optimization Dawn Impulse Prestige',loading:'Buscando themes...'},
-  'shopify-analytics':{title:'🛒 Shopify · Analytics y dashboards',icon:'🛒',query:'Shopify analytics reports dashboards Triple Whale Polar metrics',loading:'Buscando analytics...'},
-  'shopify-headless':{title:'🛒 Shopify · Headless commerce',icon:'🛒',query:'Shopify Hydrogen headless commerce Storefront API frontend',loading:'Buscando headless...'},
-  'shopify-discover':{title:'🛒 Shopify · 🔍 Descubrir',icon:'🛒',query:'Shopify emerging apps tools features unknown tactics 2026',loading:'Descubriendo Shopify...'},
-  // PINTEREST NEW
-  'pinterest-ads':{title:'📌 Pinterest · Pinterest Ads',icon:'📌',query:'Pinterest Ads campaigns advertising strategies ecommerce conversion',loading:'Buscando Pinterest Ads...'},
-  'pinterest-organic':{title:'📌 Pinterest · Crecimiento orgánico',icon:'📌',query:'Pinterest organic growth strategies pins boards algorithm',loading:'Buscando orgánico Pinterest...'},
-  'pinterest-ideapins':{title:'📌 Pinterest · Idea Pins',icon:'📌',query:'Pinterest Idea Pins video stories engagement reach',loading:'Buscando Idea Pins...'},
-  'pinterest-seo':{title:'📌 Pinterest · SEO',icon:'📌',query:'Pinterest SEO keywords pin optimization search ranking',loading:'Buscando SEO Pinterest...'},
-  'pinterest-discover':{title:'📌 Pinterest · 🔍 Descubrir',icon:'📌',query:'Pinterest emerging features unknown tactics 2026',loading:'Descubriendo Pinterest...'},
-  // ECOMMERCE NEW
-  'ecom-aov':{title:'📦 Ecommerce · AOV y upselling',icon:'📦',query:'ecommerce AOV average order value upselling cross-selling bundles',loading:'Buscando AOV...'},
-  'ecom-checkout':{title:'📦 Ecommerce · Conversión y checkout',icon:'📦',query:'ecommerce conversion rate optimization CRO checkout abandonment cart',loading:'Buscando conversión...'},
-  'ecom-payments':{title:'📦 Ecommerce · Procesamiento de pagos',icon:'📦',query:'ecommerce payment processing gateways Latin America Colombia COD methods',loading:'Buscando pagos...'},
-  'ecom-metrics':{title:'📦 Ecommerce · Métricas y dashboards',icon:'📦',query:'ecommerce metrics KPI dashboards CAC LTV ROAS conversion rates',loading:'Buscando métricas...'},
-  'ecom-competition':{title:'📦 Ecommerce · Análisis competencia',icon:'📦',query:'ecommerce competitor analysis spy tools market research strategies',loading:'Buscando competencia...'},
-  'ecom-ltv':{title:'📦 Ecommerce · Customer LTV',icon:'📦',query:'ecommerce customer lifetime value LTV retention strategies recurring',loading:'Buscando LTV...'},
-  'ecom-subscription':{title:'📦 Ecommerce · Subscription models',icon:'📦',query:'ecommerce subscription models recurring revenue Recharge Bold',loading:'Buscando subscriptions...'},
-  'ecom-pricing':{title:'📦 Ecommerce · Pricing strategies',icon:'📦',query:'ecommerce pricing psychology strategies anchor decoy bundle discount',loading:'Buscando pricing...'},
-  'ecom-discover':{title:'📦 Ecommerce · 🔍 Descubrir',icon:'📦',query:'ecommerce emerging models trends unknown tactics 2026',loading:'Descubriendo Ecommerce...'},
-  // COPYWRITING NEW
-  'copy-vsl':{title:'✍️ Copy · VSL',icon:'✍️',query:'video sales letter VSL direct response copywriting scripts structure',loading:'Buscando VSL...'},
-  'copy-email':{title:'✍️ Copy · Email copy',icon:'✍️',query:'email copywriting direct response sequences subject lines hooks',loading:'Buscando email copy...'},
-  'copy-headlines':{title:'✍️ Copy · Headlines ganadores',icon:'✍️',query:'winning headlines direct response advertising David Ogilvy John Caples examples',loading:'Buscando headlines...'},
-  'copy-ctas':{title:'✍️ Copy · CTAs que convierten',icon:'✍️',query:'high converting call to action CTA copy direct response button text',loading:'Buscando CTAs...'},
-  'copy-bigidea':{title:'✍️ Copy · Big idea hunting',icon:'✍️',query:'big idea direct response copywriting concept hunting Gary Halbert Eugene Schwartz',loading:'Buscando big ideas...'},
-  'copy-avatar':{title:'✍️ Copy · Avatar research',icon:'✍️',query:'customer avatar research persona direct response copywriting techniques',loading:'Buscando avatar research...'},
-  'copy-story':{title:'✍️ Copy · Storytelling',icon:'✍️',query:'storytelling direct response copywriting narrative structures hero journey',loading:'Buscando storytelling...'},
-  'copy-format':{title:'✍️ Copy · Long form vs short form',icon:'✍️',query:'long form short form copywriting when to use direct response',loading:'Buscando formatos copy...'},
-  'copy-discover':{title:'✍️ Copy · 🔍 Descubrir',icon:'✍️',query:'copywriting emerging techniques unknown frameworks 2026 advanced',loading:'Descubriendo Copy...'},
-  // AI NEW
-  'ai-creative':{title:'🤖 AI · Creativos (video/imagen)',icon:'🤖',query:'AI creative generation Midjourney DALL-E Sora Runway video image ads',loading:'Buscando AI creativos...'},
-  'ai-copy':{title:'🤖 AI · Copy con IA',icon:'🤖',query:'AI copywriting ChatGPT Claude Jasper Copy.ai marketing content',loading:'Buscando AI copy...'},
-  'ai-voice':{title:'🤖 AI · Voice cloning',icon:'🤖',query:'AI voice cloning ElevenLabs voiceover ads VSL advertising',loading:'Buscando voice cloning...'},
-  'ai-automation':{title:'🤖 AI · Automatización',icon:'🤖',query:'AI automation workflows Zapier Make n8n marketing operations',loading:'Buscando automatización...'},
-  'ai-data':{title:'🤖 AI · Análisis de datos',icon:'🤖',query:'AI data analysis marketing insights ChatGPT data interpretation',loading:'Buscando AI data...'},
-  'ai-agents':{title:'🤖 AI · AI agents ecommerce',icon:'🤖',query:'AI agents autonomous ecommerce customer service sales operations 2026',loading:'Buscando AI agents...'},
-  'ai-prompt':{title:'🤖 AI · Prompt engineering',icon:'🤖',query:'prompt engineering techniques ChatGPT Claude best practices marketing',loading:'Buscando prompts...'},
-  'ai-discover':{title:'🤖 AI · 🔍 Descubrir',icon:'🤖',query:'AI marketing emerging tools unknown techniques 2026 breakthrough',loading:'Descubriendo AI...'},
-  // INTELIGENCIA NEW
-  'intel-hiring':{title:'🧠 Inteligencia · Hiring',icon:'🧠',query:'hiring ecommerce roles media buyer copywriter editor video Latin America',loading:'Buscando hiring...'},
-  'intel-legal':{title:'🧠 Inteligencia · Estructuras legales',icon:'🧠',query:'legal structures ecommerce LLC SAS Colombia LATAM offshore optimization',loading:'Buscando estructuras...'},
-  'intel-sourcing':{title:'🧠 Inteligencia · Sourcing',icon:'🧠',query:'sourcing suppliers Alibaba 1688 Mercado Libre private label supplements LATAM',loading:'Buscando sourcing...'},
-  'intel-discover':{title:'🧠 Inteligencia · 🔍 Descubrir',icon:'🧠',query:'COD ecommerce LATAM emerging strategies unknown tactics 2026',loading:'Descubriendo inteligencia...'},
-  // SEGURIDAD NEW
-  'sec-identity':{title:'🛡️ Seguridad · Identidades',icon:'🛡️',query:'Facebook identity verification ad accounts BM verified business documents',loading:'Buscando identidades...'},
-  'sec-payments':{title:'🛡️ Seguridad · Métodos de pago',icon:'🛡️',query:'Facebook ads payment methods cards safe billing thresholds',loading:'Buscando métodos pago...'},
-  'sec-agency':{title:'🛡️ Seguridad · Cuentas de agencia',icon:'🛡️',query:'Facebook agency ad accounts whitelabel partners spending limits',loading:'Buscando cuentas agencia...'},
-  'sec-cloaking':{title:'🛡️ Seguridad · Cloaking',icon:'🛡️',query:'Facebook cloaking ads technical landing page dynamic content',loading:'Buscando cloaking...'},
-  'sec-discover':{title:'🛡️ Seguridad · 🔍 Descubrir',icon:'🛡️',query:'Facebook Meta account security emerging techniques unknown 2026',loading:'Descubriendo seguridad...'},
-  // VIETNAM NEW
-  'vn-accounts':{title:'🇻🇳 Vietnam · Cuentas',icon:'🇻🇳',query:'Vietnam Facebook ad accounts buying sources marketplace MMO',loading:'Buscando cuentas VN...'},
-  'vn-winners':{title:'🇻🇳 Vietnam · Productos winners',icon:'🇻🇳',query:'Vietnam winning products ecommerce dropshipping ganadores MMO',loading:'Buscando winners VN...'},
-  'vn-payments':{title:'🇻🇳 Vietnam · Métodos de cobro',icon:'🇻🇳',query:'Vietnam payment methods international transfers cobrar dollars Vietnamese',loading:'Buscando cobros VN...'},
-  'vn-whitehat':{title:'🇻🇳 Vietnam · Whitehat vs Blackhat',icon:'🇻🇳',query:'Vietnam Facebook Ads whitehat blackhat ethical advertising techniques',loading:'Buscando whitehat/blackhat...'},
-  'vn-communities':{title:'🇻🇳 Vietnam · Comunidades MMO',icon:'🇻🇳',query:'Vietnam MMO communities forums Telegram Facebook groups Make Money Online',loading:'Buscando comunidades...'},
-  'vn-discover':{title:'🇻🇳 Vietnam · 🔍 Descubrir',icon:'🇻🇳',query:'Vietnam advertising emerging techniques unknown tactics 2026',loading:'Descubriendo Vietnam...'},
-  // GRANDES LIGAS NEW
-  'big-walmart':{title:'🏢 Walmart',icon:'🏢',query:'Walmart ecommerce strategies marketplace Walmart Connect advertising',loading:'Investigando Walmart...'},
-  'big-falabella':{title:'🏢 Falabella',icon:'🏢',query:'Falabella Colombia ecommerce marketplace seller strategies',loading:'Investigando Falabella...'},
-  'big-rappi':{title:'🏢 Rappi',icon:'🏢',query:'Rappi Colombia logistics last mile delivery ecommerce integration',loading:'Investigando Rappi...'},
-  'big-dtc':{title:'🏢 DTC Brands ganadoras',icon:'🏢',query:'DTC direct to consumer brands winning case studies Allbirds Glossier Casper',loading:'Investigando DTC...'},
-  'big-temu':{title:'🏢 Temu',icon:'🏢',query:'Temu ecommerce strategy growth advertising spending model',loading:'Investigando Temu...'},
-  'big-discover':{title:'🏢 Grandes Ligas · 🔍 Descubrir',icon:'🏢',query:'ecommerce giants emerging companies unknown strategies 2026',loading:'Descubriendo grandes ligas...'},
-  // LOGISTICA NEW
-  'log-negotiation':{title:'🚚 Logística · Negociación',icon:'🚚',query:'carrier negotiation rates volume ecommerce Colombia ENVIA Interrapidisimo',loading:'Buscando negociación...'},
-  'log-returns':{title:'🚚 Logística · Devoluciones',icon:'🚚',query:'ecommerce returns COD cash on delivery management reduce returns',loading:'Buscando devoluciones...'},
-  'log-packaging':{title:'🚚 Logística · Empaque y branding',icon:'🚚',query:'ecommerce packaging branding unboxing experience COD supplements',loading:'Buscando empaque...'},
-  'log-orders':{title:'🚚 Logística · Procesamiento órdenes',icon:'🚚',query:'order processing fulfillment ecommerce automation COD Latin America',loading:'Buscando procesamiento...'},
-  'log-wms':{title:'🚚 Logística · WMS y sistemas',icon:'🚚',query:'warehouse management system WMS ecommerce inventory tracking software',loading:'Buscando WMS...'},
-  'log-discover':{title:'🚚 Logística · 🔍 Descubrir',icon:'🚚',query:'logistics ecommerce emerging tools unknown techniques 2026 LATAM',loading:'Descubriendo logística...'},
-  // PATRONES TEMPORALES
-  'pat-30d':{title:'📈 Patrones · Tendencias 30 días',icon:'📈',query:'patrones',loading:'Detectando patrones 30 días...'},
-  'pat-60d':{title:'📈 Patrones · Patrones 60 días',icon:'📈',query:'patrones',loading:'Detectando patrones 60 días...'},
-  'pat-90d':{title:'📈 Patrones · Movimientos 90 días',icon:'📈',query:'patrones',loading:'Detectando movimientos 90 días...'},
-  'pat-momentum':{title:'📈 Patrones · Acelerando vs decayendo',icon:'📈',query:'patrones',loading:'Analizando momentum...'},
-  'pat-discover':{title:'📈 Patrones · 🔍 Descubrir',icon:'📈',query:'patrones',loading:'Descubriendo patrones ocultos...'},
-  // RUSSIA TACTICS
-  'ru-arbitrage':{title:'🇷🇺 Russia · Arbitraje de tráfico',icon:'🇷🇺',query:'Russia traffic arbitrage arbitrazh affiliate marketing performance media buying CPA',loading:'Buscando arbitraje...'},
-  'ru-antidetect':{title:'🇷🇺 Russia · Anti-detect browsers',icon:'🇷🇺',query:'Dolphin Anty Multilogin GoLogin Russian antidetect browser ad accounts farming',loading:'Buscando anti-detect...'},
-  'ru-cpa':{title:'🇷🇺 Russia · CPA networks rusas',icon:'🇷🇺',query:'Russian CPA networks LeadBit Adsterra M1-Shop Everad affiliate offers nutra',loading:'Buscando CPA networks...'},
-  'ru-spy':{title:'🇷🇺 Russia · Spy tools rusos',icon:'🇷🇺',query:'Russian spy tools AdHeart Publer FB Ads spy creative intelligence',loading:'Buscando spy tools...'},
-  'ru-accounts':{title:'🇷🇺 Russia · Cuentas y tarjetas',icon:'🇷🇺',query:'Russian Facebook ad accounts cards virtual prepaid agency accounts marketplace',loading:'Buscando cuentas/tarjetas...'},
-  'ru-antifraud':{title:'🇷🇺 Russia · Anti-fraude',icon:'🇷🇺',query:'Russian Facebook Meta antifraud bypass techniques anti-detection ads compliance',loading:'Buscando anti-fraude...'},
-  'ru-pharma':{title:'🇷🇺 Russia · Pharma / Nutra',icon:'🇷🇺',query:'Russian pharma nutra affiliate offers health supplements weight loss male enhancement',loading:'Buscando pharma/nutra...'},
-  'ru-whitehat':{title:'🇷🇺 Russia · Whitehat',icon:'🇷🇺',query:'Russian whitehat affiliate marketing legitimate practices compliance Meta TikTok',loading:'Buscando whitehat...'},
-  'ru-greyhat':{title:'🇷🇺 Russia · Greyhat / Blackhat',icon:'🇷🇺',query:'Russian greyhat blackhat affiliate marketing aggressive techniques arbitrage',loading:'Buscando greyhat...'},
-  'ru-ai':{title:'🇷🇺 Russia · AI y herramientas',icon:'🇷🇺',query:'Russian AI tools Yandex GPT Sber AI marketing creative generation Russian',loading:'Buscando AI rusas...'},
-  'ru-youtube':{title:'🇷🇺 Russia · YouTube ruso',icon:'🇷🇺',query:'Russian YouTube affiliate marketing tutorials arbitrazh kursy media buying',loading:'Buscando YouTube ruso...'},
-  'ru-forums':{title:'🇷🇺 Russia · Foros y Telegram',icon:'🇷🇺',query:'Russian Telegram channels forums affiliate marketing CPA arbitrazh communities',loading:'Buscando comunidades...'},
-  'ru-winners':{title:'🇷🇺 Russia · Productos winners',icon:'🇷🇺',query:'Russian winning products ecommerce dropshipping CPA offers verticals',loading:'Buscando winners RU...'},
-  'ru-casinos':{title:'🇷🇺 Russia · Casinos y betting',icon:'🇷🇺',query:'Russian iGaming casino betting affiliate marketing techniques traffic',loading:'Buscando iGaming...'},
-  'ru-prelanders':{title:'🇷🇺 Russia · Prelanders / Lendings',icon:'🇷🇺',query:'Russian prelanders lendings quiz funnels advertorials conversion COD pharma',loading:'Buscando prelanders...'},
-  'ru-callcenters':{title:'🇷🇺 Russia · Call centers COD',icon:'🇷🇺',query:'Russian Ukrainian call centers COD cash on delivery outsourced sales closing Spanish Latin America',loading:'Buscando call centers...'},
-  'ru-trackers':{title:'🇷🇺 Russia · Trackers profesionales',icon:'🇷🇺',query:'Keitaro Voluum trackers Russian server-side tracking affiliate marketing setup',loading:'Buscando trackers...'},
-  'ru-teams':{title:'🇷🇺 Russia · Estructura de equipos (komandy)',icon:'🇷🇺',query:'Russian affiliate marketing teams komandy structure roles media buyer designer',loading:'Buscando estructura equipos...'},
-  'ru-events':{title:'🇷🇺 Russia · Conferencias y eventos',icon:'🇷🇺',query:'Affiliate World Moscow MAC Conversion Conf Russian affiliate events 2026',loading:'Buscando eventos...'},
-  'ru-vertical':{title:'🇷🇺 Russia · Especialización vertical',icon:'🇷🇺',query:'Russian affiliate vertical specialization nutra gambling dating dominate one niche',loading:'Buscando especialización...'},
-  'ru-discover':{title:'🇷🇺 Russia · 🔍 Descubrir',icon:'🇷🇺',query:'Russian affiliate marketing emerging techniques unknown tactics 2026 advanced',loading:'Descubriendo Russia...'},
-  favoritos:{title:'⭐ Favoritos',icon:'⭐'},
-  digest:{title:'📋 Digest semanal',icon:'📋',loading:'Generando digest semanal...'},
-  config:{title:'⚙️ Configuración',icon:'⚙️'},
-};
-const NAV_GROUPS=[
-  {label:'Plataformas',items:[
-    {id:'meta',icon:'📘',label:'Meta Ads',subs:['meta-news','meta-api','meta-policy','meta-creative','meta-scaling','meta-audiences','meta-pixel','meta-bidding','meta-abtesting','meta-catalog','meta-learning','meta-advantage','meta-placements','meta-attribution','meta-discover']},
-    {id:'tiktok',icon:'🎵',label:'TikTok Ads',subs:['tiktok-news','tiktok-tools','tiktok-strategy','tiktok-algorithm','tiktok-spark','tiktok-smart','tiktok-pixel','tiktok-creators','tiktok-vbo','tiktok-ugc','tiktok-discover']},
-    {id:'google',icon:'🔍',label:'Google Ads',subs:['google-news','google-tools','google-pmax','google-search','google-shopping','google-display','google-bidding','google-quality','google-keywords','google-attribution','google-discover']},
-    {id:'whatsapp',icon:'💬',label:'WhatsApp',subs:['whatsapp-news','whatsapp-api','whatsapp-sales','whatsapp-remarketing','whatsapp-flows','whatsapp-ctw','whatsapp-catalog','whatsapp-templates','whatsapp-bots','whatsapp-tracking','whatsapp-broadcast','whatsapp-discover']},
-    {id:'shopify',icon:'🛒',label:'Shopify',subs:['shopify-news','shopify-apps','shopify-checkout','shopify-email','shopify-reviews','shopify-cod','shopify-theme','shopify-analytics','shopify-headless','shopify-discover']},
-    {id:'pinterest',icon:'📌',label:'Pinterest',subs:['pinterest-news','pinterest-ads','pinterest-organic','pinterest-ideapins','pinterest-seo','pinterest-discover']},
-  ]},
-  {label:'Industria',items:[
-    {id:'ecom',icon:'📦',label:'Ecommerce / COD',subs:['ecom-news','ecom-latam','ecom-models','ecom-aov','ecom-checkout','ecom-payments','ecom-metrics','ecom-competition','ecom-ltv','ecom-subscription','ecom-pricing','ecom-discover']},
-    {id:'copy',icon:'✍️',label:'Copywriting',subs:['copy-frameworks','copy-hooks','copy-cases','copy-vsl','copy-email','copy-headlines','copy-ctas','copy-bigidea','copy-avatar','copy-story','copy-format','copy-discover']},
-    {id:'ai',icon:'🤖',label:'AI Marketing',subs:['ai-tools','ai-strategy','ai-creative','ai-copy','ai-voice','ai-automation','ai-data','ai-agents','ai-prompt','ai-discover']},
-  ]},
-  {label:'Estrategia',items:[
-    {id:'intel',icon:'🧠',label:'Inteligencia',subs:['intel-bm','intel-dropi','intel-dian','intel-tiktokshop','intel-scaling','intel-retention','intel-hiring','intel-legal','intel-sourcing','intel-discover']},
-    {id:'sec',icon:'🛡️',label:'Seguridad Meta',subs:['sec-protection','sec-recovery','sec-contingency','sec-identity','sec-payments','sec-agency','sec-cloaking','sec-discover']},
-  ]},
-  {label:'Vietnam Tactics',items:[
-    {id:'vn',icon:'🇻🇳',label:'Vietnam',subs:['vn-tactics','vn-youtube','vn-tools','vn-scale','vn-accounts','vn-winners','vn-payments','vn-whitehat','vn-communities','vn-discover']},
-  ]},
-  {label:'Russia Tactics',items:[
-    {id:'ru',icon:'🇷🇺',label:'Russia',subs:['ru-arbitrage','ru-antidetect','ru-cpa','ru-spy','ru-accounts','ru-antifraud','ru-pharma','ru-whitehat','ru-greyhat','ru-ai','ru-youtube','ru-forums','ru-winners','ru-casinos','ru-prelanders','ru-callcenters','ru-trackers','ru-teams','ru-events','ru-vertical','ru-discover']},
-  ]},
-  {label:'Grandes Ligas',items:[
-    {id:'big',icon:'🏢',label:'Grandes Ligas',subs:['big-amazon','big-mercadolibre','big-shopee','big-alibaba','big-walmart','big-falabella','big-rappi','big-dtc','big-temu','big-discover']},
-  ]},
-  {label:'Logística',items:[
-    {id:'log',icon:'🚚',label:'Logística',subs:['log-carriers','log-coverage','log-metrics','log-alternatives','log-negotiation','log-returns','log-packaging','log-orders','log-wms','log-discover']},
-  ]},
-  {label:'Patrones Temporales',items:[
-    {id:'pat',icon:'📈',label:'Patrones',subs:['pat-30d','pat-60d','pat-90d','pat-momentum','pat-discover']},
-  ]},
-  {label:'Contenido',items:[
-    {id:'youtube',icon:'🎥',label:'YouTube',sub:'youtube'},
-    {id:'twitter',icon:'𝕏',label:'X / Twitter',sub:'twitter'},
-    {id:'instagram',icon:'📸',label:'Instagram',sub:'instagram'},
-  ]},
-  {label:'Personal',items:[
-    {id:'amenazas',icon:'🚨',label:'Amenazas',sub:'amenazas'},
-    {id:'acciones',icon:'📋',label:'Acciones',sub:'acciones'},
-    {id:'brainstorm',icon:'🧠',label:'Brainstorming',sub:'brainstorm'},
-    {id:'diario',icon:'📔',label:'Diario',sub:'diario'},
-    {id:'coach',icon:'🤝',label:'Coach diario',sub:'coach'},
-    {id:'aprende',icon:'🎓',label:'Aprende algo',sub:'aprende'},
-    {id:'favoritos',icon:'⭐',label:'Favoritos',sub:'favoritos',badge:true},
-    {id:'digest',icon:'📋',label:'Digest semanal',sub:'digest'},
-    {id:'config',icon:'⚙️',label:'Inicio',sub:'config'},
-  ]},
-];
+const BIZ='Mi negocio: Ecommerce COD en Colombia/LATAM, suplementos de salud vendidos por Meta Ads y WhatsApp (Dropi, ENVÍA/Interrapidísimo).';
 const TR='CRITICAL: ALL titles and summaries MUST be in Spanish. Translate everything from any language to Spanish. Keep original URLs.';
-const ORIGIN_RULE='IMPORTANT: For EACH item, identify the SOURCE ORIGIN by analyzing publication dates. Add these JSON fields to each item: "origin" with value "original" if this source is the first to publish (oldest date), "replica" if it cites/references an earlier source, or "aggregator" if it is a summary/listicle without clear primary source. If "replica" or "aggregator", also include "origin_source" (name of original publisher) and "origin_url" (URL of original) when known. Use chronology — older date = closer to origin.';
-function handleLogin(){const k=document.getElementById('apiKeyInput').value.trim();if(!k)return;API_KEY=k;sessionStorage.setItem('radar_key',k);document.getElementById('loginScreen').style.display='none';document.getElementById('app').classList.add('active');document.getElementById('dateInput').valueAsDate=new Date();renderSidebar();renderConfig()}
+const ORIGIN_RULE='For EACH item add JSON fields: "origin" = "original" if this source is the first to publish, "replica" if it cites an earlier source, or "aggregator" if it is a summary/listicle. If replica/aggregator, add "origin_source" and "origin_url" when known. Older date = closer to origin.';
+const SYS='Marketing intelligence analyst. '+TR+' '+ORIGIN_RULE+' Respond ONLY with a valid JSON array. No markdown, no backticks.';
+
+/* ============ BOTONES GRANDES (acciones rápidas) ============ */
+const QUICK={
+  nuevo:{icon:'🔥',title:'Lo nuevo de hoy',desc:'lo más grande en marketing e IA',deep:true,
+    prompt:'Find the BIGGEST and NEWEST launches, announcements and updates from the last 10 days across digital advertising (Meta/Facebook/Instagram Ads, TikTok Ads, Google Ads), ecommerce/Shopify, and especially AI tools and AI models for marketing, video, image generation and copywriting. Include new AI models, new ad features and new tools (e.g. new releases from OpenAI/ChatGPT, Google/Gemini, etc.). For each item explain what it is and why it matters. ORDER the array from most important/disruptive to least.'},
+  ia:{icon:'🤖',title:'Herramientas IA nuevas',desc:'lo último para probar ya',deep:false,
+    prompt:'Find the NEWEST AI tools and AI model releases from recent weeks that are useful for marketing, ecommerce, paid ads, video creation, image generation, voice and copywriting. For each: what it does, why it is new or better, and a link to try it. Include big launches and notable smaller tools. ORDER from most important to least.'},
+  copy:{icon:'✍️',title:'Copy que funciona',desc:'hooks, frameworks, ganadores',panel:'copy'},
+  meta:{icon:'📘',title:'Meta Ads',desc:'todas las estrategias de trafficker',panel:'meta'},
+  tiktok:{icon:'🎵',title:'TikTok Ads',desc:'algoritmo, spark, creators',panel:'tiktok'},
+  google:{icon:'🔍',title:'Google Ads',desc:'PMax, search, shopping',panel:'google'},
+  baneos:{icon:'🛡️',title:'Baneos y rescate',desc:'protege y recupera cuentas',panel:'baneos'},
+  tendencias:{icon:'📈',title:'Lo que está subiendo',desc:'tendencias del momento',deep:true,
+    prompt:'Identify what is ACCELERATING right now in digital marketing, paid ads and ecommerce: rising techniques, tools and trends gaining momentum, and also what is declining. Explain why each is moving now and what to do about it. '+BIZ}
+};
+const QUICK_ORDER=['nuevo','ia','meta','tiktok','google','copy','baneos','tendencias'];
+
+/* ============ PANELES DE CHIPS (todas las estrategias) ============ */
+const PANELS={
+  meta:{title:'📘 Meta Ads · Trafficker',desc:'Toca un tema. Aquí está TODO lo de Meta sin menús eternos.',chips:[
+    {l:'Noticias Meta',q:'Meta Facebook Instagram Ads platform news updates'},
+    {l:'Escalado CBO / ABO',q:'Meta Facebook Ads scaling CBO Campaign Budget Optimization ABO horizontal vertical surescale'},
+    {l:'Audiencias y Lookalikes',q:'Meta Facebook Ads audiences Lookalike Custom Saved targeting strategies'},
+    {l:'Pixel y CAPI',q:'Meta Pixel Conversions API CAPI events tracking attribution setup'},
+    {l:'Pujas y presupuesto',q:'Meta Facebook Ads bid strategies budget cost cap minimum ROAS lowest cost'},
+    {l:'A/B Testing',q:'Meta Facebook Ads A/B testing split testing creative testing best practices'},
+    {l:'Catálogos y DPA',q:'Meta Facebook Dynamic Product Ads DPA catalog feed advantage shopping'},
+    {l:'Fase de aprendizaje',q:'Meta Facebook Ads learning phase optimization algorithm reset 50 conversions'},
+    {l:'Advantage+',q:'Meta Advantage Plus Shopping Campaigns ASC advantage audience automated'},
+    {l:'Placements',q:'Meta Facebook Ads placements Reels Stories Feed Marketplace audience network'},
+    {l:'Atribución y métricas',q:'Meta Facebook Ads attribution window aggregated event measurement ROAS CPM CTR'},
+    {l:'Creativos y hooks',q:'Meta Facebook ad creative formats video Reels hooks best practices conversion'},
+    {l:'Políticas (salud/suplementos)',q:'Meta Facebook advertising policies restrictions health supplements approvals'},
+    {l:'API y herramientas',q:'Meta Marketing API Conversion API Facebook advertising tools developers'},
+    {l:'🔍 Descubrir lo que no sabes',q:'Meta Facebook Ads emerging advanced techniques new features unknown tactics',discover:true}
+  ]},
+  tiktok:{title:'🎵 TikTok Ads',desc:'Toda la estrategia de TikTok en un solo lugar.',chips:[
+    {l:'Noticias TikTok',q:'TikTok Ads advertising platform news updates'},
+    {l:'Algoritmo (FYP)',q:'TikTok algorithm For You Page FYP ranking signals'},
+    {l:'Spark Ads',q:'TikTok Spark Ads organic boost authentic content advertising'},
+    {l:'Smart Performance',q:'TikTok Smart Performance Campaigns SPC automation AI driven'},
+    {l:'Pixel y eventos',q:'TikTok Pixel Events API conversion tracking ecommerce'},
+    {l:'VBO y pujas',q:'TikTok Value Based Optimization VBO bidding strategies cost cap'},
+    {l:'Creator Marketplace',q:'TikTok Creator Marketplace influencer partnership UGC ecommerce'},
+    {l:'UGC y creators',q:'TikTok UGC user generated content native ads creator collaborations'},
+    {l:'Estrategias y escala',q:'TikTok Ads strategy ecommerce performance scaling case studies'},
+    {l:'Herramientas / spy',q:'TikTok advertising tools analytics spy tools creative'},
+    {l:'🔍 Descubrir',q:'TikTok Ads emerging techniques new features unknown tactics',discover:true}
+  ]},
+  google:{title:'🔍 Google Ads',desc:'Search, Shopping, PMax y más.',chips:[
+    {l:'Noticias Google',q:'Google Ads PPC advertising platform news updates'},
+    {l:'Performance Max',q:'Google Performance Max PMax campaigns automation asset groups'},
+    {l:'Search Ads',q:'Google Search Ads keywords match types Responsive Search Ads'},
+    {l:'Shopping Ads',q:'Google Shopping Ads Merchant Center product feed optimization'},
+    {l:'Display y YouTube',q:'Google Display Network YouTube Ads video advertising targeting'},
+    {l:'Smart Bidding',q:'Google Smart Bidding tCPA tROAS Maximize Conversions strategies'},
+    {l:'Quality Score',q:'Google Ads Quality Score ad relevance landing page experience CTR'},
+    {l:'Keywords y match',q:'Google Ads keyword research match types broad phrase exact negative'},
+    {l:'Atribución',q:'Google Ads attribution model data driven conversion paths'},
+    {l:'🔍 Descubrir',q:'Google Ads emerging features new tools unknown tactics',discover:true}
+  ]},
+  copy:{title:'✍️ Copywriting',desc:'Lo que hace que la gente compre.',chips:[
+    {l:'Frameworks (AIDA/PAS)',q:'direct response copywriting frameworks AIDA PAS techniques conversion'},
+    {l:'Hooks ganadores',q:'winning hooks Facebook ads direct response copy supplements health'},
+    {l:'VSL',q:'video sales letter VSL direct response copywriting scripts structure'},
+    {l:'Email copy',q:'email copywriting direct response sequences subject lines hooks'},
+    {l:'Headlines',q:'winning headlines direct response advertising Ogilvy Caples examples'},
+    {l:'CTAs que convierten',q:'high converting call to action CTA copy direct response button text'},
+    {l:'Big idea',q:'big idea direct response copywriting concept Gary Halbert Eugene Schwartz'},
+    {l:'Avatar research',q:'customer avatar research persona direct response copywriting techniques'},
+    {l:'Storytelling',q:'storytelling direct response copywriting narrative structures'},
+    {l:'Casos de estudio',q:'direct response copywriting case studies winning ads real results'},
+    {l:'🔍 Descubrir',q:'copywriting emerging techniques unknown frameworks advanced',discover:true}
+  ]},
+  baneos:{title:'🛡️ Baneos y rescate de cuentas',desc:'Protege tus cuentas y recupéralas si caen.',chips:[
+    {l:'Protección de cuentas',q:'Facebook ad account protection security 2FA best practices advertising'},
+    {l:'Recuperar cuenta baneada',q:'Facebook Meta ad account banned restricted appeal recovery unblock'},
+    {l:'Plan de contingencia',q:'Facebook Business Manager backup plan contingency multi-account redundancy'},
+    {l:'Identidades / verificación',q:'Facebook identity verification ad accounts BM verified business documents'},
+    {l:'Métodos de pago seguros',q:'Facebook ads payment methods cards safe billing thresholds'},
+    {l:'Cuentas de agencia',q:'Facebook agency ad accounts whitelabel partners spending limits'},
+    {l:'Estructura de BM',q:'Facebook Business Manager structure best practices ban prevention multi-account'},
+    {l:'🔍 Descubrir',q:'Facebook Meta account security emerging techniques unknown',discover:true}
+  ]}
+};
+
+/* ============ LOGIN ============ */
+function handleLogin(){const k=document.getElementById('apiKeyInput').value.trim();if(!k)return;API_KEY=k;sessionStorage.setItem('radar_key',k);showApp()}
+function showApp(){document.getElementById('loginScreen').style.display='none';document.getElementById('app').classList.add('active');const d=document.getElementById('dateInput');if(d&&!d.value)d.valueAsDate=new Date();goHome()}
 function handleLogout(){sessionStorage.removeItem('radar_key');API_KEY='';document.getElementById('app').classList.remove('active');document.getElementById('loginScreen').style.display='flex';document.getElementById('apiKeyInput').value=''}
-(function(){const s=sessionStorage.getItem('radar_key');if(s){API_KEY=s;document.getElementById('loginScreen').style.display='none';document.getElementById('app').classList.add('active');document.getElementById('dateInput').valueAsDate=new Date();setTimeout(()=>{renderSidebar();renderConfig()},100)}})();
-let expandedGroups=JSON.parse(localStorage.getItem('radar_expanded')||'[]');
-function toggleGroup(gid){
-  const idx=expandedGroups.indexOf(gid);
-  if(idx>=0)expandedGroups.splice(idx,1);
-  else expandedGroups.push(gid);
-  localStorage.setItem('radar_expanded',JSON.stringify(expandedGroups));
-  renderSidebar();
+(function(){const s=sessionStorage.getItem('radar_key');if(s){API_KEY=s;setTimeout(showApp,60)}})();
+
+/* ============ NAVEGACIÓN ============ */
+function setTopbar(mode,title){
+  const show=mode!=='home';
+  document.getElementById('backBtn').style.display=show?'inline-block':'none';
+  document.getElementById('tbRight').style.display=(mode==='results')?'flex':'none';
+  document.getElementById('tbTitle').textContent=title||'';
 }
-function renderSidebar(){
-  const sb=document.getElementById('sidebarNav');
-  if(!sb)return;
-  let html='';
-  for(const group of NAV_GROUPS){
-    html+='<div class="nav-group"><div class="nav-label">'+group.label+'</div>';
-    for(const item of group.items){
-      if(item.sub){
-        const sec=SECTIONS[item.sub];
-        const active=currentSection===item.sub?'active':'';
-        const badge=item.badge?'<span class="nav-badge" id="favCount">'+Object.keys(favorites).length+'</span>':'';
-        html+='<div class="nav-item '+active+'" data-section="'+item.sub+'" onclick="switchSection(\''+item.sub+'\')"><span class="nav-icon">'+item.icon+'</span> '+item.label+' '+badge+'</div>';
-      }else if(item.subs){
-        const expanded=expandedGroups.includes(item.id);
-        const anyActive=item.subs.includes(currentSection);
-        html+='<div class="nav-item '+(anyActive&&!expanded?'active':'')+'" onclick="toggleGroup(\''+item.id+'\')" style="justify-content:space-between"><span style="display:flex;align-items:center;gap:10px"><span class="nav-icon">'+item.icon+'</span>'+item.label+'</span><span style="font-size:10px;color:var(--text-muted)">'+(expanded?'▼':'▶')+'</span></div>';
-        if(expanded){
-          for(const subId of item.subs){
-            const sub=SECTIONS[subId];
-            if(!sub)continue;
-            const active=currentSection===subId?'active':'';
-            const subLabel=sub.title.split('·')[1]?sub.title.split('·')[1].trim():sub.title;
-            html+='<div class="nav-item '+active+'" data-section="'+subId+'" onclick="switchSection(\''+subId+'\')" style="padding-left:2.5rem;font-size:11.5px">'+subLabel+'</div>';
-          }
-        }
-      }
-    }
-    html+='</div>';
+function goHome(){currentView={type:'home'};setTopbar('home');renderHome()}
+function refreshCurrent(){
+  if(currentView.type==='results'){delete cache[currentView.ck];runSearch(currentView.query,currentView.title,currentView.opts)}
+}
+function toggleFilter(f){
+  filters[f]=!filters[f];
+  document.getElementById(f==='critical'?'criticalFilter':f==='threat'?'threatFilter':'originFilter').classList.toggle('active',filters[f]);
+  if(currentView.type==='results'&&cache[currentView.ck])renderResults(cache[currentView.ck]);
+}
+
+/* ============ HOME ============ */
+function renderHome(){
+  let big='';
+  for(const id of QUICK_ORDER){const b=QUICK[id];big+='<div class="bigbtn" onclick="runQuick(\''+id+'\')"><div class="ic">'+b.icon+'</div><div><div class="tt">'+b.title+'</div><div class="ds">'+b.desc+'</div></div></div>';}
+  const c=document.getElementById('contentArea');
+  c.innerHTML=
+    '<div class="home-hero"><div class="hl">RADAR</div><div class="hs">tu radar de marketing e IA</div></div>'+
+    '<div class="home-search"><input type="text" id="homeSearch" placeholder="Escribe lo que quieras saber... (ej: nuevo modelo de video de Gemini)" onkeydown="if(event.key===\'Enter\')runFreeSearch()"><button onclick="runFreeSearch()">🔍 Buscar</button></div>'+
+    '<div class="home-tip">💡 Solo gasta cuando <b>tú</b> buscas o tocas un botón. Nada corre solo.</div>'+
+    '<div class="grid">'+big+'</div>'+
+    '<div class="section-label">Tus herramientas</div>'+
+    '<div class="util-grid">'+
+      '<div class="utilbtn" onclick="switchView(\'favoritos\')"><span class="ic">⭐</span> Mis guardados ('+Object.keys(favorites).length+')</div>'+
+      '<div class="utilbtn" onclick="switchView(\'digest\')"><span class="ic">📋</span> Digest semanal</div>'+
+      '<div class="utilbtn" onclick="switchView(\'aprende\')"><span class="ic">🎓</span> Aprende algo</div>'+
+      '<div class="utilbtn" onclick="switchView(\'config\')"><span class="ic">⚙️</span> Ajustes</div>'+
+    '</div>';
+}
+
+/* ============ ACCIONES DE BOTONES ============ */
+function runQuick(id){
+  const b=QUICK[id];
+  if(b.panel)return renderPanel(b.panel);
+  runSearch(b.prompt,b.icon+' '+b.title,{deep:!!b.deep,special:true});
+}
+function renderPanel(pid){
+  const p=PANELS[pid];if(!p)return;
+  currentView={type:'panel',pid};setTopbar('panel',p.title.replace(/^[^ ]+ /,''));
+  let chips='';
+  p.chips.forEach((ch,i)=>{chips+='<div class="chip'+(ch.discover?' discover':'')+'" onclick="runChip(\''+pid+'\','+i+')">'+ch.l+'</div>';});
+  document.getElementById('contentArea').innerHTML=
+    '<div class="panel-head"><div class="pt">'+p.title+'</div><div class="pd">'+p.desc+'</div></div>'+
+    '<div class="chips">'+chips+'</div>';
+}
+function runChip(pid,i){
+  const ch=PANELS[pid].chips[i];
+  runSearch(ch.q,PANELS[pid].title.replace(/^[^ ]+ /,'')+' · '+ch.l.replace('🔍 ',''),{discover:!!ch.discover});
+}
+function runFreeSearch(){
+  const q=document.getElementById('homeSearch')?.value?.trim();
+  if(!q)return;
+  runSearch(q,'🔍 '+q,{free:true});
+}
+
+/* ============ BÚSQUEDA (motor) ============ */
+function dateCtx(){const d=document.getElementById('dateInput')?.value;return d?'Focus on news around '+d+'.':'Focus on the most recent information.';}
+function buildPrompt(query,opts){
+  const shape='\n\nReturn a JSON array of 6-10 items: {"id":"uid","title":"SPANISH","summary":"2-3 sentences in SPANISH","source":"name","url":"url","date":"YYYY-MM-DD","urgency":"critical|informative|opportunity|threat"}\nPrioritize official/primary sources, recent dates and specific, actionable info. Be concrete: real names, numbers and tools.';
+  if(opts.special){return query+' '+dateCtx()+shape;}
+  if(opts.discover){return 'Find non-obvious, advanced or little-known information about: '+query+'. Surface what most marketers miss. '+dateCtx()+' '+BIZ+shape;}
+  if(opts.free){return 'Search for the most important, recent and valuable information about: "'+query+'". Find PRIMARY sources, not third-party summaries. '+dateCtx()+shape;}
+  return 'Search the latest and most valuable information about: '+query+'. '+dateCtx()+' Context: '+BIZ+shape;
+}
+async function runSearch(query,title,opts){
+  opts=opts||{};
+  const ck='q_'+(document.getElementById('dateInput')?.value||'')+'_'+query;
+  currentView={type:'results',query,title,opts,ck};
+  setTopbar('results',title);
+  if(cache[ck]){renderResults(cache[ck]);return;}
+  showLoading(title);
+  try{
+    const text=await callClaude(buildPrompt(query,opts),SYS,!!opts.deep);
+    const data=parseItems(text);
+    cache[ck]=data;
+    renderResults(data);
+  }catch(e){
+    document.getElementById('contentArea').innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error al cargar</div><div class="empty-sub">'+e.message+'</div></div>';
   }
-  sb.innerHTML=html;
-  renderMobileNav();
 }
-function renderMobileNav(){
-  const mn=document.getElementById('mobileNav');
-  if(!mn)return;
-  let html='<button class="mobile-nav-btn '+(currentSection==='config'?'active':'')+'" onclick="switchSection(\'config\')">⚙️ Inicio</button>';
-  html+='<button class="mobile-nav-btn '+(currentSection==='favoritos'?'active':'')+'" onclick="switchSection(\'favoritos\')">⭐ Favs</button>';
-  html+='<button class="mobile-nav-btn '+(currentSection==='amenazas'?'active':'')+'" onclick="switchSection(\'amenazas\')">🚨 Amenazas</button>';
-  html+='<button class="mobile-nav-btn '+(currentSection==='digest'?'active':'')+'" onclick="switchSection(\'digest\')">📋 Digest</button>';
-  mn.innerHTML=html;
+function parseItems(text){
+  const c=text.replace(/```json\s*/g,'').replace(/```\s*/g,'').trim();
+  const s=c.indexOf('['),e=c.lastIndexOf(']');
+  if(s===-1||e===-1)throw new Error('No se pudo leer la respuesta. Intenta de nuevo.');
+  return JSON.parse(c.substring(s,e+1));
 }
-function switchSection(s){currentSection=s;const sec=SECTIONS[s];document.getElementById('sectionTitle').textContent=sec?sec.title:s;renderSidebar();loadSection(s)}
-function loadSection(s){if(s==='favoritos')return renderFavorites();if(s==='config')return renderConfig();if(s==='digest')return generateDigest();if(s==='acciones')return renderAcciones();if(s==='brainstorm')return renderBrainstorm();if(s==='diario')return renderDiario();if(s==='coach')return renderCoach();if(s==='aprende')return renderAprende();const dk=document.getElementById('dateInput').value,ck=s+'_'+dk;if(cache[ck]){renderResults(cache[ck]);return}showLoading(s);fetchData(s,dk).then(d=>{cache[ck]=d;renderResults(d)}).catch(e=>{document.getElementById('contentArea').innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error al cargar</div><div class="empty-sub">'+e.message+'</div></div>'})}
-function refreshCurrent(){const dk=document.getElementById('dateInput').value;delete cache[currentSection+'_'+dk];loadSection(currentSection)}
-document.getElementById('dateInput').addEventListener('change',()=>{if(currentSection!=='config'&&currentSection!=='favoritos')loadSection(currentSection)});
-function toggleCriticalFilter(){criticalOnly=!criticalOnly;document.getElementById('criticalFilter').classList.toggle('active',criticalOnly);if(currentSection!=='config'&&currentSection!=='favoritos')loadSection(currentSection)}
-function toggleThreatFilter(){threatOnly=!threatOnly;document.getElementById('threatFilter').classList.toggle('active',threatOnly);if(currentSection!=='config'&&currentSection!=='favoritos')loadSection(currentSection);else if(currentSection==='favoritos')renderFavorites()}
-function toggleOriginFilter(){originOnly=!originOnly;document.getElementById('originFilter').classList.toggle('active',originOnly);if(currentSection!=='config'&&currentSection!=='favoritos')loadSection(currentSection);else if(currentSection==='favoritos')renderFavorites()}
 async function callClaude(p,sys,deep){
   const m=deep?'claude-sonnet-4-5':'claude-haiku-4-5-20251001';
   const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:m,max_tokens:4096,system:sys,tools:[{type:'web_search_20250305',name:'web_search',max_uses:3}],messages:[{role:'user',content:p}]})});
   if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error?.message||'Error '+r.status)}
   const d=await r.json();let t='';for(const b of d.content){if(b.type==='text')t+=b.text}return t;
 }
-async function fetchData(section,dateStr){
-  const dc=dateStr?'Focus on news from '+dateStr+'.':'Focus on most recent news.';
-  const SYS='Marketing intelligence analyst. '+TR+' '+ORIGIN_RULE+' Respond ONLY with valid JSON array. No markdown, no backticks.';
-  let p='';
-  const sec=SECTIONS[section];
 
-  // Content sections (YouTube, X, Instagram)
-  if(section==='youtube'){
-    p='Search YouTube for best recent videos about Meta Ads, TikTok Ads, Google Ads, ecommerce, copywriting, AI marketing. Any language. '+dc+'\n\nReturn JSON array 5-8 items: {"id":"uid","title":"SPANISH","channel":"name","summary":"2 sentences SPANISH","url":"youtube url","duration":"duration"}\n\nReal value only — case studies, numbers, strategies.';
-  }else if(section==='twitter'){
-    p='Search valuable recent posts on X/Twitter about Meta Ads, TikTok Ads, ecommerce, marketing, AI tools. Any language. '+dc+'\n\nReturn JSON array 5-8 items: {"id":"uid","title":"SPANISH","author":"@handle","summary":"2 sentences SPANISH","url":"url","urgency":"critical|informative|opportunity"}\n\nPractitioners sharing real results only.';
-  }else if(section==='instagram'){
-    p='Search valuable recent Instagram posts/reels about Meta Ads, ecommerce, paid ads, copywriting, AI tools. Any language. '+dc+'\n\nReturn JSON array 5-8 items: {"id":"uid","title":"SPANISH","author":"@handle","summary":"2 sentences SPANISH","url":"url"}\n\nReal results only — ad screenshots, ROAS, strategies. No motivation.';
-  }
-  // Amenazas section
-  else if(section==='amenazas'){
-    p='Search for ACTIVE THREATS to a COD ecommerce business in Colombia: Meta policy changes affecting supplements, Dropi platform issues, carrier problems (ENVIA, Interrapidisimo), DIAN tax enforcement, INVIMA crackdowns, account bans patterns, payment issues. '+dc+'\n\nReturn JSON array 5-8 items: {"id":"uid","title":"SPANISH","summary":"2-3 sentences SPANISH explaining the threat and what to do","source":"source","url":"url","urgency":"threat"}\n\nALL items must have urgency:"threat". Focus on what can damage the business if no action is taken.';
-  }
-  // Vietnam Tactics
-  else if(section.startsWith('vn-')){
-    const vnTopic={'vn-tactics':'Vietnam Facebook Ads tactics techniques cloaking account structure',
-                  'vn-youtube':'Vietnam YouTube tutorials Facebook Ads Vietnamese advertising MMO',
-                  'vn-tools':'Vietnam Facebook Ads tools spy creative rotator account managers',
-                  'vn-scale':'Vietnam Facebook Ads horizontal scaling Business Manager cascade'}[section]||sec.query;
-    p='Search for information about: '+vnTopic+'. Include techniques shared in Vietnamese communities. Any language. '+dc+'\n\nReturn JSON array 5-7 items: {"id":"uid","title":"SPANISH","summary":"2-3 sentences SPANISH","source":"source","url":"url","urgency":"informative|opportunity"}\n\nFocus on actionable techniques Vietnamese advertisers use that LATAM advertisers don\'t know.';
-  }
-  // Russia Tactics
-  else if(section.startsWith('ru-')){
-    p='Search for information about: '+sec.query+'. Include techniques shared in Russian-speaking affiliate marketing communities (Telegram, forums like Affbank, conferences like Affiliate World Moscow, MAC). Any language including Russian. '+dc+'\n\nReturn JSON array 5-8 items: {"id":"uid","title":"SPANISH","summary":"3 sentences SPANISH explaining the technique with specific names, tools, methods, or numbers","source":"source","url":"url","urgency":"critical|informative|opportunity"}\n\nFocus on techniques the Russian affiliate marketing (arbitrazh) community uses that LATAM operators don\'t know exist. Be specific — name actual tools, CPA networks, methods, and conferences.';
-  }
-  // Grandes Ligas
-  else if(section.startsWith('big-')){
-    const bigTopic={'big-amazon':'Amazon ecommerce strategies logistics conversion retention 2026',
-                   'big-mercadolibre':'Mercado Libre Colombia LATAM strategies seller logistics',
-                   'big-shopee':'Shopee Shein ecommerce model COD product scaling 2026',
-                   'big-alibaba':'Alibaba sourcing private label supplier negotiation'}[section];
-    p='Research strategies from: '+bigTopic+'. Extract what they do that small operators ignore. '+dc+'\n\nReturn JSON array 5-7 items: {"id":"uid","title":"SPANISH","summary":"2-3 sentences SPANISH with actionable insight","source":"source","url":"url","urgency":"informative|opportunity"}\n\nFocus on what you can adapt to a COD ecommerce in Colombia.';
-  }
-  // Logística
-  else if(section.startsWith('log-')){
-    p='Search latest about: '+sec.query+'. '+dc+'\n\nReturn JSON array 5-7 items: {"id":"uid","title":"SPANISH","summary":"2-3 sentences SPANISH actionable","source":"source","url":"url","urgency":"critical|informative|opportunity|threat"}\n\nFocus on logistics, carriers, coverage, COD metrics for Colombian ecommerce.';
-  }
-  // Inteligencia
-  else if(section.startsWith('intel-')){
-    p='Research deeply: '+sec.query+'. Context: COD ecommerce Colombia, supplements, Meta Ads + WhatsApp. '+dc+'\n\nReturn JSON array 5-7 items: {"id":"uid","title":"SPANISH","summary":"3 sentences SPANISH with specific actionable insights","source":"source","url":"url","urgency":"critical|informative|opportunity|threat"}';
-  }
-  // Seguridad
-  else if(section.startsWith('sec-')){
-    p='Search latest about: '+sec.query+'. '+dc+'\n\nReturn JSON array 5-7 items: {"id":"uid","title":"SPANISH","summary":"2-3 sentences SPANISH actionable","source":"source","url":"url","urgency":"critical|informative"}\n\nFocus on Facebook/Meta account security for advertisers.';
-  }
-  // Patrones Temporales
-  else if(section.startsWith('pat-')){
-    const patPrompts={
-      'pat-30d':'Analyze TEMPORAL PATTERNS from the last 30 days across marketing, ecommerce, Meta Ads, TikTok Ads, WhatsApp Business, AI marketing. Identify what is GROWING FAST this month — emerging trends, new techniques going viral, features being heavily adopted, products taking off. For each pattern explain: WHY it is happening NOW, who is leading the trend, and what to do about it.',
-      'pat-60d':'Analyze 60-DAY PATTERNS forming across marketing, ecommerce, paid ads, AI tools. Identify patterns that took 1-2 months to form — not just news, but recurring themes. What concepts/techniques have been mentioned multiple times across different sources? What is moving from "edge" to "mainstream"? For each pattern explain the evolution.',
-      'pat-90d':'Analyze 90-DAY STRUCTURAL MOVEMENTS in marketing, ecommerce, Meta/Google/TikTok ecosystems. Focus on FUNDAMENTAL CHANGES — not news, but shifts in how things work. What has changed in the platforms\' philosophy? What strategies that worked 3 months ago no longer work? What new strategies have emerged?',
-      'pat-momentum':'Identify what is ACCELERATING vs DECAYING in ecommerce and paid advertising right now. List winners gaining momentum (techniques, tools, platforms, products) AND losers losing relevance (declining techniques, dying tools, fading trends). Be specific with examples and timeframes.',
-      'pat-discover':'Find NON-OBVIOUS PATTERNS that most marketers are missing. Look for: weak signals (small mentions of new concepts), cross-platform patterns (same idea appearing across different platforms), counterintuitive trends (things growing against expectations), early warning signs (problems forming before being widely recognized). Be the analyst who sees what others don\'t.'
-    };
-    p=patPrompts[section]+'\n\nContext: COD ecommerce in Colombia, supplements via Meta Ads + WhatsApp. '+dc+'\n\nReturn JSON array 6-10 items: {"id":"uid","title":"SPANISH","summary":"3-4 sentences SPANISH explaining the pattern with specific examples and implications","source":"source","url":"url","date":"YYYY-MM-DD","urgency":"critical|informative|opportunity|threat"}\n\nEach item must be a PATTERN or TREND, not just a news item. Be specific. Use real names, real numbers, real timeframes.';
-  }
-  // Default: any other section with a query
-  else if(sec&&sec.query){
-    p='Search latest news: '+sec.query+'. '+dc+'\n\nReturn JSON array 5-8 items: {"id":"uid","title":"SPANISH","summary":"2 sentences SPANISH","source":"name","url":"url","date":"YYYY-MM-DD","urgency":"critical|informative|opportunity|threat"}\n\nFocus: updates, features, policy changes, strategies. Be specific.';
-  }
-
-  const useDeep=section.startsWith('pat-');
-  const text=await callClaude(p,SYS,useDeep);
-  try{const c=text.replace(/```json\s*/g,'').replace(/```\s*/g,'').trim(),s=c.indexOf('['),e=c.lastIndexOf(']');if(s===-1||e===-1)throw new Error('No JSON');return JSON.parse(c.substring(s,e+1))}catch(e){console.error('Parse:',e,'Raw:',text);throw new Error('Error procesando. Intenta de nuevo.')}
-}
-function showLoading(s){const sec=SECTIONS[s];document.getElementById('contentArea').innerHTML='<div class="loading-container"><div class="radar-spinner"></div><div class="loading-text">'+(sec?.loading||'Cargando...')+'</div><div class="loading-sub">15-30 segundos</div></div>'}
+/* ============ RENDER RESULTADOS / TARJETAS ============ */
+function showLoading(title){document.getElementById('contentArea').innerHTML='<div class="loading-container"><div class="radar-spinner"></div><div class="loading-text">Buscando: '+title+'</div><div class="loading-sub">15-30 segundos · gasta 1 búsqueda</div></div>'}
 function renderResults(items){
   const c=document.getElementById('contentArea');
-  if(!items||!items.length){c.innerHTML='<div class="empty-state"><div class="empty-icon">📭</div><div class="empty-title">Sin resultados</div><div class="empty-sub">Intenta otra fecha o actualiza</div></div>';return}
-  let f=items;
-  if(originOnly){f=f.filter(i=>i.origin==='original');if(!f.length){c.innerHTML='<div class="empty-state"><div class="empty-icon">🎯</div><div class="empty-title">Sin fuentes originales</div><div class="empty-sub">No se identificaron fuentes originales en estos resultados. Desactiva el filtro para ver todo.</div></div>';return}}
-  if(threatOnly){f=f.filter(i=>i.urgency==='threat');if(!f.length){c.innerHTML='<div class="empty-state"><div class="empty-icon">✅</div><div class="empty-title">Sin amenazas detectadas</div><div class="empty-sub">No hay amenazas directas. Desactiva el filtro para ver todo.</div></div>';return}}
-  if(criticalOnly){f=f.filter(i=>i.urgency==='critical'||i.urgency==='threat');if(!f.length){c.innerHTML='<div class="empty-state"><div class="empty-icon">✅</div><div class="empty-title">Sin alertas críticas</div><div class="empty-sub">Todo tranquilo. Desactiva el filtro para ver todo.</div></div>';return}}
-  c.innerHTML='<div class="cards-grid">'+f.map(i=>renderCard(i)).join('')+'</div>';updateFavCount();
+  if(!items||!items.length){c.innerHTML='<div class="empty-state"><div class="empty-icon">📭</div><div class="empty-title">Sin resultados</div><div class="empty-sub">Prueba otra fecha o toca Actualizar.</div></div>';return}
+  let f=items.slice();
+  if(filters.origin){f=f.filter(i=>i.origin==='original');if(!f.length)return emptyFilter(c,'🎯','Sin fuentes originales','No se identificaron fuentes originales. Desactiva el filtro.');}
+  if(filters.threat){f=f.filter(i=>i.urgency==='threat');if(!f.length)return emptyFilter(c,'✅','Sin amenazas','No hay amenazas directas. Desactiva el filtro.');}
+  if(filters.critical){f=f.filter(i=>i.urgency==='critical'||i.urgency==='threat');if(!f.length)return emptyFilter(c,'✅','Sin alertas críticas','Todo tranquilo. Desactiva el filtro.');}
+  c.innerHTML='<div class="cards-grid">'+f.map(renderCard).join('')+'</div>';
 }
+function emptyFilter(c,ic,t,s){c.innerHTML='<div class="empty-state"><div class="empty-icon">'+ic+'</div><div class="empty-title">'+t+'</div><div class="empty-sub">'+s+'</div></div>';}
 function renderCard(item){
-  const id=item.id||Math.random().toString(36).substr(2,9);
-  item.id=id;
-  itemStore[id]=item;
+  const id=item.id||Math.random().toString(36).substr(2,9);item.id=id;itemStore[id]=item;
   const isRead=readItems[id],isFav=favorites[id],note=notes[id]||'';
   const uc={critical:'badge-critical',informative:'badge-informative',opportunity:'badge-opportunity',threat:'badge-threat'}[item.urgency]||'badge-informative';
-  const ul={critical:'CRÍTICO',informative:'INFORMATIVO',opportunity:'OPORTUNIDAD',threat:'AMENAZA'}[item.urgency]||'INFO';
+  const ul={critical:'🔥 CRÍTICO',informative:'INFO',opportunity:'🟢 OPORTUNIDAD',threat:'🚨 AMENAZA'}[item.urgency]||'INFO';
   const src=item.source||item.channel||item.author||'',url=item.url||'#';
   const oc={original:'origin-original',replica:'origin-replica',aggregator:'origin-aggregator'}[item.origin];
   const ol={original:'🟢 ORIGEN',replica:'🟡 RÉPLICA',aggregator:'🔴 ECO'}[item.origin];
@@ -635,7 +432,7 @@ function renderCard(item){
   const cardClass=item.origin==='aggregator'?'is-aggregator':'';
   const originLink=(item.origin==='replica'&&item.origin_url)?'<div class="origin-link">↳ Original: <a href="'+item.origin_url+'" target="_blank">'+(item.origin_source||'fuente original')+'</a></div>':'';
   return '<div class="news-card '+(isRead?'read':'')+' '+cardClass+'" id="card-'+id+'">'+
-    '<div class="card-top"><span class="card-badge '+uc+'">'+ul+'</span>'+originBadge+'<span class="card-source">'+src+'</span>'+(item.duration?'<span class="card-source">⏱ '+item.duration+'</span>':'')+'<span class="card-date">'+(item.date||'')+'</span></div>'+
+    '<div class="card-top"><span class="card-badge '+uc+'">'+ul+'</span>'+originBadge+'<span class="card-source">'+src+'</span><span class="card-date">'+(item.date||'')+'</span></div>'+
     '<div class="card-title">'+(item.title||'')+'</div>'+
     '<div class="card-summary">'+(item.summary||'')+'</div>'+
     originLink+
@@ -648,437 +445,126 @@ function renderCard(item){
       '<button class="card-btn" style="border-color:var(--cyan);color:var(--cyan)" onclick="extractKey(\''+id+'\')">📌 Lo clave</button>'+
       '<button class="card-btn" style="border-color:var(--amber);color:var(--amber)" onclick="takeAction(\''+id+'\')">⚡ Tomar acción</button>'+
     '</div>'+
-    '<div class="card-note" id="note-'+id+'"><textarea placeholder="Escribe tu nota aquí..." id="notetext-'+id+'">'+note+'</textarea><button class="note-save" onclick="saveNote(\''+id+'\')">Guardar nota</button></div>'+
+    '<div class="card-note" id="note-'+id+'"><textarea placeholder="Escribe tu nota..." id="notetext-'+id+'">'+note+'</textarea><button class="note-save" onclick="saveNote(\''+id+'\')">Guardar nota</button></div>'+
     '<div class="card-note" id="key-'+id+'" style="display:none;border-color:var(--cyan)"><div id="keytext-'+id+'" style="font-size:12px;color:var(--text-secondary);line-height:1.6"></div></div>'+
   '</div>';
 }
 function toggleFav(id,btn){
   if(favorites[id]){delete favorites[id];btn.classList.remove('favorited');btn.innerHTML='☆ Guardar'}
-  else{const item=itemStore[id]||{id};favorites[id]=item;btn.classList.add('favorited');btn.innerHTML='★ Guardado'}
-  localStorage.setItem('radar_favs',JSON.stringify(favorites));updateFavCount();renderSidebar();
+  else{favorites[id]=itemStore[id]||{id};btn.classList.add('favorited');btn.innerHTML='★ Guardado'}
+  localStorage.setItem('radar_favs',JSON.stringify(favorites));
 }
-function toggleRead(id,btn){const c=document.getElementById('card-'+id);if(readItems[id]){delete readItems[id];c?.classList.remove('read');btn.textContent='◎ Leído'}else{readItems[id]=true;c?.classList.add('read');btn.textContent='◉ No leído'}localStorage.setItem('radar_read',JSON.stringify(readItems))}
-function toggleNote(id){document.getElementById('note-'+id)?.classList.toggle('open')}
-function saveNote(id){notes[id]=document.getElementById('notetext-'+id)?.value||'';localStorage.setItem('radar_notes',JSON.stringify(notes));toggleNote(id)}
-function updateFavCount(){const el=document.getElementById('favCount');if(el)el.textContent=Object.keys(favorites).length}
+function toggleRead(id,btn){const c=document.getElementById('card-'+id);if(readItems[id]){delete readItems[id];c&&c.classList.remove('read');btn.textContent='◎ Leído'}else{readItems[id]=true;c&&c.classList.add('read');btn.textContent='◉ No leído'}localStorage.setItem('radar_read',JSON.stringify(readItems))}
+function toggleNote(id){const n=document.getElementById('note-'+id);if(n)n.classList.toggle('open')}
+function saveNote(id){const t=document.getElementById('notetext-'+id);notes[id]=t?t.value:'';localStorage.setItem('radar_notes',JSON.stringify(notes));toggleNote(id)}
+
+/* ============ ¿CÓMO ME AFECTA? / LO CLAVE / TOMAR ACCIÓN ============ */
 async function analyzeImpact(id){
   const item=itemStore[id]||favorites[id]||{};
-  const title=item.title||'',summary=item.summary||'';
-  const modal=document.getElementById('impactModal');document.getElementById('impactSubtitle').textContent=title;modal.classList.add('open');
-  const c=document.getElementById('impactContent');c.innerHTML='<div class="loading-container"><div class="radar-spinner"></div><div class="loading-text">Analizando impacto...</div></div>';
-  try{const r=await callClaude('Analiza cómo esta noticia afecta mi negocio:\n\nNOTICIA: '+title+'\nRESUMEN: '+summary+'\n\nMi negocio: Ecommerce COD Colombia, suplementos salud vía Meta Ads y WhatsApp, Dropi, ENVÍA/Interrapidísimo.\n\nEn español:\n1. IMPACTO DIRECTO\n2. ACCIONES INMEDIATAS\n3. OPORTUNIDADES\n4. RIESGOS\n\nEspecífico. Sin relleno.','Strategic advisor COD ecommerce Colombia. Spanish. Direct.',true);c.innerHTML='<div style="white-space:pre-wrap;line-height:1.7;">'+r+'</div>'}catch(e){c.innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">'+e.message+'</div></div>'}
+  document.getElementById('impactTitle').textContent='🔮 ¿Cómo me afecta esto?';
+  document.getElementById('impactTitle').style.color='var(--purple)';
+  document.getElementById('impactSubtitle').textContent=item.title||'';
+  document.getElementById('impactModal').classList.add('open');
+  const c=document.getElementById('impactContent');
+  c.innerHTML='<div class="loading-container"><div class="radar-spinner"></div><div class="loading-text">Analizando impacto...</div></div>';
+  try{const r=await callClaude('Analiza cómo esta noticia afecta mi negocio:\n\nNOTICIA: '+(item.title||'')+'\nRESUMEN: '+(item.summary||'')+'\n\n'+BIZ+'\n\nEn español:\n1. IMPACTO DIRECTO\n2. ACCIONES INMEDIATAS\n3. OPORTUNIDADES\n4. RIESGOS\n\nEspecífico, sin relleno.','Strategic advisor for COD ecommerce in Colombia. Spanish. Direct.',true);c.innerHTML='<div style="white-space:pre-wrap;line-height:1.7">'+r+'</div>'}
+  catch(e){c.innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">'+e.message+'</div></div>'}
 }
 async function extractKey(id){
-  const keyDiv=document.getElementById('key-'+id);
-  const keyText=document.getElementById('keytext-'+id);
+  const keyDiv=document.getElementById('key-'+id),keyText=document.getElementById('keytext-'+id);
   if(keyDiv.style.display==='block'){keyDiv.style.display='none';return}
   keyDiv.style.display='block';
   const item=itemStore[id]||favorites[id]||{};
-  const title=item.title||'',summary=item.summary||'',url=item.url||'';
   keyText.innerHTML='<div class="loading-container" style="padding:20px 0"><div class="radar-spinner" style="width:30px;height:30px"></div><div class="loading-text">Extrayendo lo clave...</div></div>';
-  try{
-    const r=await callClaude('Busca más información sobre esta noticia y extrae lo más importante:\n\nTÍTULO: '+title+'\nRESUMEN: '+summary+'\nURL: '+url+'\n\nEn español, dame:\n• Los 3-5 puntos clave que necesito saber\n• Dato más importante que no debo perder\n• Fuente original de la información\n\nSé conciso y directo. Solo lo esencial.','Intelligence analyst. Spanish. Extract key facts only. Concise.');
-    keyText.innerHTML='<div style="white-space:pre-wrap;line-height:1.6">'+r+'</div>';
-  }catch(e){keyText.innerHTML='Error: '+e.message}
+  try{const r=await callClaude('Busca más sobre esto y extrae lo esencial:\n\nTÍTULO: '+(item.title||'')+'\nRESUMEN: '+(item.summary||'')+'\nURL: '+(item.url||'')+'\n\nEn español: 3-5 puntos clave, el dato más importante, y la fuente original. Conciso.','Intelligence analyst. Spanish. Key facts only. Concise.');keyText.innerHTML='<div style="white-space:pre-wrap;line-height:1.6">'+r+'</div>'}
+  catch(e){keyText.innerHTML='Error: '+e.message}
 }
 let actionChat={messages:[],context:''};
 async function takeAction(id){
   const item=itemStore[id]||favorites[id]||{};
-  const title=item.title||'',summary=item.summary||'';
-  const modal=document.getElementById('impactModal');
-  document.querySelector('#impactModal .modal-title').textContent='⚡ Tomar acción';
-  document.querySelector('#impactModal .modal-title').style.color='var(--amber)';
-  document.getElementById('impactSubtitle').textContent=title;
-  modal.classList.add('open');
+  document.getElementById('impactTitle').textContent='⚡ Tomar acción';
+  document.getElementById('impactTitle').style.color='var(--amber)';
+  document.getElementById('impactSubtitle').textContent=item.title||'';
+  document.getElementById('impactModal').classList.add('open');
   const c=document.getElementById('impactContent');
-
-  // Reset chat
-  actionChat={messages:[],context:'NOTICIA: '+title+'\nRESUMEN: '+summary};
-
-  c.innerHTML='<div class="chat-area" id="chatArea"><div class="chat-loading">⏳ Generando plan inicial...</div></div>'+
-    '<div class="chat-input-row">'+
-      '<textarea class="chat-input" id="chatInput" placeholder="Pregúntame algo sobre el plan, pide detalles, o cómo hacer un paso..." onkeydown="if(event.key===\'Enter\'&&!event.shiftKey){event.preventDefault();sendActionChat()}"></textarea>'+
-      '<button class="chat-send" onclick="sendActionChat()">Enviar</button>'+
-    '</div>';
-
-  // Initial plan request
-  const initialPrompt='Dame un plan de acción concreto y ejecutable para esta noticia:\n\n'+actionChat.context+'\n\nMi negocio: Ecommerce COD Colombia, suplementos salud vía Meta Ads y WhatsApp, Dropi, ENVÍA/Interrapidísimo.\n\nResponde en español con pasos numerados:\n\n⚡ ACCIÓN INMEDIATA (24 horas)\n📋 ACCIÓN ESTA SEMANA (7 días)\n🎯 RESULTADO ESPERADO\n\nSé directo. Pasos concretos.';
-
-  try{
-    const r=await callClaude(initialPrompt,'Action-oriented strategic advisor for COD ecommerce Colombia. Spanish. Concrete steps. When user asks follow-up questions, refer back to the original news and plan. Be conversational but stay actionable.',true);
-    actionChat.messages.push({role:'user',content:initialPrompt});
-    actionChat.messages.push({role:'assistant',content:r});
-    renderChat();
-  }catch(e){
-    document.getElementById('chatArea').innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">'+e.message+'</div></div>';
-  }
+  actionChat={messages:[],context:'NOTICIA: '+(item.title||'')+'\nRESUMEN: '+(item.summary||'')};
+  c.innerHTML='<div class="chat-area" id="chatArea"><div class="chat-loading">⏳ Generando plan inicial...</div></div><div class="chat-input-row"><textarea class="chat-input" id="chatInput" placeholder="Pregunta sobre el plan o cómo hacer un paso..." onkeydown="if(event.key===\'Enter\'&&!event.shiftKey){event.preventDefault();sendActionChat()}"></textarea><button class="chat-send" onclick="sendActionChat()">Enviar</button></div>';
+  const initial='Dame un plan de acción concreto para esta noticia:\n\n'+actionChat.context+'\n\n'+BIZ+'\n\nEn español con pasos numerados:\n⚡ ACCIÓN INMEDIATA (24h)\n📋 ESTA SEMANA (7 días)\n🎯 RESULTADO ESPERADO\n\nDirecto, pasos concretos.';
+  try{const r=await callClaudeChat([{role:'user',content:initial}],'Action-oriented strategic advisor for COD ecommerce Colombia. Spanish. Concrete steps. Stay actionable. News context: '+actionChat.context);actionChat.messages.push({role:'user',content:initial});actionChat.messages.push({role:'assistant',content:r});renderChat()}
+  catch(e){const a=document.getElementById('chatArea');if(a)a.innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">'+e.message+'</div></div>'}
 }
-function renderChat(){
-  const area=document.getElementById('chatArea');
-  if(!area)return;
-  let html='';
-  // Skip first user message (the initial system prompt) — show only from assistant onwards
-  for(let i=0;i<actionChat.messages.length;i++){
-    const m=actionChat.messages[i];
-    if(i===0&&m.role==='user')continue; // hide initial system prompt
-    const cls=m.role==='user'?'chat-msg-user':'chat-msg-assistant';
-    html+='<div class="chat-msg '+cls+'">'+m.content+'</div>';
-  }
-  area.innerHTML=html;
-  area.scrollTop=area.scrollHeight;
-}
+function renderChat(){const area=document.getElementById('chatArea');if(!area)return;let html='';for(let i=0;i<actionChat.messages.length;i++){const m=actionChat.messages[i];if(i===0&&m.role==='user')continue;html+='<div class="chat-msg '+(m.role==='user'?'chat-msg-user':'chat-msg-assistant')+'">'+m.content+'</div>'}area.innerHTML=html;area.scrollTop=area.scrollHeight}
 async function sendActionChat(){
-  const input=document.getElementById('chatInput');
-  if(!input)return;
-  const text=input.value.trim();
-  if(!text)return;
-  input.value='';
-  actionChat.messages.push({role:'user',content:text});
-  renderChat();
-  const area=document.getElementById('chatArea');
-  area.innerHTML+='<div class="chat-loading" id="chatLoading">⏳ Pensando...</div>';
-  area.scrollTop=area.scrollHeight;
-  try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-      body:JSON.stringify({
-        model:'claude-sonnet-4-5',
-        max_tokens:2048,
-        system:'Action-oriented strategic advisor for COD ecommerce Colombia (supplements via Meta Ads + WhatsApp, Dropi, ENVÍA/Interrapidísimo). Spanish. Concrete and actionable. Context of the original news: '+actionChat.context,
-        messages:actionChat.messages
-      })
-    });
-    if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||'Error '+res.status)}
-    const data=await res.json();
-    let t='';for(const b of data.content){if(b.type==='text')t+=b.text}
-    actionChat.messages.push({role:'assistant',content:t});
-    renderChat();
-  }catch(e){
-    document.getElementById('chatLoading')?.remove();
-    actionChat.messages.push({role:'assistant',content:'⚠️ Error: '+e.message});
-    renderChat();
-  }
+  const input=document.getElementById('chatInput');if(!input)return;const text=input.value.trim();if(!text)return;input.value='';
+  actionChat.messages.push({role:'user',content:text});renderChat();
+  const area=document.getElementById('chatArea');area.innerHTML+='<div class="chat-loading" id="chatLoading">⏳ Pensando...</div>';area.scrollTop=area.scrollHeight;
+  try{const r=await callClaudeChat(actionChat.messages,'Action-oriented strategic advisor for COD ecommerce Colombia (supplements via Meta Ads + WhatsApp). Spanish. Concrete and actionable. News context: '+actionChat.context);actionChat.messages.push({role:'assistant',content:r});renderChat()}
+  catch(e){const l=document.getElementById('chatLoading');if(l)l.remove();actionChat.messages.push({role:'assistant',content:'⚠️ Error: '+e.message});renderChat()}
 }
-function closeImpactModal(){
-  document.getElementById('impactModal').classList.remove('open');
-  document.querySelector('#impactModal .modal-title').textContent='¿Cómo me afecta esto?';
-  document.querySelector('#impactModal .modal-title').style.color='var(--purple)';
+async function callClaudeChat(messages,sys){
+  const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:2048,system:sys,messages})});
+  if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||'Error '+res.status)}
+  const data=await res.json();let t='';for(const b of data.content){if(b.type==='text')t+=b.text}return t;
+}
+function closeImpactModal(){document.getElementById('impactModal').classList.remove('open')}
+
+/* ============ VISTAS: FAVORITOS / DIGEST / APRENDE / CONFIG ============ */
+function switchView(v){
+  if(v==='favoritos'){currentView={type:'favoritos'};setTopbar('favoritos','⭐ Mis guardados');return renderFavorites()}
+  if(v==='digest'){currentView={type:'digest'};setTopbar('digest','📋 Digest semanal');return generateDigest()}
+  if(v==='aprende'){currentView={type:'aprende'};setTopbar('aprende','🎓 Aprende algo');return renderAprende()}
+  if(v==='config'){currentView={type:'config'};setTopbar('config','⚙️ Ajustes');return renderConfig()}
 }
 function renderFavorites(){
   const c=document.getElementById('contentArea'),fl=Object.values(favorites);
-  if(!fl.length){c.innerHTML='<div class="empty-state"><div class="empty-icon">⭐</div><div class="empty-title">Sin favoritos</div><div class="empty-sub">Guarda noticias, videos o posts. Los favoritos no gastan tokens.</div></div>';return}
+  if(!fl.length){c.innerHTML='<div class="empty-state"><div class="empty-icon">⭐</div><div class="empty-title">Sin guardados</div><div class="empty-sub">Guarda noticias o herramientas con ☆. Los guardados no gastan tokens.</div></div>';return}
   fl.forEach(item=>{if(item.id)itemStore[item.id]=item});
-  c.innerHTML='<div class="cards-grid">'+fl.map(i=>renderCard(i)).join('')+'</div>';
+  c.innerHTML='<div class="cards-grid">'+fl.map(renderCard).join('')+'</div>';
 }
 async function generateDigest(){
-  showLoading('digest');
-  try{const r=await callClaude('Weekly marketing digest past 7 days: Meta Ads, TikTok Ads, Google Ads, Shopify, ecommerce, copywriting, AI tools, Meta security, WhatsApp Business.\n\nIn Spanish:\n🔴 ALERTAS CRÍTICAS\n🟡 ACTUALIZACIONES IMPORTANTES\n🟢 OPORTUNIDADES\n🎯 ACCIÓN DE LA SEMANA\n📊 TERMÓMETRO DEL ECOSISTEMA\n\nCOD ecommerce Colombia, supplements, Meta Ads + WhatsApp. Specific.','Marketing analyst. Spanish. Actionable.',true);
-  document.getElementById('contentArea').innerHTML='<div class="digest-box"><div class="digest-title">Digest semanal — '+new Date().toLocaleDateString('es-CO',{day:'numeric',month:'long',year:'numeric'})+'</div><div class="digest-content">'+r+'</div><button class="digest-copy" onclick="copyDigest()">📋 Copiar para enviar al trafficker</button></div>'}catch(e){document.getElementById('contentArea').innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">'+e.message+'</div></div>'}
+  showLoading('Digest semanal');
+  try{const r=await callClaude('Weekly marketing digest of the past 7 days: Meta Ads, TikTok Ads, Google Ads, Shopify, ecommerce, copywriting, AI tools, Meta account security, WhatsApp Business.\n\nIn Spanish:\n🔴 ALERTAS CRÍTICAS\n🟡 ACTUALIZACIONES IMPORTANTES\n🟢 OPORTUNIDADES\n🎯 ACCIÓN DE LA SEMANA\n📊 TERMÓMETRO DEL ECOSISTEMA\n\n'+BIZ+' Specific.','Marketing analyst. Spanish. Actionable.',true);
+  document.getElementById('contentArea').innerHTML='<div class="digest-box"><div class="digest-title">Digest semanal — '+new Date().toLocaleDateString('es-CO',{day:'numeric',month:'long',year:'numeric'})+'</div><div class="digest-content">'+r+'</div><button class="digest-copy" onclick="copyDigest()">📋 Copiar</button></div>'}
+  catch(e){document.getElementById('contentArea').innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">'+e.message+'</div></div>'}
 }
-function copyDigest(){const t=document.querySelector('.digest-content')?.textContent||'';navigator.clipboard.writeText(t).then(()=>{const b=document.querySelector('.digest-copy');b.textContent='✅ Copiado';setTimeout(()=>b.textContent='📋 Copiar para enviar al trafficker',2000)})}
-function renderConfig(){
-  let groupsHTML='';
-  for(const group of NAV_GROUPS){
-    if(group.label==='Personal')continue;
-    groupsHTML+='<div style="margin-bottom:20px"><div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);margin-bottom:8px">'+group.label+'</div><div class="welcome-grid">';
-    for(const item of group.items){
-      if(item.sub){
-        groupsHTML+='<div class="welcome-card" onclick="switchSection(\''+item.sub+'\')"><div class="welcome-card-icon">'+item.icon+'</div><div class="welcome-card-title">'+item.label+'</div><div class="welcome-card-sub">Clic para abrir</div></div>';
-      }else if(item.subs){
-        groupsHTML+='<div class="welcome-card" onclick="toggleGroup(\''+item.id+'\');switchSection(\''+item.subs[0]+'\')"><div class="welcome-card-icon">'+item.icon+'</div><div class="welcome-card-title">'+item.label+'</div><div class="welcome-card-sub">'+item.subs.length+' subsecciones</div></div>';
-      }
-    }
-    groupsHTML+='</div></div>';
-  }
-  document.getElementById('contentArea').innerHTML='<div style="margin-bottom:28px"><div style="font-size:20px;font-weight:600;margin-bottom:4px">Bienvenido a RADAR</div><div style="font-size:13px;color:var(--text-secondary);margin-bottom:16px">Busca cualquier tema o selecciona una sección.</div><div id="dailyQuestionBox" style="background:linear-gradient(135deg,#a855f722,#3b82f622);border:1px solid var(--purple);border-radius:10px;padding:16px;margin-bottom:20px"><div style="font-size:11px;color:var(--purple);font-family:var(--mono);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px">💡 Pregunta del día</div><div id="dailyQuestionText" style="font-size:15px;color:var(--text);line-height:1.5;font-weight:500">⏳ Generando...</div></div><div style="display:flex;gap:8px;margin-bottom:24px"><input type="text" id="globalSearchInput" placeholder="Busca lo que quieras... (ej: Meta Marketing API, colágeno tendencias, WhatsApp Flows)" style="flex:1;padding:12px 16px;background:var(--bg-input);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;font-family:var(--font);outline:none" onkeydown="if(event.key===\'Enter\')globalSearch()"><button onclick="globalSearch()" style="padding:12px 24px;background:var(--accent);color:var(--bg-base);border:none;border-radius:8px;font-family:var(--font);font-weight:600;font-size:14px;cursor:pointer;white-space:nowrap">🔍 Buscar</button></div></div>'+groupsHTML+'<div class="settings-section"><div class="settings-title">Alertas de palabras clave</div><div style="font-size:12px;color:var(--text-muted);margin-bottom:8px">Noticias con estas palabras se resaltan</div><div class="settings-row"><input type="text" id="keywordsInput" value="'+(localStorage.getItem('radar_keywords')||'API de conversiones, Meta policy, ban, restricción, INVIMA, COD Colombia')+'" placeholder="Separadas por coma"></div><button class="card-btn" style="margin-top:8px" onclick="saveKeywords()">Guardar keywords</button></div><div class="settings-section"><div class="settings-title">Datos</div><button class="card-btn" style="border-color:var(--red);color:var(--red)" onclick="clearAllData()">🗑 Borrar datos locales</button><div style="font-size:11px;color:var(--text-muted);margin-top:6px">Borra favoritos, notas y lecturas. Tu API key se mantiene.</div></div><div class="settings-section"><div class="settings-title">Acerca de</div><div style="font-size:13px;color:var(--text-secondary);line-height:1.6">RADAR v6.0 — Centro de inteligencia de marketing digital<br>Haiku para búsqueda rápida · Sonnet para análisis profundo<br>Favoritos no gastan tokens · Tus datos solo en este navegador.</div></div>';
-  generateDailyQuestion().then(q=>{const el=document.getElementById('dailyQuestionText');if(el)el.textContent=q});
-}
-async function globalSearch(){
-  const q=document.getElementById('globalSearchInput')?.value?.trim();
-  if(!q)return;
-  const ck='search_'+q;
-  if(cache[ck]){document.getElementById('sectionTitle').textContent='🔍 '+q;renderResults(cache[ck]);return}
-  document.getElementById('sectionTitle').textContent='🔍 '+q;
-  currentSection='search';
-  document.getElementById('contentArea').innerHTML='<div class="loading-container"><div class="radar-spinner"></div><div class="loading-text">Buscando: '+q+'</div><div class="loading-sub">15-30 segundos</div></div>';
-  try{
-    const text=await callClaude('Search for the most important, recent, and valuable information about: "'+q+'"\n\nFind PRIMARY sources — official announcements, original articles, documentation, expert analysis. Not summaries from third parties.\n\nReturn JSON array 5-10 items: {"id":"uid","title":"SPANISH","summary":"2-3 sentences SPANISH","source":"name","url":"url","date":"YYYY-MM-DD","urgency":"critical|informative|opportunity|threat"}\n\nPrioritize: official sources, recent dates, actionable information.','Intelligence analyst. '+TR+' '+ORIGIN_RULE+' Respond ONLY with valid JSON array. No markdown, no backticks.');
-    const clean=text.replace(/```json\s*/g,'').replace(/```\s*/g,'').trim(),s=clean.indexOf('['),e=clean.lastIndexOf(']');
-    if(s===-1||e===-1)throw new Error('No JSON');
-    const data=JSON.parse(clean.substring(s,e+1));
-    cache[ck]=data;
-    renderResults(data);
-  }catch(e){document.getElementById('contentArea').innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">'+e.message+'</div></div>'}
-}
-function saveKeywords(){localStorage.setItem('radar_keywords',document.getElementById('keywordsInput')?.value||'');alert('Keywords guardadas')}
-function clearAllData(){if(!confirm('¿Borrar todos los datos?'))return;favorites={};readItems={};notes={};cache={};localStorage.removeItem('radar_favs');localStorage.removeItem('radar_read');localStorage.removeItem('radar_notes');updateFavCount();alert('Datos borrados')}
+function copyDigest(){const t=document.querySelector('.digest-content');if(!t)return;navigator.clipboard.writeText(t.textContent||'').then(()=>{const b=document.querySelector('.digest-copy');b.textContent='✅ Copiado';setTimeout(()=>b.textContent='📋 Copiar',2000)})}
 
-// === ACCIONES PENDIENTES ===
-let actions=JSON.parse(localStorage.getItem('radar_actions')||'[]');
-function renderAcciones(){
-  const c=document.getElementById('contentArea');
-  const pending=actions.filter(a=>!a.done);
-  const done=actions.filter(a=>a.done);
-  let html='<div style="margin-bottom:20px"><div style="font-size:20px;font-weight:600;margin-bottom:4px">📋 Mis acciones</div><div style="font-size:13px;color:var(--text-secondary);margin-bottom:16px">Tu plan ejecutable. Sin esto los planes se quedan en planes.</div>';
-  html+='<div style="display:flex;gap:8px;margin-bottom:20px"><input type="text" id="actionInput" placeholder="Nueva acción... (ej: Revisar campañas Meta hoy)" style="flex:1;padding:10px 14px;background:var(--bg-input);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;font-family:var(--font);outline:none" onkeydown="if(event.key===\'Enter\')addAction()"><button onclick="addAction()" style="padding:10px 20px;background:var(--accent);color:var(--bg-base);border:none;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer">+ Agregar</button></div>';
-  if(!pending.length&&!done.length){html+='<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">Sin acciones aún</div><div class="empty-sub">Agrega acciones manualmente o desde el chat de "Tomar acción" de cualquier noticia.</div></div></div>';c.innerHTML=html;return}
-  if(pending.length){
-    html+='<div style="font-size:12px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px">Pendientes ('+pending.length+')</div>';
-    pending.forEach(a=>{
-      html+='<div style="background:var(--bg-card);border:1px solid var(--border-light);border-radius:10px;padding:12px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px"><input type="checkbox" onchange="toggleAction(\''+a.id+'\')" style="cursor:pointer;width:18px;height:18px"><div style="flex:1"><div style="font-size:13px;color:var(--text);line-height:1.5">'+a.text+'</div>'+(a.date?'<div style="font-size:11px;color:var(--text-muted);font-family:var(--mono);margin-top:4px">'+a.date+(a.source?' · '+a.source:'')+'</div>':'')+'</div><button onclick="deleteAction(\''+a.id+'\')" style="background:transparent;border:none;color:var(--text-muted);cursor:pointer;font-size:14px;padding:4px 8px">✕</button></div>';
-    });
-  }
-  if(done.length){
-    html+='<div style="font-size:12px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1.5px;margin:20px 0 8px">Hechas ('+done.length+')</div>';
-    done.forEach(a=>{
-      html+='<div style="background:var(--bg-card);border:1px solid var(--border-light);border-radius:10px;padding:12px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px;opacity:.55"><input type="checkbox" checked onchange="toggleAction(\''+a.id+'\')" style="cursor:pointer;width:18px;height:18px"><div style="flex:1"><div style="font-size:13px;color:var(--text);line-height:1.5;text-decoration:line-through">'+a.text+'</div></div><button onclick="deleteAction(\''+a.id+'\')" style="background:transparent;border:none;color:var(--text-muted);cursor:pointer;font-size:14px;padding:4px 8px">✕</button></div>';
-    });
-  }
-  html+='</div>';
-  c.innerHTML=html;
-}
-function addAction(text,source){
-  const input=document.getElementById('actionInput');
-  const t=text||input?.value?.trim();if(!t)return;
-  actions.unshift({id:Date.now().toString(36),text:t,done:false,date:new Date().toLocaleDateString('es-CO'),source:source||''});
-  localStorage.setItem('radar_actions',JSON.stringify(actions));
-  if(input)input.value='';
-  if(currentSection==='acciones')renderAcciones();
-}
-function toggleAction(id){const a=actions.find(x=>x.id===id);if(!a)return;a.done=!a.done;localStorage.setItem('radar_actions',JSON.stringify(actions));renderAcciones()}
-function deleteAction(id){if(!confirm('¿Borrar esta acción?'))return;actions=actions.filter(x=>x.id!==id);localStorage.setItem('radar_actions',JSON.stringify(actions));renderAcciones()}
-
-// === BRAINSTORMING ===
-let brainstormChat={messages:[],idea:''};
-function renderBrainstorm(){
-  const c=document.getElementById('contentArea');
-  c.innerHTML='<div style="margin-bottom:20px"><div style="font-size:20px;font-weight:600;margin-bottom:4px">🧠 Brainstorming estructurado</div><div style="font-size:13px;color:var(--text-secondary);margin-bottom:16px">Desarrolla una idea desde cero. Claude te hace preguntas dirigidas hasta dejarla lista para ejecutar.</div></div>'+
-    '<div style="display:flex;gap:8px;margin-bottom:16px"><input type="text" id="brainIdea" placeholder="Escribe tu idea... (ej: lanzar línea de probióticos, contratar editor, expandir a México)" style="flex:1;padding:12px 16px;background:var(--bg-input);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;font-family:var(--font);outline:none" onkeydown="if(event.key===\'Enter\')startBrainstorm()"><button onclick="startBrainstorm()" style="padding:12px 24px;background:var(--purple);color:var(--bg-base);border:none;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer">Empezar</button></div>'+
-    '<div class="chat-area" id="brainArea" style="max-height:500px"></div>'+
-    '<div class="chat-input-row" id="brainInputRow" style="display:none">'+
-      '<textarea class="chat-input" id="brainInput" placeholder="Responde la pregunta o aporta más detalles..." onkeydown="if(event.key===\'Enter\'&&!event.shiftKey){event.preventDefault();sendBrainstorm()}"></textarea>'+
-      '<button class="chat-send" style="background:var(--purple)" onclick="sendBrainstorm()">Enviar</button>'+
-    '</div>';
-}
-async function startBrainstorm(){
-  const idea=document.getElementById('brainIdea')?.value?.trim();
-  if(!idea)return;
-  brainstormChat={messages:[],idea:idea};
-  document.getElementById('brainInputRow').style.display='flex';
-  document.getElementById('brainArea').innerHTML='<div class="chat-loading">⏳ Iniciando brainstorming...</div>';
-  const prompt='Quiero desarrollar esta idea: "'+idea+'"\n\nMi negocio: Ecommerce COD Colombia, suplementos vía Meta Ads + WhatsApp.\n\nActúa como un estratega senior haciendo brainstorming conmigo. NO me des respuestas todavía. Hazme las 3-5 preguntas más importantes que necesito responder para que esta idea pase de idea a plan ejecutable. Una pregunta a la vez si es muy compleja, o todas si son simples. En español, directo, sin relleno.';
-  brainstormChat.messages.push({role:'user',content:prompt});
-  try{
-    const r=await callBrainstormAPI();
-    brainstormChat.messages.push({role:'assistant',content:r});
-    renderBrainArea();
-  }catch(e){document.getElementById('brainArea').innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">'+e.message+'</div></div>'}
-}
-async function sendBrainstorm(){
-  const input=document.getElementById('brainInput');
-  const t=input?.value?.trim();if(!t)return;
-  input.value='';
-  brainstormChat.messages.push({role:'user',content:t});
-  renderBrainArea();
-  const area=document.getElementById('brainArea');
-  area.innerHTML+='<div class="chat-loading" id="brainLoading">⏳ Pensando...</div>';
-  area.scrollTop=area.scrollHeight;
-  try{
-    const r=await callBrainstormAPI();
-    brainstormChat.messages.push({role:'assistant',content:r});
-    renderBrainArea();
-  }catch(e){document.getElementById('brainLoading')?.remove();brainstormChat.messages.push({role:'assistant',content:'⚠️ Error: '+e.message});renderBrainArea()}
-}
-async function callBrainstormAPI(){
-  const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:2048,system:'Strategic brainstorming partner for COD ecommerce Colombia (supplements via Meta Ads + WhatsApp). Spanish. Use Socratic method — ask sharp questions, challenge assumptions, push toward executable plan. Goal: take a vague idea and develop it into a concrete plan through dialogue. Be direct, no fluff. Current idea being developed: '+brainstormChat.idea,messages:brainstormChat.messages})});
-  if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||'Error '+res.status)}
-  const data=await res.json();let t='';for(const b of data.content){if(b.type==='text')t+=b.text}return t;
-}
-function renderBrainArea(){
-  const area=document.getElementById('brainArea');if(!area)return;
-  let html='';
-  for(let i=0;i<brainstormChat.messages.length;i++){
-    const m=brainstormChat.messages[i];
-    if(i===0&&m.role==='user')continue;
-    const cls=m.role==='user'?'chat-msg-user':'chat-msg-assistant';
-    html+='<div class="chat-msg '+cls+'">'+m.content+'</div>';
-  }
-  area.innerHTML=html;
-  area.scrollTop=area.scrollHeight;
-}
-
-// === DIARIO (decisiones + aprendizajes) ===
-let journal=JSON.parse(localStorage.getItem('radar_journal')||'[]');
-let journalType='decision';
-function renderDiario(){
-  const c=document.getElementById('contentArea');
-  const types={decision:{label:'Decisión',color:'var(--blue)'},aprendizaje:{label:'Aprendizaje',color:'var(--accent)'},idea:{label:'Idea',color:'var(--amber)'},reflexion:{label:'Reflexión',color:'var(--purple)'}};
-  let html='<div style="margin-bottom:20px"><div style="font-size:20px;font-weight:600;margin-bottom:4px">📔 Mi diario</div><div style="font-size:13px;color:var(--text-secondary);margin-bottom:16px">Documenta decisiones, aprendizajes, ideas y reflexiones. Después Claude puede leer y mostrarte patrones.</div></div>';
-  html+='<div style="background:var(--bg-card);border:1px solid var(--border-light);border-radius:10px;padding:16px;margin-bottom:16px">';
-  html+='<div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap">';
-  Object.entries(types).forEach(([k,v])=>{
-    html+='<button class="card-btn '+(journalType===k?'favorited':'')+'" style="'+(journalType===k?'border-color:'+v.color+';color:'+v.color+';background:'+v.color+'22':'')+'" onclick="setJournalType(\''+k+'\')">'+v.label+'</button>';
-  });
-  html+='</div>';
-  html+='<input type="text" id="journalCat" placeholder="Categoría (ej: Meta Ads, Copy, COD, Hiring)" style="width:100%;padding:8px 12px;background:var(--bg-input);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:13px;font-family:var(--font);outline:none;margin-bottom:8px">';
-  html+='<textarea id="journalText" placeholder="Escribe tu entrada..." style="width:100%;min-height:80px;padding:10px;background:var(--bg-input);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:13px;font-family:var(--font);outline:none;resize:vertical"></textarea>';
-  html+='<div style="display:flex;gap:8px;margin-top:8px"><button onclick="addJournal()" style="padding:8px 20px;background:var(--accent);color:var(--bg-base);border:none;border-radius:6px;font-weight:600;font-size:12px;cursor:pointer">+ Guardar entrada</button><button onclick="analyzeJournal()" style="padding:8px 20px;background:var(--purple-dim);border:1px solid var(--purple);color:var(--purple);border-radius:6px;font-weight:500;font-size:12px;cursor:pointer">🔍 Analizar patrones</button></div>';
-  html+='</div>';
-  html+='<div id="journalAnalysis"></div>';
-  if(!journal.length){html+='<div class="empty-state"><div class="empty-icon">📔</div><div class="empty-title">Empieza tu diario</div><div class="empty-sub">Cada entrada se queda contigo. Después de 3 meses tendrás un manual personalizado.</div></div>';c.innerHTML=html;return}
-  html+='<div style="font-size:12px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px">Tus entradas ('+journal.length+')</div>';
-  journal.forEach(e=>{
-    const t=types[e.type]||{label:e.type,color:'var(--text-muted)'};
-    html+='<div style="background:var(--bg-card);border:1px solid var(--border-light);border-radius:10px;padding:14px 16px;margin-bottom:8px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:10px;font-family:var(--mono);padding:2px 8px;border-radius:4px;background:'+t.color+'22;color:'+t.color+'">'+t.label.toUpperCase()+'</span>'+(e.category?'<span style="font-size:11px;color:var(--text-muted);font-family:var(--mono)">'+e.category+'</span>':'')+'<span style="font-size:11px;color:var(--text-muted);margin-left:auto;font-family:var(--mono)">'+e.date+'</span><button onclick="deleteJournal(\''+e.id+'\')" style="background:transparent;border:none;color:var(--text-muted);cursor:pointer;font-size:14px;padding:0 4px">✕</button></div><div style="font-size:13px;color:var(--text-secondary);line-height:1.6;white-space:pre-wrap">'+e.text+'</div></div>';
-  });
-  c.innerHTML=html;
-}
-function setJournalType(t){journalType=t;renderDiario()}
-function addJournal(){
-  const text=document.getElementById('journalText')?.value?.trim();if(!text)return;
-  const cat=document.getElementById('journalCat')?.value?.trim()||'';
-  journal.unshift({id:Date.now().toString(36),text:text,category:cat,type:journalType,date:new Date().toLocaleDateString('es-CO')});
-  localStorage.setItem('radar_journal',JSON.stringify(journal));
-  renderDiario();
-}
-function deleteJournal(id){if(!confirm('¿Borrar entrada?'))return;journal=journal.filter(x=>x.id!==id);localStorage.setItem('radar_journal',JSON.stringify(journal));renderDiario()}
-async function analyzeJournal(){
-  if(!journal.length){alert('Necesitas al menos algunas entradas para analizar');return}
-  const div=document.getElementById('journalAnalysis');
-  div.innerHTML='<div class="loading-container"><div class="radar-spinner"></div><div class="loading-text">Analizando patrones en tu diario...</div></div>';
-  const entries=journal.map(e=>'['+e.date+' · '+e.type+(e.category?' · '+e.category:'')+'] '+e.text).join('\n\n');
-  try{
-    const r=await callClaude('Lee mi diario y muéstrame patrones. Mi negocio: COD ecommerce Colombia, suplementos, Meta Ads + WhatsApp.\n\nDIARIO:\n'+entries+'\n\nEn español dame:\n📊 PATRONES IDENTIFICADOS\n✅ DECISIONES QUE FUNCIONAN\n❌ DECISIONES O ERRORES RECURRENTES\n🎯 RECOMENDACIONES BASADAS EN MI HISTORIAL\n\nSé directo, específico, basado solo en lo que escribí.','Análisis personal basado en diario propio. Spanish. Específico y honesto.',true);
-    div.innerHTML='<div style="background:var(--bg-card);border:1px solid var(--purple);border-radius:10px;padding:20px;margin-bottom:16px"><div style="font-size:14px;font-weight:600;color:var(--purple);margin-bottom:8px">🔍 Análisis de tu diario</div><div style="font-size:13px;color:var(--text-secondary);line-height:1.7;white-space:pre-wrap">'+r+'</div></div>';
-  }catch(e){div.innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">'+e.message+'</div></div>'}
-}
-
-// === COACH MODE ===
-let coachChat={messages:[],date:''};
-function renderCoach(){
-  const c=document.getElementById('contentArea');
-  const today=new Date().toLocaleDateString('es-CO');
-  c.innerHTML='<div style="margin-bottom:20px"><div style="font-size:20px;font-weight:600;margin-bottom:4px">🤝 Coach diario</div><div style="font-size:13px;color:var(--text-secondary);margin-bottom:8px">Revisión 5 minutos. Claude te hace 3 preguntas, tú respondes, te da feedback de coach.</div><div style="font-size:11px;color:var(--text-muted);font-family:var(--mono)">'+today+'</div></div>'+
-    '<div class="chat-area" id="coachArea" style="max-height:500px"></div>'+
-    '<div class="chat-input-row"><textarea class="chat-input" id="coachInput" placeholder="Responde aquí..." onkeydown="if(event.key===\'Enter\'&&!event.shiftKey){event.preventDefault();sendCoach()}"></textarea><button class="chat-send" onclick="sendCoach()">Enviar</button></div>';
-
-  // Reset and start
-  coachChat={messages:[],date:today};
-  document.getElementById('coachArea').innerHTML='<div class="chat-loading">⏳ El coach está preparándose...</div>';
-  const prompt='Soy un emprendedor de ecommerce COD en Colombia, vendo suplementos vía Meta Ads + WhatsApp. Vas a ser mi coach por 5 minutos. Empieza haciéndome estas 3 preguntas (de a una si lo prefieres, o todas juntas):\n\n1. ¿Qué hiciste ayer en tu negocio?\n2. ¿Qué vas a hacer hoy?\n3. ¿Qué te traba?\n\nDespués de mis respuestas darás feedback como coach — directo, sin endulzar, retándome a ejecutar mejor.';
-  coachChat.messages.push({role:'user',content:prompt});
-  (async()=>{
-    try{
-      const r=await callCoachAPI();
-      coachChat.messages.push({role:'assistant',content:r});
-      renderCoachArea();
-    }catch(e){document.getElementById('coachArea').innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">'+e.message+'</div></div>'}
-  })();
-}
-async function sendCoach(){
-  const input=document.getElementById('coachInput');
-  const t=input?.value?.trim();if(!t)return;
-  input.value='';
-  coachChat.messages.push({role:'user',content:t});
-  renderCoachArea();
-  const area=document.getElementById('coachArea');
-  area.innerHTML+='<div class="chat-loading" id="coachLoading">⏳ Coach pensando...</div>';
-  area.scrollTop=area.scrollHeight;
-  try{
-    const r=await callCoachAPI();
-    coachChat.messages.push({role:'assistant',content:r});
-    renderCoachArea();
-  }catch(e){document.getElementById('coachLoading')?.remove();coachChat.messages.push({role:'assistant',content:'⚠️ Error: '+e.message});renderCoachArea()}
-}
-async function callCoachAPI(){
-  const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:1500,system:'Eres un coach senior de ecommerce COD (Colombia, suplementos, Meta Ads + WhatsApp). Estilo: directo, exigente, sin endulzar, retas al usuario a ejecutar mejor. No le des palmaditas. Identificas patrones, le cuestionas prioridades, le exiges claridad. Respuestas en español, cortas y punzantes. Coach NO consultor — tu trabajo es que ejecute más y mejor.',messages:coachChat.messages})});
-  if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||'Error '+res.status)}
-  const data=await res.json();let t='';for(const b of data.content){if(b.type==='text')t+=b.text}return t;
-}
-function renderCoachArea(){
-  const area=document.getElementById('coachArea');if(!area)return;
-  let html='';
-  for(let i=0;i<coachChat.messages.length;i++){
-    const m=coachChat.messages[i];
-    if(i===0&&m.role==='user')continue;
-    const cls=m.role==='user'?'chat-msg-user':'chat-msg-assistant';
-    html+='<div class="chat-msg '+cls+'">'+m.content+'</div>';
-  }
-  area.innerHTML=html;area.scrollTop=area.scrollHeight;
-}
-
-// === APRENDE ===
 let learnChat={messages:[],topic:''};
 function renderAprende(){
-  const c=document.getElementById('contentArea');
-  c.innerHTML='<div style="margin-bottom:20px"><div style="font-size:20px;font-weight:600;margin-bottom:4px">🎓 Aprende algo nuevo</div><div style="font-size:13px;color:var(--text-secondary);margin-bottom:16px">Le dices qué quieres aprender y Claude te lo enseña paso a paso, usando tu negocio como ejemplo.</div></div>'+
-    '<div style="display:flex;gap:8px;margin-bottom:16px"><input type="text" id="learnTopic" placeholder="¿Qué quieres aprender? (ej: VBO, CAPI, Performance Max, prelanders rusos, escalado CBO)" style="flex:1;padding:12px 16px;background:var(--bg-input);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;font-family:var(--font);outline:none" onkeydown="if(event.key===\'Enter\')startLearn()"><button onclick="startLearn()" style="padding:12px 24px;background:var(--cyan);color:var(--bg-base);border:none;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer">Empezar</button></div>'+
-    '<div class="chat-area" id="learnArea" style="max-height:500px"></div>'+
-    '<div class="chat-input-row" id="learnInputRow" style="display:none">'+
-      '<textarea class="chat-input" id="learnInput" placeholder="Pregunta o pide más detalle..." onkeydown="if(event.key===\'Enter\'&&!event.shiftKey){event.preventDefault();sendLearn()}"></textarea>'+
-      '<button class="chat-send" style="background:var(--cyan)" onclick="sendLearn()">Enviar</button>'+
-    '</div>';
+  document.getElementById('contentArea').innerHTML='<div class="panel-head"><div class="pt">🎓 Aprende algo nuevo</div><div class="pd">Dime qué quieres entender y te lo explico paso a paso, fácil, con ejemplos de tu negocio.</div></div>'+
+    '<div class="home-search" style="margin-bottom:14px"><input type="text" id="learnTopic" placeholder="¿Qué quieres aprender? (ej: CBO, CAPI, Performance Max, VSL)" onkeydown="if(event.key===\'Enter\')startLearn()"><button onclick="startLearn()">Empezar</button></div>'+
+    '<div class="chat-area" id="learnArea" style="max-height:520px"></div>'+
+    '<div class="chat-input-row" id="learnRow" style="display:none"><textarea class="chat-input" id="learnInput" placeholder="Pregunta o pide más detalle..." onkeydown="if(event.key===\'Enter\'&&!event.shiftKey){event.preventDefault();sendLearn()}"></textarea><button class="chat-send" onclick="sendLearn()">Enviar</button></div>';
 }
 async function startLearn(){
-  const topic=document.getElementById('learnTopic')?.value?.trim();
-  if(!topic)return;
-  learnChat={messages:[],topic:topic};
-  document.getElementById('learnInputRow').style.display='flex';
+  const topic=document.getElementById('learnTopic')?.value?.trim();if(!topic)return;
+  learnChat={messages:[],topic};document.getElementById('learnRow').style.display='flex';
   document.getElementById('learnArea').innerHTML='<div class="chat-loading">⏳ Preparando tu lección...</div>';
-  const prompt='Quiero aprender: "'+topic+'"\n\nMi contexto: Ecommerce COD Colombia, suplementos vía Meta Ads + WhatsApp.\n\nEnseñame esto paso a paso, asumiendo que sé poco. Estructura:\n\n1. ¿QUÉ ES? (definición simple)\n2. ¿POR QUÉ IMPORTA PARA MÍ?\n3. PASO A PASO de cómo aplicarlo (números reales si aplica)\n4. EJEMPLO concreto con mi negocio\n5. ERRORES COMUNES que debo evitar\n6. PRÓXIMO PASO (qué hacer hoy mismo)\n\nEspañol claro, sin jerga innecesaria.';
+  const prompt='Quiero aprender: "'+topic+'"\n\n'+BIZ+'\n\nEnséñame paso a paso, asumiendo que sé poco. Estructura:\n1. ¿QUÉ ES? (simple)\n2. ¿POR QUÉ ME IMPORTA?\n3. PASO A PASO\n4. EJEMPLO con mi negocio\n5. ERRORES COMUNES\n6. PRÓXIMO PASO HOY\n\nEspañol claro, sin jerga.';
   learnChat.messages.push({role:'user',content:prompt});
-  try{
-    const r=await callLearnAPI();
-    learnChat.messages.push({role:'assistant',content:r});
-    renderLearnArea();
-  }catch(e){document.getElementById('learnArea').innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">'+e.message+'</div></div>'}
+  try{const r=await callClaudeChat(learnChat.messages,'Expert teacher of digital marketing and ecommerce. Student: COD entrepreneur in Colombia (supplements via Meta + WhatsApp). Pedagogical, concrete examples, no jargon. Spanish. Topic: '+topic);learnChat.messages.push({role:'assistant',content:r});renderLearn()}
+  catch(e){document.getElementById('learnArea').innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-title">Error</div><div class="empty-sub">'+e.message+'</div></div>'}
 }
 async function sendLearn(){
-  const input=document.getElementById('learnInput');
-  const t=input?.value?.trim();if(!t)return;
-  input.value='';
-  learnChat.messages.push({role:'user',content:t});
-  renderLearnArea();
-  const area=document.getElementById('learnArea');
-  area.innerHTML+='<div class="chat-loading" id="learnLoading">⏳ Pensando...</div>';
-  area.scrollTop=area.scrollHeight;
-  try{
-    const r=await callLearnAPI();
-    learnChat.messages.push({role:'assistant',content:r});
-    renderLearnArea();
-  }catch(e){document.getElementById('learnLoading')?.remove();learnChat.messages.push({role:'assistant',content:'⚠️ Error: '+e.message});renderLearnArea()}
+  const input=document.getElementById('learnInput');const t=input?.value?.trim();if(!t)return;input.value='';
+  learnChat.messages.push({role:'user',content:t});renderLearn();
+  const area=document.getElementById('learnArea');area.innerHTML+='<div class="chat-loading" id="learnLoading">⏳ Pensando...</div>';area.scrollTop=area.scrollHeight;
+  try{const r=await callClaudeChat(learnChat.messages,'Expert teacher of digital marketing and ecommerce. Student: COD entrepreneur in Colombia. Pedagogical, concrete, no jargon. Spanish. Topic: '+learnChat.topic);learnChat.messages.push({role:'assistant',content:r});renderLearn()}
+  catch(e){const l=document.getElementById('learnLoading');if(l)l.remove();learnChat.messages.push({role:'assistant',content:'⚠️ Error: '+e.message});renderLearn()}
 }
-async function callLearnAPI(){
-  const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:2048,system:'Profesor experto en marketing digital y ecommerce. Tu estudiante: emprendedor de COD Colombia (suplementos via Meta + WhatsApp). Estilo: pedagógico, ejemplos concretos con su negocio, sin jerga innecesaria. Spanish. Tema actual: '+learnChat.topic,messages:learnChat.messages})});
-  if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||'Error '+res.status)}
-  const data=await res.json();let t='';for(const b of data.content){if(b.type==='text')t+=b.text}return t;
-}
-function renderLearnArea(){
-  const area=document.getElementById('learnArea');if(!area)return;
-  let html='';
-  for(let i=0;i<learnChat.messages.length;i++){
-    const m=learnChat.messages[i];
-    if(i===0&&m.role==='user')continue;
-    const cls=m.role==='user'?'chat-msg-user':'chat-msg-assistant';
-    html+='<div class="chat-msg '+cls+'">'+m.content+'</div>';
-  }
-  area.innerHTML=html;area.scrollTop=area.scrollHeight;
-}
+function renderLearn(){const area=document.getElementById('learnArea');if(!area)return;let html='';for(let i=0;i<learnChat.messages.length;i++){const m=learnChat.messages[i];if(i===0&&m.role==='user')continue;html+='<div class="chat-msg '+(m.role==='user'?'chat-msg-user':'chat-msg-assistant')+'">'+m.content+'</div>'}area.innerHTML=html;area.scrollTop=area.scrollHeight}
 
-// === PREGUNTA DEL DÍA ===
-async function generateDailyQuestion(){
-  const today=new Date().toLocaleDateString('es-CO');
-  const saved=JSON.parse(localStorage.getItem('radar_daily_q')||'{}');
-  if(saved.date===today&&saved.q){return saved.q}
-  try{
-    const r=await callClaude('Genera UNA pregunta provocadora para empezar el día. Mi negocio: COD Colombia, suplementos via Meta Ads + WhatsApp.\n\nLa pregunta debe:\n- Forzarme a reflexionar antes de operar en piloto automático\n- Ser específica, no genérica\n- Reto mental real\n- Una sola oración\n- En español\n\nEjemplos del estilo:\n"¿Qué campaña deberías matar hoy y no has matado?"\n"¿Qué hiciste esta semana que tu competencia no hizo?"\n"¿Cuál es tu botella?"\n\nDame UNA pregunta nueva.','Generador de preguntas reflexivas. Spanish. Una sola pregunta corta.',false);
-    localStorage.setItem('radar_daily_q',JSON.stringify({date:today,q:r.trim()}));
-    return r.trim();
-  }catch(e){return '¿Cuál es tu prioridad #1 hoy?'}
+function renderConfig(){
+  document.getElementById('contentArea').innerHTML=
+    '<div class="panel-head"><div class="pt">⚙️ Ajustes</div><div class="pd">Tu llave y tus datos. Todo vive solo en este navegador.</div></div>'+
+    '<div class="settings-section"><div class="settings-title">Cómo ahorras tokens</div><div style="font-size:13px;color:var(--text-secondary);line-height:1.7">• Nada se busca solo: solo gasta cuando tú tocas un botón o buscas.<br>• Cada búsqueda se guarda en memoria: si la repites el mismo día, no vuelve a gastar.<br>• Tus guardados, notas y lecturas no gastan nada.<br>• Búsqueda rápida usa Haiku (barato). Análisis profundo usa Sonnet.</div></div>'+
+    '<div class="settings-section"><div class="settings-title">Datos locales</div><button class="card-btn" style="border-color:var(--red);color:var(--red)" onclick="clearAllData()">🗑 Borrar guardados, notas y caché</button><div style="font-size:11px;color:var(--text-muted);margin-top:6px">Tu API key NO se borra con esto.</div></div>'+
+    '<div class="settings-section"><div class="settings-title">Sesión</div><button class="card-btn" onclick="handleLogout()">Cerrar sesión (olvidar API key)</button></div>'+
+    '<div class="settings-section"><div class="settings-title">Acerca de</div><div style="font-size:13px;color:var(--text-secondary);line-height:1.6">RADAR · versión simple<br>Tu radar de marketing e IA. Sin menús eternos.</div></div>';
 }
+function clearAllData(){if(!confirm('¿Borrar guardados, notas y caché?'))return;favorites={};readItems={};notes={};cache={};localStorage.removeItem('radar_favs');localStorage.removeItem('radar_read');localStorage.removeItem('radar_notes');alert('Datos borrados');goHome()}
 
-// === FAB (Floating PDF/Text Analyzer) ===
+/* ============ FAB (analizar PDF / texto) ============ */
 let fabMode='resumen';
 if(typeof pdfjsLib!=='undefined'){pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.worker.min.js'}
 function openFab(){document.getElementById('fabModal').classList.add('open')}
@@ -1086,19 +572,13 @@ function closeFab(){document.getElementById('fabModal').classList.remove('open')
 function setFabMode(mode,btn){fabMode=mode;document.querySelectorAll('#fabActions .fab-action-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}
 async function handleFabFile(event){
   const file=event.target.files[0];if(!file)return;
-  const label=document.querySelector('label[for="fabFile"]');
-  label.textContent='⏳ Procesando '+file.name+'...';
+  const label=document.querySelector('label[for="fabFile"]');label.textContent='⏳ Procesando '+file.name+'...';
   try{
     let text='';
     if(file.type==='application/pdf'||file.name.endsWith('.pdf')){
       if(typeof pdfjsLib==='undefined'){label.textContent='❌ Error cargando lector PDF';return}
-      const arrayBuffer=await file.arrayBuffer();
-      const pdf=await pdfjsLib.getDocument({data:arrayBuffer}).promise;
-      for(let i=1;i<=pdf.numPages;i++){
-        const page=await pdf.getPage(i);
-        const content=await page.getTextContent();
-        text+=content.items.map(it=>it.str).join(' ')+'\n';
-      }
+      const arrayBuffer=await file.arrayBuffer();const pdf=await pdfjsLib.getDocument({data:arrayBuffer}).promise;
+      for(let i=1;i<=pdf.numPages;i++){const page=await pdf.getPage(i);const content=await page.getTextContent();text+=content.items.map(it=>it.str).join(' ')+'\n'}
     }else{text=await file.text()}
     document.getElementById('fabText').value=text.substring(0,15000);
     label.textContent='✅ '+file.name+' cargado ('+text.length+' caracteres)';
@@ -1107,23 +587,18 @@ async function handleFabFile(event){
 async function analyzeFab(){
   const text=document.getElementById('fabText').value.trim();
   if(!text){alert('Pega texto o sube un archivo primero');return}
-  const resultDiv=document.getElementById('fabResult');
-  resultDiv.style.display='block';
+  const resultDiv=document.getElementById('fabResult');resultDiv.style.display='block';
   resultDiv.innerHTML='<div class="loading-container" style="padding:20px 0"><div class="radar-spinner" style="width:30px;height:30px"></div><div class="loading-text">Analizando...</div></div>';
   const prompts={
-    resumen:'Haz un resumen claro y conciso en español de este contenido. Estructura: puntos principales, datos clave, conclusiones.',
-    clave:'Extrae lo más importante de este contenido en español. Dame: 3-5 puntos clave, dato más importante, fuente si aparece. Sé conciso.',
-    afecta:'Analiza cómo este contenido afecta mi negocio en español. Mi negocio: Ecommerce COD Colombia, suplementos salud vía Meta Ads y WhatsApp. Responde con: IMPACTO DIRECTO, ACCIONES INMEDIATAS, OPORTUNIDADES, RIESGOS. Específico, sin relleno.',
-    accion:'Dame un plan de acción concreto en español basado en este contenido. Mi negocio: Ecommerce COD Colombia, suplementos vía Meta Ads y WhatsApp. Responde con: ACCIÓN INMEDIATA (24h), ACCIÓN ESTA SEMANA (7 días), RESULTADO ESPERADO. Pasos específicos, listo para ejecutar.'
+    resumen:'Haz un resumen claro y conciso en español. Estructura: puntos principales, datos clave, conclusiones.',
+    clave:'Extrae lo más importante en español: 3-5 puntos clave, el dato más importante, la fuente si aparece. Conciso.',
+    afecta:'Analiza cómo este contenido afecta mi negocio en español. '+BIZ+' Responde: IMPACTO DIRECTO, ACCIONES INMEDIATAS, OPORTUNIDADES, RIESGOS. Específico.',
+    accion:'Dame un plan de acción concreto en español basado en este contenido. '+BIZ+' Responde: ACCIÓN INMEDIATA (24h), ESTA SEMANA (7 días), RESULTADO ESPERADO. Pasos listos para ejecutar.'
   };
   const deepModes=['afecta','accion'];
-  try{
-    const r=await callClaude(prompts[fabMode]+'\n\nCONTENIDO:\n'+text,'Analista de inteligencia. Respuesta en español. Directo y específico.',deepModes.includes(fabMode));
-    resultDiv.innerHTML=r;
-  }catch(e){resultDiv.innerHTML='<div style="color:var(--red)">Error: '+e.message+'</div>'}
+  try{const r=await callClaude(prompts[fabMode]+'\n\nCONTENIDO:\n'+text,'Intelligence analyst. Spanish. Direct and specific.',deepModes.includes(fabMode));resultDiv.innerHTML='<div style="white-space:pre-wrap">'+r+'</div>'}
+  catch(e){resultDiv.innerHTML='<div style="color:var(--red)">Error: '+e.message+'</div>'}
 }
-
-updateFavCount();
 </script>
 </body>
 </html>
